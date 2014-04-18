@@ -1,5 +1,5 @@
 module SpecialMatrices
 
-# package code goes here
+include("frobenius.jl")
 
 end # module
