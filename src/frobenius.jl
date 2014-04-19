@@ -1,5 +1,3 @@
-import Base: A_mul_B!, full, getindex, inv, isassigned, size, *
-
 export FrobeniusMatrix
 
 #Frobenius matrices or Gaussian elimination matrices
