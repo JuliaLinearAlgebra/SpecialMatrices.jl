@@ -71,3 +71,19 @@ julia> A=CompanionMatrix([1,2,1])
  1  0  -2
  0  1  -1
 ```
+
+## `StrangMatrix`
+
+A special `SymTridiagonal` matrix named after Gilbert Strang
+
+```julia
+julia> StrangMatrix(6)
+6x6 StrangMatrix{Float64}:
+  2.0  -1.0   0.0   0.0   0.0   0.0
+ -1.0   2.0  -1.0   0.0   0.0   0.0
+  0.0  -1.0   2.0  -1.0   0.0   0.0
+  0.0   0.0  -1.0   2.0  -1.0   0.0
+  0.0   0.0   0.0  -1.0   2.0  -1.0
+  0.0   0.0   0.0   0.0  -1.0   2.0
+```
+
