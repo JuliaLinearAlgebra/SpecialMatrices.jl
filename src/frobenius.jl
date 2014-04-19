@@ -21,9 +21,9 @@ export FrobeniusMatrix
 #dense vector, so that the size can be inferred automatically as j+k where j is
 #the index of the column and k is the number of subdiagonal elements.
 
-type FrobeniusMatrix{T} <: AbstractArray{T, 2}
+immutable FrobeniusMatrix{T} <: AbstractArray{T, 2}
     colidx :: Int
-    z ::Vector{T}
+    z :: Vector{T}
 end
 
 #Basic property computations
