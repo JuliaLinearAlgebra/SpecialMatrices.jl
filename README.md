@@ -62,3 +62,12 @@ julia> F*[10.0:10.0:60.0]
  150.0
 ```
 
+## [`CompanionMatrix`](http://en.wikipedia.org/wiki/Companion_matrix)
+
+```julia
+julia> A=CompanionMatrix([1,2,1])
+3x3 CompanionMatrix{Int64}:
+ 0  0  -1
+ 1  0  -2
+ 0  1  -1
+```
