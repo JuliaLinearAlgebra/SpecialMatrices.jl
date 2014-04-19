@@ -62,10 +62,9 @@ function *{T}(F::FrobeniusMatrix{T}, G::FrobeniusMatrix{T})
     else
         M⧀, M⧁ = F.colidx > G.colidx ? (G, F) : (F, G)
         M = full(M⧁)
-        M[M⧀.colidx+1:end, M⧀.colidx] = FrobeniusMatrix(M⧁.colidx-M⧀.colidx, F.z) * G.z
+        M[M⧀.colidx+1:end, M⧀.colidx] = FrobeniusMatrix(M⧁.colidx-M⧀.colidx, M⧁.z) * M⧀.z
         return M
     end
 end
 
 inv(F::FrobeniusMatrix) = FrobeniusMatrix(F.colidx, -F.z)
-
