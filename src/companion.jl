@@ -36,6 +36,19 @@ function A_mul_B!{T}(C::CompanionMatrix{T}, b::Vector{T})
 end
 *{T}(C::CompanionMatrix{T}, b::Vector{T}) = A_mul_B!(C, copy(b))
 
+function A_mul_B!{T}(A::Matrix{T}, C::CompanionMatrix{T})
+	v = Array(T, size(A,1))
+	for i=1:size(A,1)
+		v[i] =(A[i,:]*-C.c)[1]
+	end
+	for i=1:size(A,1), j=1:size(A,2)-1
+		A[i,j] = A[i,j+1]
+	end
+	A[:,end] = v
+	A
+end
+*{T}(A::Matrix{T}, C::CompanionMatrix{T}) = A_mul_B!(copy(A), C)
+
 function inv{T}(C::CompanionMatrix{T})
 	M = zeros(T, size(C)...)
     for i=1:size(C,1)-1
