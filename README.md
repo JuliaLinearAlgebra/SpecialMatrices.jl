@@ -9,15 +9,15 @@ matrices which are used in linear algebra.
 
 ## Currently supported special matrices
 
-## [`FrobeniusMatrix`](http://en.wikipedia.org/wiki/Frobenius_matrix)
+## [`Frobenius`](http://en.wikipedia.org/wiki/Frobenius_matrix) matrix
 
 Example
 
 ```julia
 julia> using SpecialMatrices
 
-julia> F=FrobeniusMatrix(3, [1.0:3.0]) #Specify subdiagonals of column 3
-6x6 FrobeniusMatrix{Float64}:
+julia> F=Frobenius(3, [1.0:3.0]) #Specify subdiagonals of column 3
+6x6 Frobenius{Float64}:
  1.0  0.0  0.0  0.0  0.0  0.0
  0.0  1.0  0.0  0.0  0.0  0.0
  0.0  0.0  1.0  0.0  0.0  0.0
@@ -26,7 +26,7 @@ julia> F=FrobeniusMatrix(3, [1.0:3.0]) #Specify subdiagonals of column 3
  0.0  0.0  3.0  0.0  0.0  1.0
 
 julia> inv(F) #Special form of inverse
-6x6 FrobeniusMatrix{Float64}:
+6x6 Frobenius{Float64}:
  1.0  0.0   0.0  0.0  0.0  0.0
  0.0  1.0   0.0  0.0  0.0  0.0
  0.0  0.0   1.0  0.0  0.0  0.0
@@ -35,7 +35,7 @@ julia> inv(F) #Special form of inverse
  0.0  0.0  -3.0  0.0  0.0  1.0
 
 julia> F*F #Special form preserved if the same column has the subdiagonals
-6x6 FrobeniusMatrix{Float64}:
+6x6 Frobenius{Float64}:
  1.0  0.0  0.0  0.0  0.0  0.0
  0.0  1.0  0.0  0.0  0.0  0.0
  0.0  0.0  1.0  0.0  0.0  0.0
@@ -43,7 +43,7 @@ julia> F*F #Special form preserved if the same column has the subdiagonals
  0.0  0.0  4.0  0.0  1.0  0.0
  0.0  0.0  6.0  0.0  0.0  1.0
 
-julia> F*FrobeniusMatrix(2, [5.0:-1.0:2.0]) #Promotes to Matrix
+julia> F*Frobenius(2, [5.0:-1.0:2.0]) #Promotes to Matrix
 6x6 Array{Float64,2}:
  1.0   0.0  0.0  0.0  0.0  0.0
  0.0   1.0  0.0  0.0  0.0  0.0
@@ -62,23 +62,23 @@ julia> F*[10.0:10.0:60.0]
  150.0
 ```
 
-## [`CompanionMatrix`](http://en.wikipedia.org/wiki/Companion_matrix)
+## [`Companion`](http://en.wikipedia.org/wiki/Companion_matrix) matrix
 
 ```julia
-julia> A=CompanionMatrix([1,2,1])
-3x3 CompanionMatrix{Int64}:
+julia> A=Companion([1,2,1])
+3x3 Companion{Int64}:
  0  0  -1
  1  0  -2
  0  1  -1
 ```
 
-## `StrangMatrix`
+## `Strang` matrix
 
 A special `SymTridiagonal` matrix named after Gilbert Strang
 
 ```julia
-julia> StrangMatrix(6)
-6x6 StrangMatrix{Float64}:
+julia> Strang(6)
+6x6 Strang{Float64}:
   2.0  -1.0   0.0   0.0   0.0   0.0
  -1.0   2.0  -1.0   0.0   0.0   0.0
   0.0  -1.0   2.0  -1.0   0.0   0.0
