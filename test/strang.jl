@@ -1,5 +1,5 @@
 n = rand(1:10)
-Z = StrangMatrix(n)
+Z = Strang(n)
 
 #Matvec product
 b = randn(n)

@@ -1,5 +1,5 @@
 n = rand(1:10)
-Z = CompanionMatrix(randn(n))
+Z = Companion(randn(n))
 
 #Special properties
 @test_approx_eq full(inv(Z)) inv(full(Z))
