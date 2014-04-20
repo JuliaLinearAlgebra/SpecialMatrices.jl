@@ -111,6 +111,17 @@ julia> Toeplitz([-4:4])
  4   3   2   1   0
 ```
 
+## `Circulant` matrix
+
+```julia
+julia> Circulant([1:4])
+4x4 Circulant{Int64}:
+ 1  4  3  2
+ 2  1  4  3
+ 3  2  1  4
+ 4  3  2  1
+```
+
 ## `Vandermonde` matrix
 
 ```julia
