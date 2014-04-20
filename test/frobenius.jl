@@ -9,7 +9,7 @@ Z = FrobeniusMatrix(m, randn(n)) #size m+n
 b = randn(m+n)
 @test_approx_eq Z*b full(Z)*b
 
-#Malmul product
+#Matmul product
 Y1 = FrobeniusMatrix(m, randn(n)) #Another one of the same column
 @test_approx_eq full(Y1*Z) full(Y1)*full(Z)
 

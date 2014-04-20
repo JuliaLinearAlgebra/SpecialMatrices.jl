@@ -87,3 +87,38 @@ julia> Strang(6)
   0.0   0.0   0.0   0.0  -1.0   2.0
 ```
 
+## `Hankel` matrix
+
+```julia
+julia> Hankel([-4:4])
+5x5 Hankel{Int64}:
+ -4  -3  -2  -1  0
+ -3  -2  -1   0  1
+ -2  -1   0   1  2
+ -1   0   1   2  3
+  0   1   2   3  4
+```
+
+## `Toeplitz` matrix
+
+```julia
+julia> Toeplitz([-4:4])
+5x5 Toeplitz{Int64}:
+ 0  -1  -2  -3  -4
+ 1   0  -1  -2  -3
+ 2   1   0  -1  -2
+ 3   2   1   0  -1
+ 4   3   2   1   0
+```
+
+## `Vandermonde` matrix
+
+```julia
+julia> Vandermonde([1:5])
+5x5 Vandermonde{Int64}:
+ 1  1   1    1    1
+ 1  2   4    8   16
+ 1  3   9   27   81
+ 1  4  16   64  256
+ 1  5  25  125  625
+```
