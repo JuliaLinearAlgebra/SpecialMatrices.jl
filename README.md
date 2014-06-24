@@ -125,6 +125,7 @@ julia> Circulant([1:4])
 
 ## `Hilbert` matrix
 
+```julia
 julia> full(Hilbert(5))
 5x5 Array{Rational{Int64},2}:
  1//1  1//2  1//3  1//4  1//5
@@ -132,6 +133,7 @@ julia> full(Hilbert(5))
  1//3  1//4  1//5  1//6  1//7
  1//4  1//5  1//6  1//7  1//8
  1//5  1//6  1//7  1//8  1//9
+```
 
 ## `Vandermonde` matrix
 
