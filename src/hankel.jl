@@ -2,8 +2,8 @@ export Hankel
 
 immutable Hankel{T} <: AbstractArray{T, 2}
     c :: Vector{T}
-    Hankel{T}(c::Vector{T}) = length(c) % 2 == 1 ? new(c) : throw(ArgumentError(""))
 end
+Hankel{T}(c::Vector{T}) = length(c) % 2 == 1 ? Hankel{T}(c) : throw(ArgumentError(""))
 
 #XXX Inefficient but works
 getindex(H::Hankel, i, j) = getindex(full(H), i, j)
