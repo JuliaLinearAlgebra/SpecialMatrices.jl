@@ -1,9 +1,8 @@
 export Hankel
 
 immutable Hankel{T} <: AbstractArray{T, 2}
-	c :: Vector{T}
-	#XXX why doesn't this work?
-	#Hankel{T}(c::Vector{T}) = length(c) % 2 == 1 ? new(c) : throw(ArgumentError(""))
+    c :: Vector{T}
+    Hankel{T}(c::Vector{T}) = length(c) % 2 == 1 ? new(c) : throw(ArgumentError(""))
 end
 
 #XXX Inefficient but works
@@ -15,10 +14,10 @@ size(H::Hankel, r::Int) = (r==1 || r==2) ? 1 + div(length(H.c),2) :
 size(H::Hankel) = size(H,1), size(H,2)
 
 function full{T}(H::Hankel{T})
-	n=size(H, 1)
-	M=Array(T, n, n)
-	for i=1:n
-		M[:,i] = H.c[i:i+n-1]
-	end
-	M
+    n=size(H, 1)
+    M=Array(T, n, n)
+    for i=1:n
+        M[:,i] = H.c[i:i+n-1]
+    end
+    M
 end
