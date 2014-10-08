@@ -137,6 +137,17 @@ julia> Hankel([-4:4])
 ## [`Hilbert`](http://en.wikipedia.org/wiki/Hilbert_matrix) matrix
 
 ```julia
+julia> A=Hilbert(5)
+Hilbert{Rational{Int64}}(5,5)
+
+julia> full(A)
+5x5 Array{Rational{Int64},2}:
+ 1//1  1//2  1//3  1//4  1//5
+ 1//2  1//3  1//4  1//5  1//6
+ 1//3  1//4  1//5  1//6  1//7
+ 1//4  1//5  1//6  1//7  1//8
+ 1//5  1//6  1//7  1//8  1//9
+
 julia> full(Hilbert(5))
 5x5 Array{Rational{Int64},2}:
  1//1  1//2  1//3  1//4  1//5
@@ -144,6 +155,17 @@ julia> full(Hilbert(5))
  1//3  1//4  1//5  1//6  1//7
  1//4  1//5  1//6  1//7  1//8
  1//5  1//6  1//7  1//8  1//9
+```
+Inverses are also integer matrices:
+
+```julia
+julia> inv(A)
+5x5 Array{Rational{Int64},2}:
+    25//1    -300//1     1050//1    -1400//1     630//1
+  -300//1    4800//1   -18900//1    26880//1  -12600//1
+  1050//1  -18900//1    79380//1  -117600//1   56700//1
+ -1400//1   26880//1  -117600//1   179200//1  -88200//1
+   630//1  -12600//1    56700//1   -88200//1   44100//1
 ```
 
 ## [`Kahan`](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html) matrix
@@ -162,7 +184,7 @@ julia> A=Kahan(5,3,0.5,0)
  1.0  -0.877583  -0.877583
  0.0   0.479426  -0.420735
  0.0   0.0        0.229849
- 0.0   0.0        0.0     
+ 0.0   0.0        0.0
  0.0   0.0        0.0
 
 julia> A=Kahan(3,5,0.5,1e-3)
@@ -172,11 +194,33 @@ julia> A=Kahan(3,5,0.5,1e-3)
  0.0   0.0        0.229849  -0.201711  -0.201711
 ```
 
-For more details see [N. J. Higham, 1987][Higham87].
+For more details see [N. J. Higham (1987)][Higham87].
 
-[Higham87]:http://eprints.ma.man.ac.uk/695/01/covered/MIMS_ep2007_10.pdf"N. Higham, A
-Survey of Condition Number Estimation for Triangular
-Matrices, SIMAX, Vol. 29, No. 4, pp. 588, 1987"
+[Higham87]: http://eprints.ma.man.ac.uk/695/01/covered/MIMS_ep2007_10.pdf "N. Higham, A Survey of Condition Number Estimation for Triangular Matrices, SIMAX, Vol. 29, No. 4, pp. 588, 1987"
+
+## `Riemann` matrix
+
+Riemann matrix is defined as `A = B[2:N+1, 2:N+1]`, where
+`B[i,j] = i-1` if `i` divides `j`, and `-1` otherwise.
+[Riemann hypothesis](http://en.wikipedia.org/wiki/Riemann_hypothesis) holds
+if and only if `det(A) = O( N! N^(-1/2+epsilon))` for every `epsilon > 0`.
+
+```julia
+julia> Riemann(7)
+7x7 Riemann{Int64}:
+  1  -1   1  -1   1  -1   1
+ -1   2  -1  -1   2  -1  -1
+ -1  -1   3  -1  -1  -1   3
+ -1  -1  -1   4  -1  -1  -1
+ -1  -1  -1  -1   5  -1  -1
+ -1  -1  -1  -1  -1   6  -1
+ -1  -1  -1  -1  -1  -1   7
+```
+
+For more details see [F. Roesler (1986)][Roesler1986].
+
+[Roesler1986]: http://www.sciencedirect.com/science/article/pii/0024379586902557 "Friedrich Roesler, Riemann's hypothesis as an eigenvalue problem, Linear Algebra and its Applications, Vol. 81, (1986)"
+
 
 
 
