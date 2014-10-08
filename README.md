@@ -3,12 +3,69 @@
 A [Julia](http://julialang.org) package for working with special matrix types.
 
 This package extends the `Base.LinAlg` library with support for special
-matrices which are used in linear algebra.
+matrices which are used in linear algebra. Every special matrix has its own type.
+The full matrix is accessed by the command `full(A)`.
 
 [![Build Status](https://travis-ci.org/jiahao/SpecialMatrices.jl.svg)](https://travis-ci.org/jiahao/SpecialMatrices.jl) [![Coverage Status](https://img.shields.io/coveralls/jiahao/SpecialMatrices.jl.svg)](https://coveralls.io/r/jiahao/SpecialMatrices.jl)
 
-
 ## Currently supported special matrices
+
+## [`Cauchy`](http://en.wikipedia.org/wiki/Cauchy_matrix) matrix
+
+```julia
+julia> Cauchy([1,2,3],[3,4,5])
+3x3 Cauchy{Int64}:
+ 0.25      0.2       0.166667
+ 0.2       0.166667  0.142857
+ 0.166667  0.142857  0.125
+
+julia> Cauchy([1,2,3])
+3x3 Cauchy{Int64}:
+ 0.5       0.333333  0.25
+ 0.333333  0.25      0.2
+ 0.25      0.2       0.166667
+
+julia> Cauchy(pi)
+3x3 Cauchy{Float64}:
+ 0.5       0.333333  0.25
+ 0.333333  0.25      0.2
+ 0.25      0.2       0.166667
+```
+
+## `Circulant` matrix
+
+```julia
+julia> Circulant([1:4])
+4x4 Circulant{Int64}:
+ 1  4  3  2
+ 2  1  4  3
+ 3  2  1  4
+ 4  3  2  1
+```
+
+## [`Companion`](http://en.wikipedia.org/wiki/Companion_matrix) matrix
+
+```julia
+julia> A=Companion([3,2,1])
+3x3 Companion{Int64}:
+ 0  0  -3
+ 1  0  -2
+ 0  1  -1
+```
+Also, directly from a polynomial:
+
+```julia
+julia> using Polynomials
+
+julia> P=Poly([2,3,4,5])
+Poly(2 + 3x + 4x^2 + 5x^3)
+
+julia> C=Companion(P)
+3x3 Companion{Number}:
+ 0  0  -0.4
+ 1  0  -0.6
+ 0  1  -0.8
+```
 
 ## [`Frobenius`](http://en.wikipedia.org/wiki/Frobenius_matrix) matrix
 
@@ -63,15 +120,65 @@ julia> F*[10.0:10.0:60.0]
  150.0
 ```
 
-## [`Companion`](http://en.wikipedia.org/wiki/Companion_matrix) matrix
+## [`Hankel`](http://en.wikipedia.org/wiki/Hankel_matrix) matrix
+
+Input is a vector of odd length.
 
 ```julia
-julia> A=Companion([1,2,1])
-3x3 Companion{Int64}:
- 0  0  -1
- 1  0  -2
- 0  1  -1
+julia> Hankel([-4:4])
+5x5 Hankel{Int64}:
+ -4  -3  -2  -1  0
+ -3  -2  -1   0  1
+ -2  -1   0   1  2
+ -1   0   1   2  3
+  0   1   2   3  4
 ```
+
+## [`Hilbert`](http://en.wikipedia.org/wiki/Hilbert_matrix) matrix
+
+```julia
+julia> full(Hilbert(5))
+5x5 Array{Rational{Int64},2}:
+ 1//1  1//2  1//3  1//4  1//5
+ 1//2  1//3  1//4  1//5  1//6
+ 1//3  1//4  1//5  1//6  1//7
+ 1//4  1//5  1//6  1//7  1//8
+ 1//5  1//6  1//7  1//8  1//9
+```
+
+## [`Kahan`](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html) matrix
+
+```julia
+julia> A=Kahan(5,5,1,35)
+5x5 Kahan{Int64,Int64}:
+ 1.0  -0.540302  -0.540302  -0.540302  -0.540302
+ 0.0   0.841471  -0.454649  -0.454649  -0.454649
+ 0.0   0.0        0.708073  -0.382574  -0.382574
+ 0.0   0.0        0.0        0.595823  -0.321925
+ 0.0   0.0        0.0        0.0        0.501368
+
+julia> A=Kahan(5,3,0.5,0)
+5x3 Kahan{Float64,Int64}:
+ 1.0  -0.877583  -0.877583
+ 0.0   0.479426  -0.420735
+ 0.0   0.0        0.229849
+ 0.0   0.0        0.0     
+ 0.0   0.0        0.0
+
+julia> A=Kahan(3,5,0.5,1e-3)
+3x5 Kahan{Float64,Float64}:
+ 1.0  -0.877583  -0.877583  -0.877583  -0.877583
+ 0.0   0.479426  -0.420735  -0.420735  -0.420735
+ 0.0   0.0        0.229849  -0.201711  -0.201711
+```
+
+For more details see [N. J. Higham, 1987][Higham87].
+
+[Higham87]:http://eprints.ma.man.ac.uk/695/01/covered/MIMS_ep2007_10.pdf"N. Higham, A
+Survey of Condition Number Estimation for Triangular
+Matrices, SIMAX, Vol. 29, No. 4, pp. 588, 1987"
+
+
 
 ## `Strang` matrix
 
@@ -88,19 +195,9 @@ julia> Strang(6)
   0.0   0.0   0.0   0.0  -1.0   2.0
 ```
 
-## `Hankel` matrix
+## [`Toeplitz`](http://en.wikipedia.org/wiki/Toeplitz_matrix) matrix
 
-```julia
-julia> Hankel([-4:4])
-5x5 Hankel{Int64}:
- -4  -3  -2  -1  0
- -3  -2  -1   0  1
- -2  -1   0   1  2
- -1   0   1   2  3
-  0   1   2   3  4
-```
-
-## `Toeplitz` matrix
+Input is a vector of odd length.
 
 ```julia
 julia> Toeplitz([-4:4])
@@ -111,31 +208,8 @@ julia> Toeplitz([-4:4])
  3   2   1   0  -1
  4   3   2   1   0
 ```
+## [`Vandermonde`](http://en.wikipedia.org/wiki/Vandermonde_matrix) matrix
 
-## `Circulant` matrix
-
-```julia
-julia> Circulant([1:4])
-4x4 Circulant{Int64}:
- 1  4  3  2
- 2  1  4  3
- 3  2  1  4
- 4  3  2  1
-```
-
-## `Hilbert` matrix
-
-```julia
-julia> full(Hilbert(5))
-5x5 Array{Rational{Int64},2}:
- 1//1  1//2  1//3  1//4  1//5
- 1//2  1//3  1//4  1//5  1//6
- 1//3  1//4  1//5  1//6  1//7
- 1//4  1//5  1//6  1//7  1//8
- 1//5  1//6  1//7  1//8  1//9
-```
-
-## `Vandermonde` matrix
 
 ```julia
 julia> Vandermonde([1:5])
