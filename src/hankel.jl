@@ -5,13 +5,18 @@ immutable Hankel{T} <: AbstractArray{T, 2}
 end
 Hankel{T}(c::Vector{T}) = length(c) % 2 == 1 ? Hankel{T}(c) : throw(ArgumentError(""))
 
-#XXX Inefficient but works
-getindex(H::Hankel, i, j) = getindex(full(H), i, j)
-isassigned(H::Hankel, i, j) = isassigned(full(H), i, j)
+getindex(H::Hankel, i::Int, j::Int) = H.c[i+j-1]
+isassigned(H::Hankel, i::Int, j::Int) = isassigned(H.c, i+j-1)
+
 
 size(H::Hankel, r::Int) = (r==1 || r==2) ? 1 + div(length(H.c),2) :
     throw(ArgumentError("Invalid dimension $r"))
 size(H::Hankel) = size(H,1), size(H,2)
+
+# Fast matrix x vector via fft()
+function *{T}(A::Hankel{T},x::Vector{T})
+    Toeplitz(A.c)*reverse(x)
+end
 
 function full{T}(H::Hankel{T})
     n=size(H, 1)

@@ -10,7 +10,7 @@ include("hilbert.jl") #Hilbert matrix
 include("kahan.jl") #Kahan matrix
 include("riemann.jl") #Riemann matrix
 include("strang.jl") #Strang matrix
-include("toeplitz.jl") #Toeplitz matrix
+include("toeplitz.jl") #Toeplitz matrix, Circulant matrix
 include("vandermonde.jl") #Vandermonde matrix
 
 end # module

@@ -28,8 +28,11 @@ function size(C::Companion)
 end
 
 #XXX Inefficient but works
-getindex(C::Companion, i, j) = getindex(full(C), i, j)
-isassigned(C::Companion, i, j) = isassigned(full(C), i, j)
+# getindex(C::Companion, i, j) = getindex(full(C), i, j)
+# isassigned(C::Companion, i, j) = isassigned(full(C), i, j)
+getindex{T}(C::Companion{T}, i::Int, j::Int) = (j==length(C.c)) ? -C.c[i] : (i==j+1 ? one(T) : zero(T) )
+isassigned(C::Companion, i::Int, j::Int) = (j==length(C.c)) ? isassigned(C.c,i) : true
+
 
 function full{T}(C::Companion{T})
     M = zeros(T, size(C)...)
@@ -53,7 +56,7 @@ end
 function A_mul_B!{T}(A::Matrix{T}, C::Companion{T})
 	v = Array(T, size(A,1))
 	for i=1:size(A,1)
-		v[i] =(A[i,:]*-C.c)[1]
+		v[i] =dot(vec(A[i,:]),-C.c)
 	end
 	for i=1:size(A,1), j=1:size(A,2)-1
 		A[i,j] = A[i,j+1]

@@ -1,3 +1,3 @@
 n=rand(1:10)
-H = Hankel([-n:n])
-@test diag(full(H)) == [-n:2:n]
+H = Hankel(collect(-n:n))
+@test diag(full(H)) == collect(-n:2:n)

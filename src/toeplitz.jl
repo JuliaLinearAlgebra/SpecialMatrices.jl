@@ -4,13 +4,20 @@ immutable Toeplitz{T} <: AbstractArray{T, 2}
 	c :: Vector{T}
 end
 
-#XXX Inefficient but works
-getindex(T::Toeplitz, i, j) = getindex(full(T), i, j)
-isassigned(T::Toeplitz, i, j) = isassigned(full(T), i, j)
+getindex(T::Toeplitz, i::Int, j::Int) = T.c[i-j+div(length(T.c)+1,2)]
+isassigned(T::Toeplitz, i::Int, j::Int) = isassigned(T.c,i-j+div(length(T.c)+1,2))
 
 size(T::Toeplitz, r::Int) = (r==1 || r==2) ? 1 + div(length(T.c),2) :
     throw(ArgumentError("Invalid dimension $r"))
 size(T::Toeplitz) = size(T,1), size(T,2)
+
+# Fast matrix x vector multiplication via embedding Toeplitz() into Circulant()
+function *{T}(A::Toeplitz{T},x::Vector{T})
+    n=length(A.c)
+    k=Int(round((n+1)/2))
+    C=Circulant([A.c[k:n];A.c[1:k-1]])
+    (C*[x;zeros(T,k-1)])[1:k]
+end
 
 function full{T}(To::Toeplitz{T})
 	n=size(To, 1)
@@ -28,13 +35,20 @@ immutable Circulant{T} <: AbstractArray{T, 2}
 	c :: Vector{T}
 end
 
-#XXX Inefficient but works
-getindex(C::Circulant, i, j) = getindex(full(C), i, j)
-isassigned(C::Circulant, i, j) = isassigned(full(C), i, j)
-
+getindex(C::Circulant, i::Int, j::Int) = C.c[mod(i-j,length(C.c))+1]
+isassigned(C::Circulant, i::Int, j::Int) = isassigned(C.c,mod(i-j,length(C.c))+1)
 size(C::Circulant, r::Int) = (r==1 || r==2) ? length(C.c) :
     throw(ArgumentError("Invalid dimension $r"))
 size(C::Circulant) = size(C,1), size(C,2)
+
+# Fast matrix x vector via fft()
+# see Golub, van Loan, Matrix Computations, John Hopkins, Baltimore, 1996, p. 202 
+function *{T}(C::Circulant{T},x::Vector{T})
+    xt=fft(x)
+    vt=fft(C.c)
+    yt=vt.*xt
+    typeof(x[1])==Int ? map(Int,round(real(ifft(yt)))): ( (T <: Real) ? map(T,real(ifft(yt))) : ifft(yt))
+end
 
 function full{T}(C::Circulant{T})
 	n=size(C, 1)
