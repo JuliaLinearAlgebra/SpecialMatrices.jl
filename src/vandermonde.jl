@@ -4,9 +4,8 @@ immutable Vandermonde{T} <: AbstractArray{T, 2}
 	c :: Vector{T}
 end
 
-#XXX Inefficient but works
-getindex(V::Vandermonde, i, j) = getindex(full(V), i, j)
-isassigned(V::Vandermonde, i, j) = isassigned(full(V), i, j)
+getindex(V::Vandermonde, i::Int, j::Int) = V.c[i]^(j-1)
+isassigned(V::Vandermonde, i::Int, j::Int) = isassigned(V.c, i)
 
 size(V::Vandermonde, r::Int) = (r==1 || r==2) ? length(V.c) :
     throw(ArgumentError("Invalid dimension $r"))
