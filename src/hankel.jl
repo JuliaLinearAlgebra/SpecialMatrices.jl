@@ -18,6 +18,12 @@ function *{T}(A::Hankel{T},x::Vector{T})
     Toeplitz(A.c)*reverse(x)
 end
 
+function A_mul_B!{T}(y::StridedVector{T},A::Hankel{T},x::StridedVector{T})
+    xx=reverse(x)
+    y=A_mul_B!(similar(xx),Toeplitz(A.c),xx)
+    return y
+end
+
 function full{T}(H::Hankel{T})
     n=size(H, 1)
     M=Array(T, n, n)
