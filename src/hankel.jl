@@ -20,8 +20,7 @@ end
 
 function A_mul_B!{T}(y::StridedVector{T},A::Hankel{T},x::StridedVector{T})
     xx=reverse(x)
-    y=A_mul_B!(similar(xx),Toeplitz(A.c),xx)
-    return y
+    return A_mul_B!(y,Toeplitz(A.c),xx)
 end
 
 function full{T}(H::Hankel{T})

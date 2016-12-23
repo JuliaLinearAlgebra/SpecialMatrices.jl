@@ -24,8 +24,9 @@ function A_mul_B!{T}(y::StridedVector{T},A::Toeplitz{T},x::StridedVector{T})
     k=Int(round((n+1)/2))
     C=Circulant([A.c[k:n];A.c[1:k-1]])
     xx=[x;zeros(T,k-1)]
-    y=A_mul_B!(similar(xx),C,xx)
-    return y[1:k]
+    yy=A_mul_B!(similar(xx),C,xx)
+    copy!(y, 1, yy, 1, length(y))
+    return y
 end
 
 function full{T}(To::Toeplitz{T})
@@ -62,8 +63,14 @@ end
 function A_mul_B!{T}(y::StridedVector{T},C::Circulant{T},x::StridedVector{T})
     xt=fft(x)
     vt=fft(C.c)
-    yt=vt.*xt
-    y=typeof(x[1])==Int ? map(Int,round(real(ifft(yt)))): ( (T <: Real) ? map(T,real(ifft(yt))) : ifft(yt))
+    yt=ifft(vt.*xt)
+    if T<: Int
+        map!(round,y,yt) 
+    elseif T<: Real
+        map!(real,y,yt)
+    else
+        copy!(y,yt)
+    end
     return y
 end
 
