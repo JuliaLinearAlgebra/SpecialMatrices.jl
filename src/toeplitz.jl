@@ -41,24 +41,60 @@ end
 
 
 
-immutable Circulant{T} <: AbstractArray{T, 2}
-	c :: Vector{T}
+immutable Circulant{T} <: AbstractMatrix{T}
+	c::Vector{T}
 end
 
-getindex(C::Circulant, i::Int, j::Int) = C.c[mod(i-j,length(C.c))+1]
-isassigned(C::Circulant, i::Int, j::Int) = isassigned(C.c,mod(i-j,length(C.c))+1)
-size(C::Circulant, r::Int) = (r==1 || r==2) ? length(C.c) :
+typealias Circ Circulant
+
+getindex(C::Circ, i::Int, j::Int) = C.c[mod(i-j,length(C.c))+1]
+isassigned(C::Circ, i::Int, j::Int) = isassigned(C.c,mod(i-j,length(C.c))+1)
+size(C::Circ, r::Int) = (r==1 || r==2) ? length(C.c) :
     throw(ArgumentError("Invalid dimension $r"))
-size(C::Circulant) = size(C,1), size(C,2)
+size(C::Circ) = size(C,1), size(C,2)
 
-# Fast matrix x vector via fft()
-# see Golub, van Loan, Matrix Computations, John Hopkins, Baltimore, 1996, p. 202 
-function *{T}(C::Circulant{T},x::Vector{T})
-    xt=fft(x)
-    vt=fft(C.c)
-    yt=vt.*xt
-    typeof(x[1])==Int ? map(Int,round(real(ifft(yt)))): ( (T <: Real) ? map(T,real(ifft(yt))) : ifft(yt))
+# Generic code for multiplication by a Circulant matrix. Dispatch is used later
+# on to ensure that the types returned are the correct ones. The idea is that
+# if both inputs are Integer, then the output should also be integer.
+# Similarly, if the inputs are both real, then the output should also be real.
+function circ_dot(C::Circ, X::VecOrMat)
+    if size(X, 1) != size(C.c, 1)
+        throw(ArgumentError("C and X are not conformal."))
+    end
+    U = DFT(size(X, 1))
+    return U * Diagonal(U * C.c) * U'X
 end
+function circ_dot(X::VecOrMat, C::Circ)
+    if size(X, 2) != size(C.c, 1)
+        throw(ArgumentError("C and X are not conformal."))
+    end
+    U = DFT(size(X, 1))
+    return X * U * Diagonal(U * C.c) * U'
+end
+
+# In general, the return type of the multiplication operation should be a
+# complex float.
+*(C::Circ, X::VecOrMat) = circ_dot(C, X)
+*(X::VecOrMat, C::Circ) = circ_dot(X, C)
+
+# If both arguments contain reals, then the result should really contain reals.
+*{T<:Real, V<:Real}(C::Circ{T}, X::VecOrMat{V}) = real(circ_dot(C, X))
+*{T<:Real, V<:Real}(X::VecOrMat{V}, C::Circ{T}) = real(circ_dot(X, C))
+
+# If both arguments contain (real) integers, then the result should be both
+# Integer-valued and real. Promote to common type for the purposes of
+# converting back to integer later.
+*{T<:Integer, V<:Integer}(C::Circ{T}, X::VecOrMat{V}) = *(promote(C, X)...)
+*{T<:Integer, V<:Integer}(X::VecOrMat{V}, C::Circ{T}) = *(promote(C, X)...)
+*{T<:Integer}(C::Circ{T}, X::VecOrMat{T}) =
+    convert(T, round.(real.(circ_dot(C, X))))
+*{T<:Integer}(X::VecOrMat{T}, C::Circ{T}) =
+    convert(T, round.(real.(circ_dot(C, X))))
+
+# TODO: Create functionality to allow complex integers to be appropriately handled.
+
+
+
 
 function A_mul_B!{T}(y::StridedVector{T},C::Circulant{T},x::StridedVector{T})
     xt=fft(x)
