@@ -1,6 +1,7 @@
 using SpecialMatrices
 using Base.Test  
 
+include("dft.jl") # Discrete Fourier Transform matrix.
 include("companion.jl") #Companion matrix
 include("frobenius.jl") #Frobenius matrix
 include("strang.jl") #Strang matrix
