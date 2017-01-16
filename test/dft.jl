@@ -1,7 +1,7 @@
 N = 5
 x = randn(N)
 X = reshape(x, N, 1)
-U = DFT{Float64}(N)
+U = DFT{Complex128}(N)
 
 function check_dot(N=N, x=x, X=X, U=U)
     all((U * x) .== (U * X))

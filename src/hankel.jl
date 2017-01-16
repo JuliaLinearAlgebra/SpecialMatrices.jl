@@ -3,7 +3,8 @@ export Hankel
 immutable Hankel{T} <: AbstractArray{T, 2}
     c :: Vector{T}
 end
-Hankel{T}(c::Vector{T}) = length(c) % 2 == 1 ? Hankel{T}(c) : throw(ArgumentError(""))
+(::Hankel{T}){T}(c::Vector{T}) = length(c) % 2 == 1 ? Hankel{T}(c) : throw(ArgumentError(""))
+
 
 getindex(H::Hankel, i::Int, j::Int) = H.c[i+j-1]
 isassigned(H::Hankel, i::Int, j::Int) = isassigned(H.c, i+j-1)

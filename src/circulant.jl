@@ -1,4 +1,4 @@
-export Circulant
+export Circulant, CircEig
 
 immutable Circulant{T} <: AbstractMatrix{T}
     c::Vector{T}
@@ -7,7 +7,7 @@ typealias Circ Circulant
 
 function full{T}(C::Circ{T})
     n = size(C, 1)
-    M = Array(T, n, n)
+    M = Array(T, n, n) 
     for i=1:n
         M[i:n,i] = C.c[1:n-i+1]
         M[1:i-1,i] = C.c[n-i+2:n]
@@ -36,43 +36,79 @@ Base.ctranspose(C::Circ) = conj!(transpose(C))
 -(C::Circ, D::Circ) = Circ(C.c - D.c)
 -(C::Circ) = Circ(-C.c)
 
-# # Return the eigen-factorisation of C. Constituents are efficient to compute
-# # and the eigenvectors are represented efficiently using a UnitaryDFT object.
-# function Base.eigfact{T}(C::Circ{T})
-#     n = length(C.c)
-#     Base.LinAlg.Eigen(DFT{T}(n) * C.c, UnitaryDFT{T}(n))
-# end
+# Return the eigen-factorisation of C. Constituents are efficient to compute
+# and the eigenvectors are represented efficiently using a UnitaryDFT object.
+eig{T<:Real}(C::Circ{T}) = (N = length(C.c); (DFT{Complex{T}}(N) * C.c, UDFT{Complex{T}}(N)))
+eig{T<:Complex}(C::Circ{T}) = (N = length(C.c); (DFT{T}(N) * C.c, UDFT{T}(N)))
+eigfact(C::Circ) = Eigen(eig(C)...)
+typealias CircEig{T<:Complex} Eigen{T, T, UDFT{T}, Vector{T}}
 
-eig{T}(C::Circ{T}) = (N = length(C.c); (DFT{T}(N) * C.c, UnitaryDFT{T}(N)))
-
-# Generic code for multiplication by a Circulant matrix. Dispatch is used later
-# on to ensure that the types returned are the correct ones. The idea is that
-# if both inputs are Integer, then the output should also be integer.
-# Similarly, if the inputs are both real, then the output should also be real.
-function circ_dot{T}(C::Circ{T}, X::StridedVecOrMat)
-    if size(X, 1) != size(C, 2)
+# Check for conformal arguments.
+function conf{T}(C::CircEig{T}, X::SVM)
+    if size(X, 1) != size(C.vectors, 2)
         throw(ArgumentError("C and X are not conformal."))
     end
-    γ, U = eig(C)
-    return Ac_mul_B(U, (Diagonal(γ) * (U * X)))
 end
-function circ_dot(X::StridedVecOrMat, C::Circ)
-    if size(X, 2) != size(C, 1)
-        println(size(X, 2))
-        println(size(C, 1))
-        throw(ArgumentError("C and X are not conformal."))
+function conf{T}(X::SVM, C::CircEig{T})
+    if size(X, 2) != size(C.vectors, 1)
+        throw(ArgumentError("X and C are not conformal."))
     end
-    γ, U = eig(C)
-    return (A_mul_Bc(X, U) * Diagonal(γ)) * U
 end
 
-# In general, the return type of the * operation should be a complex float.
-*(C::Circ, X::SVM) = circ_dot(C, X)
-*(X::SVM, C::Circ) = circ_dot(X, C)
+# TODO: How do I correctly do the in-place bits of this? Do some profiling
+# before moving forwards with more functionality.
 
-# If both arguments contain reals, then the result should really contain reals.
-*{T<:Real, V<:Real}(C::Circ{T}, X::SVM{V}) = real!.(circ_dot(C, X))
-*{T<:Real, V<:Real}(X::SVM{V}, C::Circ{T}) = real!.(circ_dot(X, C))
+# Perform the multiplication A * B in place, overwriting B.
+# TODO: TEST THIS!
+function A_mul_B!(A::Diagonal, B::SVM)
+    M, N = size(B)
+    if size(A, 2) != M
+        throw(ArgumentError("A and B are not conformal."))
+    end
+    d = D.diag
+    @show M, N
+    for j in 1:N
+        for i in 1:M
+            B[i, j] *= d[i]
+        end
+    end
+end
+
+# Always compute the eigen-factorisation to compute the multiplication. If
+# this operation is to be performed multiple times, then we should just cache
+# the factorisation to save re-computing it for each multiplication operation.
+function *{T}(C::CircEig{T}, X::SVM)
+    conf(C, X)
+    Γ, U = Diagonal(C.values), C.vectors
+    Ac_mul_B(U, (Γ * (U * X)))
+    tmp = U * X
+    bfft!(A_mul_B!(tmp, Γ, tmp), 1) / U.sqrtN
+    @show Ac_mul_B(U, (Γ * (U * X)))
+    tmp = U * X
+    @show bfft!(A_mul_B!(Γ, tmp), 1) / U.sqrtN
+end
+function *{T}(X::SVM, C::CircEig{T})
+    conf(X, C)
+    Γ, U = Diagonal(C.values), C.vectors
+    (A_mul_Bc(X, U) * Γ) * U
+end
+*(C::Circ, X::SVM) = eigfact(C) * X
+*(X::SVM, C::Circ) = X * eigfact(C)
+
+# Use the eigen-factorisation to compute the inv(C) * X. The inverse
+# factorisation should be cached if the operation is required multiple times.
+function \{T}(C::CircEig{T}, X::SVM)
+    conf(C, X)
+    Γ, U = Diagonal(C.values), C.vectors
+    Ac_mul_B(U, (Γ \ (U * X)))
+end
+function /{T}(X::SVM, C::CircEig{T})
+    conf(X, C)
+    Γ, U = Diagonal(C.values), C.vectors
+    (A_mul_Bc(X, U) / Γ) * U
+end
+\(C::Circ, X::SVM) = eigfact(C) \ X
+/(X::SVM, C::Circ) = X / eigfact(C)
 
 # TODO: How attached are people to this? This should probably change. Also, this doesn't
 # really get you anything in terms of performance. There's not reduction in memory use as far as I can see

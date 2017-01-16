@@ -1,16 +1,17 @@
 module SpecialMatrices
 
 import Base: A_mul_B!, full, getindex, inv, isassigned, size, *, length, +, -,
-    Ac_mul_B, A_mul_Bc, At_mul_B, A_mul_Bt, eig
+    Ac_mul_B, A_mul_Bc, At_mul_B, A_mul_Bt, eig, eigfact, Eigen, \, /
 
 typealias SV StridedVector
 typealias SM StridedMatrix
 typealias SVM StridedVecOrMat
 
+include("dft.jl") # Discrete Fourier Transform matrices.
+
 include("cauchy.jl") # Cauchy matrix
 include("circulant.jl") # Circulant matrix.
 include("companion.jl") # Companion matrix
-include("dft.jl") # Discrete Fourier Transform matrices.
 include("frobenius.jl") # Frobenius matrix
 include("hankel.jl") # Hankel matrix
 include("hilbert.jl") # Hilbert matrix
