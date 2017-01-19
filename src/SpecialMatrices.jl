@@ -1,7 +1,9 @@
 module SpecialMatrices
 
 import Base: A_mul_B!, full, getindex, inv, isassigned, size, *, length, +, -,
-    Ac_mul_B, A_mul_Bc, At_mul_B, A_mul_Bt, eig, eigfact, Eigen, \, /
+    Ac_mul_B, A_mul_Bc, At_mul_B, A_mul_Bt, eig, eigfact, Eigen, \, /,
+    transpose, ctranspose, copy, conj, conj!, inv, det, logdet, real, convert,
+    round
 
 typealias SV StridedVector
 typealias SM StridedMatrix
