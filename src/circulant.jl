@@ -64,14 +64,12 @@ end
 function *{T}(C::CircEig{T}, X::SVM)
     conf(C, X)
     Γ, U = Diagonal(C.values), C.vectors
-    Ac_mul_B(U, (Γ * (U * X)))
     Y = U * X
-    Ac_mul_B!(U, Γ * (U * X))
+    Ac_mul_B!(U, Γ * Y)
 end
 function *{T}(X::SVM, C::CircEig{T})
     conf(X, C)
     Γ, U = Diagonal(C.values), C.vectors
-    (A_mul_Bc(X, U) * Γ) * U
     Y = A_mul_Bc(X, U)
     A_mul_B!(A_mul_B!(Y, Y, Γ), U)
 end
