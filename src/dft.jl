@@ -23,6 +23,7 @@ length(M::AbstractDFT) = M.N^2
 # Don't bother to implement an in-place transpose as U is sufficiently
 # light-weight not to care in the slightest.
 transpose(U::AbstractDFT) = copy(U)
+transpose!(U::AbstractDFT) = copy(U)
 
 # Indexing is explicitely disabled as accidentally using the naive version of
 # the DFT is a really bad idea. Basically any functionality that would allow
