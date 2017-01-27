@@ -7,7 +7,7 @@ typealias Circ Circulant
 
 function full{T}(C::Circ{T})
     n = size(C, 1)
-    M = Array(T, n, n) 
+    M = Matrix{T}(n, n) 
     for i=1:n
         M[i:n,i] = C.c[1:n-i+1]
         M[1:i-1,i] = C.c[n-i+2:n]
