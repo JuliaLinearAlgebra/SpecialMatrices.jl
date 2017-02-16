@@ -2,28 +2,27 @@
 
 export Cauchy
 
-immutable Cauchy{T} <: AbstractMatrix{T}
-    x::Vector{T} #
-    y::Vector{T} #
-end # immutable
-
-function Cauchy(k::Number)
-         Cauchy([1:k],[1:k])
+immutable Cauchy{T<:Number} <: AbstractMatrix{T}
+    x::Vector{T}
+    y::Vector{T}
 end
 
-function Cauchy(x::Vector)
-         Cauchy(x,x)
+function Cauchy(x, y)
+    T = promote_type(eltype(x), eltype(y))
+    vx = Vector{T}(x)
+    vy = Vector{T}(y)
+    Cauchy(vx, vy)
 end
+function Cauchy(x)
+    vx = Vector(x)
+    Cauchy(vx, vx)
+end
+Cauchy(k::Number) =  Cauchy(1:k)
 
-# Define its size
+size(A::Cauchy) = (size(A.x,1), size(A.y,1))
 
-size(A::Cauchy, dim::Integer) = length(A.x)
-size(A::Cauchy)= size(A,1), size(A,1)
-
-# Index into a Cauchy
 function getindex(A::Cauchy,i::Integer,j::Integer)
     return 1.0/(A.x[i]+A.y[j])
-end # getindex
+end
 
-# Dense version of Cauchy
-full(A::Cauchy) =[A[i,j] for i=1:size(A,1), j=1:size(A,2)]
+full(A::Cauchy) = [A[i,j] for i=1:size(A,1), j=1:size(A,2)]
