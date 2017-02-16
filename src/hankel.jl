@@ -26,13 +26,13 @@ function *{T}(A::Hankel{T},x::Vector{T})
 end
 
 function A_mul_B!{T}(y::StridedVector{T},A::Hankel{T},x::StridedVector{T})
-    xx=reverse(x)
-    return A_mul_B!(y,Toeplitz(A.c),xx)
+    xx = reverse(x)
+    A_mul_B!(y,Toeplitz(A.c),xx)
 end
 
 function full{T}(H::Hankel{T})
-    n=size(H, 1)
-    M=Array(T, n, n)
+    n = size(H, 1)
+    M = Array(T, n, n)
     for i=1:n
         M[:,i] = H.c[i:i+n-1]
     end
