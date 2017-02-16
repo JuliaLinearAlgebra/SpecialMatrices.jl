@@ -6,8 +6,8 @@ This package extends the `Base.LinAlg` library with support for special
 matrices which are used in linear algebra. Every special matrix has its own type.
 The full matrix is accessed by the command `full(A)`.
 
-[![Build Status](https://travis-ci.org/fp4code/SpecialMatrices.jl.svg?branch=fp-hankel)](https://travis-ci.org/fp4code/SpecialMatrices.jl)
-[![Coverage Status](https://coveralls.io/repos/github/fp4code/SpecialMatrices.jl/badge.svg?branch=fp-hankel)](https://coveralls.io/github/fp4code/SpecialMatrices.jl?branch=fp-hankel)
+[![Build Status](https://travis-ci.org/fp4code/SpecialMatrices.jl.svg?branch=master)](https://travis-ci.org/fp4code/SpecialMatrices.jl)
+[![Coverage Status](https://coveralls.io/repos/github/fp4code/SpecialMatrices.jl/badge.svg?branch=master)](https://coveralls.io/github/fp4code/SpecialMatrices.jl?branch=master)
 
 ## Currently supported special matrices
 
