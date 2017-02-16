@@ -8,13 +8,15 @@ immutable Cauchy{T<:Number} <: AbstractMatrix{T}
 end
 
 function Cauchy(x, y)
-    T = promote_type(eltype(x), eltype(y))
-    vx = Vector{T}(x)
-    vy = Vector{T}(y)
+    cx = collect(x)
+    cy = collect(y)
+    T = promote_type(eltype(cx), eltype(cy))
+    vx = Vector{T}(cx)
+    vy = Vector{T}(cy)
     Cauchy(vx, vy)
 end
 function Cauchy(x)
-    vx = Vector(x)
+    vx = collect(x)
     Cauchy(vx, vx)
 end
 Cauchy(k::Number) =  Cauchy(1:k)
