@@ -1,13 +1,17 @@
 export Hankel
 
-immutable Hankel{T} <: AbstractArray{T, 2}
-    c :: Vector{T}
+immutable Hankel{T<:Number} <: AbstractArray{T, 2}
+    c::Vector{T}
+    function (::Type{Hankel}){T}(c::Vector{T})
+        if length(c) % 2 == 0
+            throw(ArgumentError("Number of elements should be odd"))
+        end
+        new{T}(c)
+    end
 end
-Hankel{T}(c::Vector{T}) = length(c) % 2 == 1 ? Hankel{T}(c) : throw(ArgumentError(""))
 
 getindex(H::Hankel, i::Int, j::Int) = H.c[i+j-1]
 isassigned(H::Hankel, i::Int, j::Int) = isassigned(H.c, i+j-1)
-
 
 size(H::Hankel, r::Int) = (r==1 || r==2) ? 1 + div(length(H.c),2) :
     throw(ArgumentError("Invalid dimension $r"))
