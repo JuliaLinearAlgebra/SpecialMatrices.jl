@@ -13,3 +13,6 @@ H = Hankel([11,12,13,14,15])
 @test size(H,1) == 3
 @test size(H,2) == 3
 @test size(H,22) == 1
+
+@test isassigned(H,2,2) == true
+@test isassigned(H,22,22) == false
