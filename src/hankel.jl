@@ -21,13 +21,13 @@ end
 size(H::Hankel) = (H.n, H.n)
 
 # Fast matrix x vector via fft()
-function *{T}(A::Hankel{T},x::Vector{T})
+function *{T}(A::Hankel{T}, x::Vector{T})
     Toeplitz(A.c)*reverse(x)
 end
 
-function A_mul_B!{T}(y::StridedVector{T},A::Hankel{T},x::StridedVector{T})
+function A_mul_B!{T}(y::StridedVector{T}, A::Hankel{T}, x::StridedVector{T})
     xx = reverse(x)
-    A_mul_B!(y,Toeplitz(A.c),xx)
+    A_mul_B!(y, Toeplitz(A.c), xx)
 end
 
 function full{T}(H::Hankel{T})
