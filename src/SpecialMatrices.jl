@@ -1,5 +1,7 @@
 module SpecialMatrices
 
+using Compat
+
 import Base: A_mul_B!, full, getindex, inv, isassigned, size, *
 
 include("cauchy.jl") #Cauchy matrix

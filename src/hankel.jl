@@ -2,7 +2,7 @@ export Hankel
 
 immutable Hankel{T<:Number} <: AbstractArray{T, 2}
     c::Vector{T}
-    function (::Type{Hankel}){T}(c::Vector{T})
+    @compat function (::Type{Hankel}){T}(c::Vector{T})
         if length(c) % 2 == 0
             throw(ArgumentError("Number of elements should be odd"))
         end
