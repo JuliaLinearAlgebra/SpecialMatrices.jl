@@ -13,12 +13,12 @@ function Hankel(c::Vector)
     Hankel{T}(c)
 end
 
-
-getindex(H::Hankel, i::Int, j::Int) = H.c[i+j-1]
+function getindex(H::Hankel, i::Int, j::Int)
+    if !(1 <= i <= H.n && 1 <= j <= H.n); throw(BoundsError()); end
+    H.c[i+j-1]
+end
 isassigned(H::Hankel, i::Int, j::Int) = i>=1 && i <= H.n && j>=1 && j <= H.n
 
-#size(H::Hankel, r::Int) = (r==1 || r==2) ? H.n :
-#    throw(ArgumentError("Invalid dimension $r"))
 size(H::Hankel) = (H.n, H.n)
 
 # Fast matrix x vector via fft()
