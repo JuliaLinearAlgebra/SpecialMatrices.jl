@@ -1,21 +1,25 @@
 export Hankel
 
-immutable Hankel{T<:Number} <: AbstractArray{T, 2}
+immutable Hankel{T} <: AbstractArray{T, 2}
     c::Vector{T}
-    @compat function (::Type{Hankel}){T}(c::Vector{T})
-        if length(c) % 2 == 0
-            throw(ArgumentError("Number of elements should be odd"))
-        end
-        new{T}(c)
+    n::Int
+    function Hankel(c::Vector{T})
+        length(c) % 2 == 0 && throw(ArgumentError("Number of elements should be odd"))
+        new(c, div(length(c)+1,2))
     end
 end
+function Hankel(c::Vector)
+    T = eltype(c)
+    Hankel{T}(c)
+end
+
 
 getindex(H::Hankel, i::Int, j::Int) = H.c[i+j-1]
-isassigned(H::Hankel, i::Int, j::Int) = isassigned(H.c, i+j-1)
+isassigned(H::Hankel, i::Int, j::Int) = i>=1 && i <= H.n && j>=1 && j <= H.n
 
-size(H::Hankel, r::Int) = (r==1 || r==2) ? 1 + div(length(H.c),2) :
+size(H::Hankel, r::Int) = (r==1 || r==2) ? H.n :
     throw(ArgumentError("Invalid dimension $r"))
-size(H::Hankel) = size(H,1), size(H,2)
+size(H::Hankel) = H.n, H.n
 
 # Fast matrix x vector via fft()
 function *{T}(A::Hankel{T},x::Vector{T})
