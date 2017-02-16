@@ -21,14 +21,17 @@ H = Hankel([1,3.2,-0.2,9.1,3.14])
 V = Vector([2.1,0.1,-9.9])
 @test maxabs(H*V - full(H)*V) < 1e-12
 
-H = Hankel([1,3.2im,-0.2,9.1,3.14])
-V = Vector([2.1,0.1,-9.9])
-@test maxabs(H*V - full(H)*V) < 1e-12
+# No method matching A_mul_B!... for mixed Float/Complex arguments in julia-0.4
+if VERSION >= v"0.5-"
+    H = Hankel([1,3.2im,-0.2,9.1,3.14])
+    V = Vector([2.1,0.1,-9.9])
+    @test maxabs(H*V - full(H)*V) < 1e-12
 
-H = Hankel([1,3.2,-0.2,9.1,3.14])
-V = Vector([2.1,0.1im,-9.9])
-@test maxabs(H*V - full(H)*V) < 1e-12
-
+    H = Hankel([1,3.2,-0.2,9.1,3.14])
+    V = Vector([2.1,0.1im,-9.9])
+    @test maxabs(H*V - full(H)*V) < 1e-12
+end
+    
 H = Hankel([1,3.2im,-0.2,9.1,3.14])
 V = Vector([2.1,0.1im,-9.9])
 @test maxabs(H*V - full(H)*V) < 1e-12
