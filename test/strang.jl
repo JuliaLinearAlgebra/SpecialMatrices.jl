@@ -10,6 +10,12 @@ for i in 1:n, j in 1:n
     abs(i-j)>1 && @test Z[i,j] == 0
 end
 
+A = Strang(10)
+u = ones(10)
+v = similar(u)
+A_mul_B!(v,A,u)
+@test v == [1.0;zeros(8);1.0]
+
 #Matvec product
 b = randn(n)
 @test_approx_eq Z*b full(Z)*b

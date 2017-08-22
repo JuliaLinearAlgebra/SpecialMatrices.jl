@@ -11,7 +11,7 @@ function getindex{T}(S::Strang{T}, i, j)
     abs(i - j) == 1 && return -1
     0
 end
-getindex{T}(S::Strang{T}, I...) = getindex(S,ind2sub(size(S),I)...)
+getindex{T}(S::Strang{T}, I...) = getindex(S,ind2sub(size(S),I...)...)
 size(S::Strang, r::Int) = r==1 || r==2 ? S.n : throw(ArgumentError("Invalid dimension $r"))
 size(S::Strang) = S.n, S.n
 full{T}(S::Strang{T}) = full(strang(T, S.n))
