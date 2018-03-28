@@ -1,9 +1,9 @@
 export Hankel
 
-immutable Hankel{T} <: AbstractArray{T, 2}
+struct Hankel{T} <: AbstractArray{T, 2}
     c :: Vector{T}
 end
-Hankel{T}(c::Vector{T}) = length(c) % 2 == 1 ? Hankel{T}(c) : throw(ArgumentError(""))
+#Hankel{T}(c::Vector{T}) = length(c) % 2 == 1 ? Hankel{T}(c) : throw(ArgumentError(""))
 
 getindex(H::Hankel, i::Int, j::Int) = H.c[i+j-1]
 isassigned(H::Hankel, i::Int, j::Int) = isassigned(H.c, i+j-1)
@@ -25,7 +25,7 @@ end
 
 function full{T}(H::Hankel{T})
     n=size(H, 1)
-    M=Array(T, n, n)
+    M=Array{T}(n, n)
     for i=1:n
         M[:,i] = H.c[i:i+n-1]
     end

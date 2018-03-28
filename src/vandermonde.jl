@@ -13,7 +13,7 @@ size(V::Vandermonde) = length(V.c), length(V.c)
 
 function full{T}(V::Vandermonde{T})
 	n=size(V, 1)
-	M=Array(T, n, n)
+	M=Array{T}(n, n)
 	for i=1:n
 		M[:,i] = V.c.^(i-1)
 	end

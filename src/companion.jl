@@ -1,6 +1,6 @@
 export Companion
 
-immutable Companion{T} <: AbstractArray{T, 2}
+struct Companion{T} <: AbstractArray{T, 2}
     c :: Vector{T}
 end
 #From polynomial
@@ -8,9 +8,9 @@ end
 using Polynomials
 #Generate companion matrix from a polynomial
 
-function Companion(P::Poly)
+function Companion{T}(P::Poly{T})
    n = length(P)
-   c = Array(Number,n-1)
+   c = Array{T}(n-1)
    d=P.a[n]
    for i=1:n-1
        c[i]=P.a[i]/d

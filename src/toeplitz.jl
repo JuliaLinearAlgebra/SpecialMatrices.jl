@@ -1,6 +1,6 @@
-export Circulant, Toeplitz
+export Circulant, Toeplitz, embed
 
-immutable Toeplitz{T} <: AbstractArray{T, 2}
+struct Toeplitz{T} <: AbstractArray{T, 2}
 	c :: Vector{T}
 end
 
@@ -14,14 +14,14 @@ size(T::Toeplitz) = size(T,1), size(T,2)
 # Fast matrix x vector multiplication via embedding Toeplitz() into Circulant()
 function *{T}(A::Toeplitz{T},x::Vector{T})
     n=length(A.c)
-    k=Int(round((n+1)/2))
+    k=div(n+1,2)
     C=Circulant([A.c[k:n];A.c[1:k-1]])
     (C*[x;zeros(T,k-1)])[1:k]
 end
 
 function A_mul_B!{T}(y::StridedVector{T},A::Toeplitz{T},x::StridedVector{T})
     n=length(A.c)
-    k=Int(round((n+1)/2))
+    k=div(n+1,2)
     C=Circulant([A.c[k:n];A.c[1:k-1]])
     xx=[x;zeros(T,k-1)]
     yy=A_mul_B!(similar(xx),C,xx)
@@ -31,7 +31,7 @@ end
 
 function full{T}(To::Toeplitz{T})
 	n=size(To, 1)
-	M=Array(T, n, n)
+	M=Array{T}(n,n)
 	for i=1:n
 		M[i:n,i] = To.c[n:2n-i]
 		M[1:i-1,i] = To.c[n-i+1:n-1]
@@ -39,9 +39,7 @@ function full{T}(To::Toeplitz{T})
 	M
 end
 
-
-
-immutable Circulant{T} <: AbstractArray{T, 2}
+struct Circulant{T} <: AbstractArray{T, 2}
 	c :: Vector{T}
 end
 
@@ -57,7 +55,7 @@ function *{T}(C::Circulant{T},x::Vector{T})
     xt=fft(x)
     vt=fft(C.c)
     yt=vt.*xt
-    typeof(x[1])==Int ? map(Int,round(real(ifft(yt)))): ( (T <: Real) ? map(T,real(ifft(yt))) : ifft(yt))
+    typeof(x[1])==Int ? map(Int,round.(real(ifft(yt)))): ( (T <: Real) ? map(T,real(ifft(yt))) : ifft(yt))
 end
 
 function A_mul_B!{T}(y::StridedVector{T},C::Circulant{T},x::StridedVector{T})
@@ -76,10 +74,14 @@ end
 
 function full{T}(C::Circulant{T})
 	n=size(C, 1)
-	M=Array(T, n, n)
+	M=Array{T}(n,n)
 	for i=1:n
 		M[i:n,i] = C.c[1:n-i+1]
 		M[1:i-1,i] = C.c[n-i+2:n]
 	end
 	M
+end
+
+function embed{T}(To::Toeplitz{T})
+    return Circulant([To.c[div(end+1,2):end];To.c[1:div(end-1,2)]])
 end
