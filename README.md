@@ -1,6 +1,10 @@
+
+
 # Special Matrices
 
 A [Julia](http://julialang.org) package for working with special matrix types.
+
+Use `Pkg.checkout("SpecialMatrices")` to access latest version.
 
 This package extends the `Base.LinAlg` library with support for special
 matrices which are used in linear algebra. Every special matrix has its own type.
