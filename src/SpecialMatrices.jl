@@ -1,6 +1,14 @@
 module SpecialMatrices
 
-import Base: A_mul_B!, full, getindex, inv, isassigned, size, *
+using Compat
+using Compat.LinearAlgebra
+
+import Compat.LinearAlgebra: Matrix, inv
+if VERSION >= v"0.7.0"
+    import Compat.LinearAlgebra: mul!
+end
+
+import Base: getindex, isassigned, size, *
 
 include("cauchy.jl") #Cauchy matrix
 include("companion.jl") #Companion matrix

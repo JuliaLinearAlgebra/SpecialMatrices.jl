@@ -2,13 +2,13 @@
 
 export Cauchy
 
-immutable Cauchy{T} <: AbstractMatrix{T}
+struct Cauchy{T} <: AbstractMatrix{T}
     x::Vector{T} #
     y::Vector{T} #
 end # immutable
 
 function Cauchy(k::Number)
-         Cauchy([1:k],[1:k])
+         Cauchy(collect(1:k),collect(1:k))
 end
 
 function Cauchy(x::Vector)
@@ -26,4 +26,4 @@ function getindex(A::Cauchy,i::Integer,j::Integer)
 end # getindex
 
 # Dense version of Cauchy
-full(A::Cauchy) =[A[i,j] for i=1:size(A,1), j=1:size(A,2)]
+Matrix(A::Cauchy) = [A[i,j] for i=1:size(A,1), j=1:size(A,2)]

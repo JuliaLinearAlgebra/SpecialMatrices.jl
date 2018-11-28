@@ -2,7 +2,7 @@
 
 export Kahan
 
-immutable Kahan{T<:Number,T1<:Number} <: AbstractMatrix{T}
+struct Kahan{T<:Number,T1<:Number} <: AbstractMatrix{T}
     m::Int # dimension
     n::Int # dimension
     theta::T # angle
@@ -27,7 +27,7 @@ function getindex(A::Kahan,i::Integer,j::Integer)
 end # getindex
 
 # Dense version of Kahan
-full(A::Kahan) =[A[i,j] for i=1:size(A,1), j=1:size(A,2)]
+Matrix(A::Kahan) =[A[i,j] for i=1:size(A,1), j=1:size(A,2)]
 
 
 

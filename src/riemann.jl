@@ -2,7 +2,7 @@
 import Base: size
 export Riemann
 
-immutable Riemann{Int} <: AbstractMatrix{Int}
+struct Riemann{Int} <: AbstractMatrix{Int}
     n::Int
 end # immutable
 
@@ -22,5 +22,5 @@ function getindex(A::Riemann,i::Integer,j::Integer)
 end # getindex
 
 # Dense version of Riemann
-full(A::Riemann) =[A[i,j] for i=1:size(A,1), j=1:size(A,2)]
+Matrix(A::Riemann) =[A[i,j] for i=1:size(A,1), j=1:size(A,2)]
 
