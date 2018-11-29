@@ -12,26 +12,26 @@ size(T::Toeplitz, r::Int) = (r==1 || r==2) ? 1 + div(length(T.c),2) :
 size(T::Toeplitz) = size(T,1), size(T,2)
 
 # Fast matrix x vector multiplication via embedding Toeplitz() into Circulant()
-function *{T}(A::Toeplitz{T},x::Vector{T})
+function *(A::Toeplitz{T},x::Vector{T}) where T
     n=length(A.c)
     k=div(n+1,2)
     C=Circulant([A.c[k:n];A.c[1:k-1]])
     (C*[x;zeros(T,k-1)])[1:k]
 end
 
-function A_mul_B!{T}(y::StridedVector{T},A::Toeplitz{T},x::StridedVector{T})
+function mul!(y::StridedVector{T},A::Toeplitz{T},x::StridedVector{T}) where T
     n=length(A.c)
     k=div(n+1,2)
     C=Circulant([A.c[k:n];A.c[1:k-1]])
     xx=[x;zeros(T,k-1)]
-    yy=A_mul_B!(similar(xx),C,xx)
+    yy=mul!(similar(xx),C,xx)
     copy!(y, 1, yy, 1, length(y))
     return y
 end
 
-function full{T}(To::Toeplitz{T})
+function Matrix(To::Toeplitz{T}) where T
 	n=size(To, 1)
-	M=Array{T}(n,n)
+	M=Array{T}(undef,n,n)
 	for i=1:n
 		M[i:n,i] = To.c[n:2n-i]
 		M[1:i-1,i] = To.c[n-i+1:n-1]
@@ -51,14 +51,14 @@ size(C::Circulant) = size(C,1), size(C,2)
 
 # Fast matrix x vector via fft()
 # see Golub, van Loan, Matrix Computations, John Hopkins, Baltimore, 1996, p. 202 
-function *{T}(C::Circulant{T},x::Vector{T})
+function *(C::Circulant{T},x::Vector{T}) where T
     xt=fft(x)
     vt=fft(C.c)
     yt=vt.*xt
-    typeof(x[1])==Int ? map(Int,round.(real(ifft(yt)))): ( (T <: Real) ? map(T,real(ifft(yt))) : ifft(yt))
+    typeof(x[1])==Int ? map(Int,round.(real(ifft(yt)))) : ( (T <: Real) ? map(T,real(ifft(yt))) : ifft(yt))
 end
 
-function A_mul_B!{T}(y::StridedVector{T},C::Circulant{T},x::StridedVector{T})
+function mul!(y::StridedVector{T},C::Circulant{T},x::StridedVector{T}) where T
     xt=fft(x)
     vt=fft(C.c)
     yt=ifft(vt.*xt)
@@ -72,9 +72,9 @@ function A_mul_B!{T}(y::StridedVector{T},C::Circulant{T},x::StridedVector{T})
     return y
 end
 
-function full{T}(C::Circulant{T})
+function Matrix(C::Circulant{T}) where T
 	n=size(C, 1)
-	M=Array{T}(n,n)
+	M=Array{T}(undef,n,n)
 	for i=1:n
 		M[i:n,i] = C.c[1:n-i+1]
 		M[1:i-1,i] = C.c[n-i+2:n]
@@ -82,6 +82,6 @@ function full{T}(C::Circulant{T})
 	M
 end
 
-function embed{T}(To::Toeplitz{T})
+function embed(To::Toeplitz{T}) where T
     return Circulant([To.c[div(end+1,2):end];To.c[1:div(end-1,2)]])
 end

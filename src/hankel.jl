@@ -14,18 +14,18 @@ size(H::Hankel, r::Int) = (r==1 || r==2) ? 1 + div(length(H.c),2) :
 size(H::Hankel) = size(H,1), size(H,2)
 
 # Fast matrix x vector via fft()
-function *{T}(A::Hankel{T},x::Vector{T})
+function *(A::Hankel{T},x::Vector{T}) where T
     Toeplitz(A.c)*reverse(x)
 end
 
-function A_mul_B!{T}(y::StridedVector{T},A::Hankel{T},x::StridedVector{T})
+function mul!(y::StridedVector{T},A::Hankel{T},x::StridedVector{T}) where T
     xx=reverse(x)
-    return A_mul_B!(y,Toeplitz(A.c),xx)
+    return mul!(y,Toeplitz(A.c),xx)
 end
 
-function full{T}(H::Hankel{T})
+function Matrix(H::Hankel{T}) where T
     n=size(H, 1)
-    M=Array{T}(n, n)
+    M=Array{T}(undef, n, n)
     for i=1:n
         M[:,i] = H.c[i:i+n-1]
     end

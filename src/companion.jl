@@ -8,9 +8,9 @@ end
 using Polynomials
 #Generate companion matrix from a polynomial
 
-function Companion{T}(P::Poly{T})
+function Companion(P::Poly{T}) where T
    n = length(P)
-   c = Array{T}(n-1)
+   c = Array{T}(undef, n-1)
    d=P.a[n]
    for i=1:n-1
        c[i]=P.a[i]/d
@@ -28,13 +28,13 @@ function size(C::Companion)
 end
 
 #XXX Inefficient but works
-# getindex(C::Companion, i, j) = getindex(full(C), i, j)
-# isassigned(C::Companion, i, j) = isassigned(full(C), i, j)
-getindex{T}(C::Companion{T}, i::Int, j::Int) = (j==length(C.c)) ? -C.c[i] : (i==j+1 ? one(T) : zero(T) )
+# getindex(C::Companion, i, j) = getindex(Matrix(C), i, j)
+# isassigned(C::Companion, i, j) = isassigned(Matrix(C), i, j)
+getindex(C::Companion{T}, i::Int, j::Int) where T = (j==length(C.c)) ? -C.c[i] : (i==j+1 ? one(T) : zero(T) )
 isassigned(C::Companion, i::Int, j::Int) = (j==length(C.c)) ? isassigned(C.c,i) : true
 
 
-function full{T}(C::Companion{T})
+function Matrix(C::Companion{T}) where T
     M = zeros(T, size(C)...)
     M[:,end]=-C.c
     for i=1:size(C,1)-1
@@ -44,17 +44,17 @@ function full{T}(C::Companion{T})
 end
 
 #Linear algebra stuff
-function A_mul_B!{T}(C::Companion{T}, b::Vector{T})
+function mul!(C::Companion{T}, b::Vector{T}) where T
 	x = b[end]
 	y = -C.c[1]*x
 	b[2:end] = b[1:end-1]-C.c[2:end]*x
 	b[1] = y
     b
 end
-*{T}(C::Companion{T}, b::Vector{T}) = A_mul_B!(C, copy(b))
+*(C::Companion{T}, b::Vector{T}) where T = mul!(C, copy(b))
 
-function A_mul_B!{T}(A::Matrix{T}, C::Companion{T})
-	v = Array(T, size(A,1))
+function mul!(A::Matrix{T}, C::Companion{T}) where T
+	v = Array{T}(undef, size(A,1))
 	for i=1:size(A,1)
 		v[i] =dot(vec(A[i,:]),-C.c)
 	end
@@ -64,9 +64,9 @@ function A_mul_B!{T}(A::Matrix{T}, C::Companion{T})
 	A[:,end] = v
 	A
 end
-*{T}(A::Matrix{T}, C::Companion{T}) = A_mul_B!(copy(A), C)
+*(A::Matrix{T}, C::Companion{T}) where T = mul!(copy(A), C)
 
-function inv{T}(C::Companion{T})
+function inv(C::Companion{T}) where T
 	M = zeros(T, size(C)...)
     for i=1:size(C,1)-1
     	M[i, i+1] = one(T)

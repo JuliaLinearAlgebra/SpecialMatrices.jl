@@ -1,16 +1,12 @@
-
-
 # Special Matrices
 
 A [Julia](http://julialang.org) package for working with special matrix types.
 
-Use `Pkg.checkout("SpecialMatrices")` to access latest version.
-
-This package extends the `Base.LinAlg` library with support for special
+This package extends the `LinearAlgebra` library with support for special
 matrices which are used in linear algebra. Every special matrix has its own type.
-The full matrix is accessed by the command `full(A)`.
+The full matrix is accessed by the command `Matrix(A)`.
 
-[![Build Status](https://travis-ci.org/jiahao/SpecialMatrices.jl.svg)](https://travis-ci.org/jiahao/SpecialMatrices.jl) [![Coverage Status](https://img.shields.io/coveralls/jiahao/SpecialMatrices.jl.svg)](https://coveralls.io/r/jiahao/SpecialMatrices.jl)
+[![Build Status](https://travis-ci.org/JuliaMatrices/SpecialMatrices.jl.svg)](https://travis-ci.org/JuliaMatrices/SpecialMatrices.jl) [![Coverage Status](https://img.shields.io/coveralls/jiahao/SpecialMatrices.jl.svg)](https://coveralls.io/r/jiahao/SpecialMatrices.jl)
 
 ## Currently supported special matrices
 
@@ -39,7 +35,7 @@ julia> Cauchy(pi)
 ## `Circulant` matrix
 
 ```julia
-julia> Circulant([1:4])
+julia> Circulant([1,2,3,4])
 4x4 Circulant{Int64}:
  1  4  3  2
  2  1  4  3
@@ -61,14 +57,14 @@ Also, directly from a polynomial:
 ```julia
 julia> using Polynomials
 
-julia> P=Poly([2,3,4,5])
+julia> P=Poly([2.0,3,4,5])
 Poly(2 + 3x + 4x^2 + 5x^3)
 
 julia> C=Companion(P)
-3x3 Companion{Number}:
- 0  0  -0.4
- 1  0  -0.6
- 0  1  -0.8
+3×3 Companion{Float64}:
+ 0.0  0.0  -0.4
+ 1.0  0.0  -0.6
+ 0.0  1.0  -0.8
 ```
 
 ## [`Frobenius`](http://en.wikipedia.org/wiki/Frobenius_matrix) matrix
@@ -78,7 +74,7 @@ Example
 ```julia
 julia> using SpecialMatrices
 
-julia> F=Frobenius(3, [1.0:3.0]) #Specify subdiagonals of column 3
+julia> F=Frobenius(3, [1.0,2.0,3.0]) #Specify subdiagonals of column 3
 6x6 Frobenius{Float64}:
  1.0  0.0  0.0  0.0  0.0  0.0
  0.0  1.0  0.0  0.0  0.0  0.0
@@ -105,7 +101,7 @@ julia> F*F #Special form preserved if the same column has the subdiagonals
  0.0  0.0  4.0  0.0  1.0  0.0
  0.0  0.0  6.0  0.0  0.0  1.0
 
-julia> F*Frobenius(2, [5.0:-1.0:2.0]) #Promotes to Matrix
+julia> F*Frobenius(2, [5.0,4.0,3.0,2.0]) #Promotes to Matrix
 6x6 Array{Float64,2}:
  1.0   0.0  0.0  0.0  0.0  0.0
  0.0   1.0  0.0  0.0  0.0  0.0
@@ -114,7 +110,7 @@ julia> F*Frobenius(2, [5.0:-1.0:2.0]) #Promotes to Matrix
  0.0  13.0  2.0  0.0  1.0  0.0
  0.0  17.0  3.0  0.0  0.0  1.0
 
-julia> F*[10.0:10.0:60.0]
+julia> F*[10.0,20,30,40,50,60.0]
 6-element Array{Float64,1}:
   10.0
   20.0
@@ -129,7 +125,7 @@ julia> F*[10.0:10.0:60.0]
 Input is a vector of odd length.
 
 ```julia
-julia> Hankel([-4:4])
+julia> Hankel(collect(-4:4))
 5x5 Hankel{Int64}:
  -4  -3  -2  -1  0
  -3  -2  -1   0  1
@@ -144,7 +140,7 @@ julia> Hankel([-4:4])
 julia> A=Hilbert(5)
 Hilbert{Rational{Int64}}(5,5)
 
-julia> full(A)
+julia> Matrix(A)
 5x5 Array{Rational{Int64},2}:
  1//1  1//2  1//3  1//4  1//5
  1//2  1//3  1//4  1//5  1//6
@@ -152,7 +148,7 @@ julia> full(A)
  1//4  1//5  1//6  1//7  1//8
  1//5  1//6  1//7  1//8  1//9
 
-julia> full(Hilbert(5))
+julia> Matrix(Hilbert(5))
 5x5 Array{Rational{Int64},2}:
  1//1  1//2  1//3  1//4  1//5
  1//2  1//3  1//4  1//5  1//6
@@ -248,7 +244,7 @@ julia> Strang(6)
 Input is a vector of odd length.
 
 ```julia
-julia> Toeplitz([-4:4])
+julia> Toeplitz(collect(-4:4))
 5x5 Toeplitz{Int64}:
  0  -1  -2  -3  -4
  1   0  -1  -2  -3
@@ -260,7 +256,7 @@ julia> Toeplitz([-4:4])
 
 
 ```julia
-julia> Vandermonde([1:5])
+julia> Vandermonde(collect(1:5))
 5x5 Vandermonde{Int64}:
  1  1   1    1    1
  1  2   4    8   16

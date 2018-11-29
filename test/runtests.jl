@@ -1,5 +1,6 @@
 using SpecialMatrices
-using Base.Test  
+using Compat.Test  
+using Compat.LinearAlgebra
 
 include("companion.jl") #Companion matrix
 include("frobenius.jl") #Frobenius matrix
