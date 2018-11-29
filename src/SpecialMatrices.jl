@@ -9,7 +9,8 @@ if VERSION >= v"0.7.0"
 end
 
 import Base: getindex, isassigned, size, *
-
+import Base.\
+    
 include("cauchy.jl") #Cauchy matrix
 include("companion.jl") #Companion matrix
 include("frobenius.jl") #Frobenius matrix
