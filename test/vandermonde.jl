@@ -1,5 +1,6 @@
-using SpecialMatrices
+using Compat
 using Compat.Test
+using SpecialMatrices
 
 a = [1,2,3+1im,8,5]
 V=Vandermonde(a)
@@ -12,22 +13,40 @@ M = Matrix(V)
 @test Matrix(V') == M'
 @test Matrix(transpose(V)) == transpose(M)
 
-# Test solving
+# Test solving with vector and matrix rhs
 y = [1im,1,5,0,2]
-@test isapprox(V\y, M\y)
-@test isapprox(V'\y, M'\y)
-@test isapprox(y'/V, y'/M)
-@test isapprox(transpose(V)\y, transpose(M)\y)
-
-# Test that overloading works
-x2 = zero(M\y)
-SpecialMatrices.dvand!(x2, a, y)
-@test V\y==x2
-if VERSION >= v"0.7.0"
-    SpecialMatrices.pvand!(x2, a', y)
-    @test V'\y==x2
-    @test y'/V==x2'
-    SpecialMatrices.pvand!(x2, a, y)
-    @test transpose(V)\y==x2    
+Y = [y 2*y]
+for rhs=[y, Y]
+    # Test solution
+    @test isapprox(V\rhs, M\rhs)
+    @test isapprox(V'\rhs, M'\rhs)
+    @test isapprox(rhs'/V, rhs'/M)
+    @test isapprox(transpose(V)\rhs, transpose(M)\rhs)
+    # Check that overloading works
+    x = zero(M\rhs)
+    copyto!(x, rhs)
+    SpecialMatrices.dvand!(a, x)
+    @test V\rhs==x
+    if VERSION >= v"0.7.0"
+        copyto!(x, rhs)
+        SpecialMatrices.pvand!(a', x)
+        @test V'\rhs==x
+        @test rhs'/V==x'
+        copyto!(x, rhs)
+        SpecialMatrices.pvand!(a, x)
+        @test transpose(V)\rhs==x
+    end
 end
 
+# Test dimension errors
+rhs = zeros(2,2)
+try
+    V\rhs
+catch e
+    @test typeof(e)==DimensionMismatch
+end
+try
+    V'\rhs
+catch e
+    @test typeof(e)==DimensionMismatch
+end

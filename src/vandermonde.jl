@@ -49,24 +49,30 @@ function Matrix(V::Transpose{T,Vandermonde{T}}) where T
     M
 end
 
-function \(V::Adjoint{T1,Vandermonde{T1}}, y::Vector{T2}) where T1 where T2
+function \(V::Adjoint{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 where T2
     T = vandtype(T1,T2)
-    x = Array{T}(undef, length(y))
-    pvand!(x, adjoint(V.parent.c), y)
+    x = Array{T}(undef, size(y))
+    copyto!(x, y)    
+    pvand!(adjoint(V.parent.c), x)
+    return x
 end    
 
-function \(V::Transpose{T1,Vandermonde{T1}}, y::Vector{T2}) where T1 where T2
+function \(V::Transpose{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 where T2
     T = vandtype(T1,T2)
-    x = Array{T}(undef, length(y))
-    pvand!(x, V.parent.c, y)
+    x = Array{T}(undef, size(y))
+    copyto!(x, y)    
+    pvand!(V.parent.c, x)
+    return x
 end
 
 end # End version check
 
-function \(V::Vandermonde{T1}, y::Vector{T2}) where T1 where T2
+function \(V::Vandermonde{T1}, y::AbstractVecOrMat{T2}) where T1 where T2
     T = vandtype(T1,T2)
-    x = Array{T}(undef, length(y))    
-    dvand!(x, V.c, y)
+    x = Array{T}(undef, size(y))
+    copyto!(x, y)
+    dvand!(V.c, x)
+    return x
 end
 
 
@@ -78,59 +84,70 @@ function vandtype(T1::Type, T2::Type)
 end
 
 """
-    pvand!(x, alpha, b) -> x
+    pvand!(a, b) -> b
 
-Solves transposed system ``A^T*x = b`` \\
-A is Vandermonde matrix, \\
-``A_{ij} = α_i^{j-1}``
+Solves system ``A^T*x = b`` in-place.
+
+``A^T`` is transpose of Vandermonde matrix ``A_{ij} = a_i^{j-1}``.
 
 Algorithm by Bjorck & Pereyra,
 Mathematics of Computation, Vol. 24, No. 112 (1970), pp. 893-903,
 https://doi.org/10.2307/2004623
 """
-function pvand!(x, alpha, b)
+function pvand!(alpha, B)
     n = length(alpha);
-    copyto!(x,b)
-    for k=1:n
-        for j=n:-1:k+1
-            x[j] = x[j]-alpha[k]*x[j-1]
+    if n != size(B,1)
+        throw(DimensionMismatch("matrix has dimensions ($n,$n) but right hand side has $(size(B,1)) rows"))
+    end
+    nrhs = size(B,2)
+    @inbounds begin
+        for j=1:nrhs
+            for k=1:n-1
+                for i=n:-1:k+1
+                    B[i,j] = B[i,j]-alpha[k]*B[i-1,j]
+                end
+            end
+            for k=n-1:-1:1
+                for i=k+1:n
+                    B[i,j] = B[i,j]/(alpha[i]-alpha[i-k])
+                end
+                for i=k:n-1
+                    B[i,j] = B[i,j]-B[i+1,j]
+                end
+            end
         end
     end
-    for k=n-1:-1:1
-        for j=k+1:n
-            x[j] = x[j]/(alpha[j]-alpha[j-k])
-        end
-        for j=k:n-1
-            x[j] = x[j]-x[j+1]
-        end
-    end
-    return x
 end
-
 """
-    dvand(x, alpha, b) -> x
+    dvand!(a, b) -> b
 
-Solves system ``A*x = b`` \\
-A is Vandermonde matrix, \\
-``A_{ij} = α_i^{j-1}``
+Solves system ``A*x = b`` in-place.
+
+``A`` is Vandermonde matrix ``A_{ij} = a_i^{j-1}``.
 
 Algorithm by Bjorck & Pereyra,
 Mathematics of Computation, Vol. 24, No. 112 (1970), pp. 893-903,
 https://doi.org/10.2307/2004623
 """
-function dvand!(x, alpha, b)
+function dvand!(alpha, B)
     n = length(alpha)
-    copyto!(x,b)
-    for k=1:n-1
-        for j=n:-1:k+1
-            x[j] = (x[j]-x[j-1])/(alpha[j]-alpha[j-k])
+    if n != size(B,1)
+        throw(DimensionMismatch("matrix has dimensions ($n,$n) but right hand side has $(size(B,1)) rows"))
+    end
+    nrhs = size(B,2)
+    @inbounds begin
+        for j=1:nrhs
+            for k=1:n-1
+                for i=n:-1:k+1
+                    B[i,j] = (B[i,j]-B[i-1,j])/(alpha[i]-alpha[i-k])
+                end
+            end
+            for k=n-1:-1:1
+                for i=k:n-1
+                    B[i,j] = B[i,j]-alpha[k]*B[i+1,j]
+                end
+            end
         end
     end
-    for k=n-1:-1:1
-        for j=k:n-1
-            x[j] = x[j]-alpha[k]*x[j+1]
-        end
-    end
-    return x
 end
 
