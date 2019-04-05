@@ -25,7 +25,7 @@ function mul!(y::StridedVector{T},A::Toeplitz{T},x::StridedVector{T}) where T
     C=Circulant([A.c[k:n];A.c[1:k-1]])
     xx=[x;zeros(T,k-1)]
     yy=mul!(similar(xx),C,xx)
-    copy!(y, 1, yy, 1, length(y))
+    copyto!(y, 1, yy, 1, length(y))
     return y
 end
 
