@@ -2,6 +2,7 @@ module SpecialMatrices
 
 using Compat
 using Compat.LinearAlgebra
+using FFTW
 
 import Compat.LinearAlgebra: Matrix, inv
 if VERSION >= v"0.7.0"
