@@ -4,14 +4,14 @@ using Compat
 using Compat.LinearAlgebra
 using FFTW
 
-import Compat.LinearAlgebra: Matrix, inv
+import Compat.LinearAlgebra: Matrix, inv, det, ishermitian, isposdef
 if VERSION >= v"0.7.0"
     import Compat.LinearAlgebra: mul!
 end
 
 import Base: getindex, isassigned, size, *
 import Base.\
-    
+
 include("cauchy.jl") #Cauchy matrix
 include("companion.jl") #Companion matrix
 include("frobenius.jl") #Frobenius matrix
