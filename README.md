@@ -1,4 +1,4 @@
-# Special Matrices
+# SpecialMatrices
 
 A [Julia](http://julialang.org) package for working with special matrix types.
 
