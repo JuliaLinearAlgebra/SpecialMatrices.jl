@@ -1,11 +1,19 @@
 using SpecialMatrices
-using Test  
+using Test
 using LinearAlgebra
 
-include("companion.jl") #Companion matrix
-include("frobenius.jl") #Frobenius matrix
-include("strang.jl") #Strang matrix
-include("hankel.jl") #Hankel matrix
-include("hilbert.jl") #Hilbert matrix
-include("toeplitz.jl") #Toeplitz matrix
-include("vandermonde.jl") #Vandermonde matrix
+const files = (
+    "companion",
+    "frobenius",
+    "hankel",
+    "hilbert",
+    "strang",
+    "toeplitz",
+    "vandermonde",
+)
+
+@testset "SpecialMatrices.jl" begin
+    @testset "$(titlecase(f)) matrix" for f in files
+        include("$f.jl")
+    end
+end
