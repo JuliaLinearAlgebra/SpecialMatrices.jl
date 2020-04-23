@@ -3,6 +3,7 @@ module SpecialMatrices
 using Compat
 using LinearAlgebra
 using FFTW
+using Polynomials
 
 import LinearAlgebra: Matrix, inv, det, ishermitian, isposdef, mul!
 
