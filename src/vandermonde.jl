@@ -23,8 +23,6 @@ function Matrix(V::Vandermonde{T}) where T
     M
 end
 
-if VERSION >= v"0.7.0" # Only use Adjoint and Transpose for 0.7 and up
-
 function Matrix(V::Adjoint{T,Vandermonde{T}}) where T
     n=size(V, 1)
     M=Array{T}(undef, n, n)
@@ -52,20 +50,18 @@ end
 function \(V::Adjoint{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 where T2
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
-    copyto!(x, y)    
+    copyto!(x, y)
     pvand!(adjoint(V.parent.c), x)
     return x
-end    
+end
 
 function \(V::Transpose{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 where T2
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
-    copyto!(x, y)    
+    copyto!(x, y)
     pvand!(V.parent.c, x)
     return x
 end
-
-end # End version check
 
 function \(V::Vandermonde{T1}, y::AbstractVecOrMat{T2}) where T1 where T2
     T = vandtype(T1,T2)
@@ -150,4 +146,3 @@ function dvand!(alpha, B)
         end
     end
 end
-

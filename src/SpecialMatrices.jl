@@ -1,6 +1,5 @@
 module SpecialMatrices
 
-using Compat
 using LinearAlgebra
 using FFTW
 using Polynomials

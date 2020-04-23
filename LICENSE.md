@@ -1,6 +1,6 @@
 The SpecialMatrices.jl package is licensed under the MIT "Expat" License:
 
-> Copyright (c) 2014: Jiahao Chen.
+> Copyright (c) 2014-2020: Jiahao Chen.
 >
 > Permission is hereby granted, free of charge, to any person obtaining
 > a copy of this software and associated documentation files (the
