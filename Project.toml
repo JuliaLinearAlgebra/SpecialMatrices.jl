@@ -4,9 +4,9 @@ uuid = "928aab9d-ef52-54ac-8ca1-acd7ca42c160"
 version = "1.0.0"
 
 [deps]
-FFTW
-Polynomials
-LinearAlgebra
+FFTW =
+Polynomials =
+LinearAlgebra =
 
 [compat]
 julia = "≥ 1.0.0"
