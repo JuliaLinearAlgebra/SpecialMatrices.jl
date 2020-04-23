@@ -1,7 +1,3 @@
-using Compat
-using Compat.Test
-using SpecialMatrices
-
 a = [1,2,3+1im,8,5]
 V=Vandermonde(a)
 
@@ -27,15 +23,13 @@ for rhs=[y, Y]
     copyto!(x, rhs)
     SpecialMatrices.dvand!(a, x)
     @test V\rhs==x
-    if VERSION >= v"0.7.0"
-        copyto!(x, rhs)
-        SpecialMatrices.pvand!(a', x)
-        @test V'\rhs==x
-        @test rhs'/V==x'
-        copyto!(x, rhs)
-        SpecialMatrices.pvand!(a, x)
-        @test transpose(V)\rhs==x
-    end
+    copyto!(x, rhs)
+    SpecialMatrices.pvand!(a', x)
+    @test V'\rhs==x
+    @test rhs'/V==x'
+    copyto!(x, rhs)
+    SpecialMatrices.pvand!(a, x)
+    @test transpose(V)\rhs==x
 end
 
 # Test dimension errors
