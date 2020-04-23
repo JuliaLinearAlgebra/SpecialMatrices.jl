@@ -1,13 +1,10 @@
 module SpecialMatrices
 
 using Compat
-using Compat.LinearAlgebra
+using LinearAlgebra
 using FFTW
 
-import Compat.LinearAlgebra: Matrix, inv, det, ishermitian, isposdef
-if VERSION >= v"0.7.0"
-    import Compat.LinearAlgebra: mul!
-end
+import LinearAlgebra: Matrix, inv, det, ishermitian, isposdef, mul!
 
 import Base: getindex, isassigned, size, *
 import Base.\
