@@ -3,10 +3,8 @@ export Companion
 struct Companion{T} <: AbstractArray{T, 2}
     c :: Vector{T}
 end
-#From polynomial
 
-using Polynomials
-#Generate companion matrix from a polynomial
+# Generate companion matrix from a polynomial
 
 function Companion(P::Poly{T}) where T
    n = length(P)
