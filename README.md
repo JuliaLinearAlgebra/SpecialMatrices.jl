@@ -57,8 +57,8 @@ Also, directly from a polynomial:
 ```julia
 julia> using Polynomials
 
-julia> P=Poly([2.0,3,4,5])
-Poly(2 + 3x + 4x^2 + 5x^3)
+julia> P=Polynomial([2.0,3,4,5])
+Polynomial(2 + 3x + 4x^2 + 5x^3)
 
 julia> C=Companion(P)
 3×3 Companion{Float64}:
