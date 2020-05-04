@@ -6,7 +6,7 @@ end
 
 # Generate companion matrix from a polynomial
 
-function Companion(P::Poly{T}) where T
+function Companion(P::Polynomial{T}) where T
    n = length(P)
    c = Array{T}(undef, n-1)
    d=P.a[n]
