@@ -9,9 +9,9 @@ end
 function Companion(P::Polynomial{T}) where T
    n = length(P)
    c = Array{T}(undef, n-1)
-   d=P.a[n]
+   d=P.coeffs[n]
    for i=1:n-1
-       c[i]=P.a[i]/d
+       c[i]=P.coeffs[i]/d
    end
    Companion(c)   
 end
