@@ -6,7 +6,12 @@ This package extends the `LinearAlgebra` library with support for special
 matrices which are used in linear algebra. Every special matrix has its own type.
 The full matrix is accessed by the command `Matrix(A)`.
 
+Always install the current master:
+
+`pkg> add SpecialMatrices#master`
+
 [![Build Status](https://travis-ci.org/JuliaMatrices/SpecialMatrices.jl.svg)](https://travis-ci.org/JuliaMatrices/SpecialMatrices.jl) [![Coverage Status](https://img.shields.io/coveralls/jiahao/SpecialMatrices.jl.svg)](https://coveralls.io/r/jiahao/SpecialMatrices.jl)
+
 
 ## Currently supported special matrices
 
