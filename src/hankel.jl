@@ -1,5 +1,19 @@
 export Hankel
+"""
+[`Hankel` matrix](http://en.wikipedia.org/wiki/Hankel_matrix)
 
+Input is a vector of odd length.
+
+```julia
+julia> Hankel(collect(-4:4))
+5x5 Hankel{Int64}:
+ -4  -3  -2  -1  0
+ -3  -2  -1   0  1
+ -2  -1   0   1  2
+ -1   0   1   2  3
+  0   1   2   3  4
+```
+"""
 struct Hankel{T} <: AbstractArray{T, 2}
     c :: Vector{T}
 end

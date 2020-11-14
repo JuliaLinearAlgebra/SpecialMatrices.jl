@@ -1,5 +1,20 @@
 export Strang
+"""
+`Strang` matrix
 
+A special `SymTridiagonal` matrix named after Gilbert Strang
+
+```julia
+julia> Strang(6)
+6x6 Strang{Float64}:
+  2.0  -1.0   0.0   0.0   0.0   0.0
+ -1.0   2.0  -1.0   0.0   0.0   0.0
+  0.0  -1.0   2.0  -1.0   0.0   0.0
+  0.0   0.0  -1.0   2.0  -1.0   0.0
+  0.0   0.0   0.0  -1.0   2.0  -1.0
+  0.0   0.0   0.0   0.0  -1.0   2.0
+```
+"""
 struct Strang{T} <: AbstractArray{T, 2}
     n :: Int
 end

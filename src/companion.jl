@@ -1,5 +1,29 @@
 export Companion
+"""
+[`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
 
+```julia
+julia> A=Companion([3,2,1])
+3x3 Companion{Int64}:
+ 0  0  -3
+ 1  0  -2
+ 0  1  -1
+```
+Also, directly from a polynomial:
+
+```julia
+julia> using Polynomials
+
+julia> P=Polynomial([2.0,3,4,5])
+Polynomial(2 + 3x + 4x^2 + 5x^3)
+
+julia> C=Companion(P)
+3×3 Companion{Float64}:
+ 0.0  0.0  -0.4
+ 1.0  0.0  -0.6
+ 0.0  1.0  -0.8
+```
+"""
 struct Companion{T} <: AbstractArray{T, 2}
     c :: Vector{T}
 end
@@ -13,11 +37,11 @@ function Companion(P::Polynomial{T}) where T
    for i=1:n-1
        c[i]=P.coeffs[i]/d
    end
-   Companion(c)   
+   Companion(c)
 end
 
 #Basic property computations
-size(C::Companion, r::Int) = (r==1 || r==2) ? length(C.c) : 
+size(C::Companion, r::Int) = (r==1 || r==2) ? length(C.c) :
     throw(ArgumentError("Companion is of rank 2"))
 
 function size(C::Companion)

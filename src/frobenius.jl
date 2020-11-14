@@ -1,31 +1,84 @@
 export Frobenius
+"""
+[`Frobenius` matrix](http://en.wikipedia.org/wiki/Frobenius_matrix)
 
-#Frobenius matrices or Gaussian elimination matrices
-#
-#Matrices of the form
-#[ 1 0 ...     0 ]
-#[ 0 1 ...     0 ]
-#[ .........     ]
-#[ ... 1 ...     ]
-#[ ... c1 1 ...  ]
-#[ ... c2 0 1 ...]
-#[ ............. ]
-#[ ... ck ...   1]
-#
-#i.e. an identity matrix with nonzero subdiagonal elements along a single
-#column.
-#
-#In this implementation, the subdiagonal of the nonzero column is stored as a
-#dense vector, so that the size can be inferred automatically as j+k where j is
-#the index of the column and k is the number of subdiagonal elements.
+Frobenius matrices or Gaussian elimination matrices of the form
 
+```
+[ 1 0 ...     0 ]
+[ 0 1 ...     0 ]
+[ .........     ]
+[ ... 1 ...     ]
+[ ... c1 1 ...  ]
+[ ... c2 0 1 ...]
+[ ............. ]
+[ ... ck ...   1]
+```
+
+i.e. an identity matrix with nonzero subdiagonal elements along a single column.
+
+```
+ In this implementation, the subdiagonal of the nonzero column is stored as a
+ dense vector, so that the size can be inferred automatically as j+k where j is
+ the index of the column and k is the number of subdiagonal elements.
+```
+
+```julia
+julia> using SpecialMatrices
+
+julia> F=Frobenius(3, [1.0,2.0,3.0]) #Specify subdiagonals of column 3
+6x6 Frobenius{Float64}:
+ 1.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  1.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  1.0  0.0  0.0  0.0
+ 0.0  0.0  1.0  1.0  0.0  0.0
+ 0.0  0.0  2.0  0.0  1.0  0.0
+ 0.0  0.0  3.0  0.0  0.0  1.0
+
+julia> inv(F) #Special form of inverse
+6x6 Frobenius{Float64}:
+ 1.0  0.0   0.0  0.0  0.0  0.0
+ 0.0  1.0   0.0  0.0  0.0  0.0
+ 0.0  0.0   1.0  0.0  0.0  0.0
+ 0.0  0.0  -1.0  1.0  0.0  0.0
+ 0.0  0.0  -2.0  0.0  1.0  0.0
+ 0.0  0.0  -3.0  0.0  0.0  1.0
+
+julia> F*F #Special form preserved if the same column has the subdiagonals
+6x6 Frobenius{Float64}:
+ 1.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  1.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  1.0  0.0  0.0  0.0
+ 0.0  0.0  2.0  1.0  0.0  0.0
+ 0.0  0.0  4.0  0.0  1.0  0.0
+ 0.0  0.0  6.0  0.0  0.0  1.0
+
+julia> F*Frobenius(2, [5.0,4.0,3.0,2.0]) #Promotes to Matrix
+6x6 Array{Float64,2}:
+ 1.0   0.0  0.0  0.0  0.0  0.0
+ 0.0   1.0  0.0  0.0  0.0  0.0
+ 0.0   5.0  1.0  0.0  0.0  0.0
+ 0.0   9.0  1.0  1.0  0.0  0.0
+ 0.0  13.0  2.0  0.0  1.0  0.0
+ 0.0  17.0  3.0  0.0  0.0  1.0
+
+julia> F*[10.0,20,30,40,50,60.0]
+6-element Array{Float64,1}:
+  10.0
+  20.0
+  30.0
+  70.0
+ 110.0
+ 150.0
+```
+"""
 struct Frobenius{T} <: AbstractArray{T, 2}
     colidx :: Int
     c :: Vector{T}
 end
 
 #Basic property computations
-size(F::Frobenius, r::Int) = (r==1 || r==2) ? F.colidx + length(F.c) : 
+size(F::Frobenius, r::Int) = (r==1 || r==2) ? F.colidx + length(F.c) :
     throw(ArgumentError("Frobenius matrix is of rank 2"))
 
 function size(F::Frobenius)

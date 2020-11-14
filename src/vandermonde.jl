@@ -1,5 +1,52 @@
 export Vandermonde
+"""
+[`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
 
+```julia
+julia> a = collect(1.0:5.0)
+julia> A = Vandermonde(a)
+5×5 Vandermonde{Float64}:
+ 1.0  1.0   1.0    1.0    1.0
+ 1.0  2.0   4.0    8.0   16.0
+ 1.0  3.0   9.0   27.0   81.0
+ 1.0  4.0  16.0   64.0  256.0
+ 1.0  5.0  25.0  125.0  625.0
+```
+
+Adjoint Vandermonde:
+```julia
+julia> A'
+5×5 LinearAlgebra.Adjoint{Float64,Vandermonde{Float64}}:
+ 1.0   1.0   1.0    1.0    1.0
+ 1.0   2.0   3.0    4.0    5.0
+ 1.0   4.0   9.0   16.0   25.0
+ 1.0   8.0  27.0   64.0  125.0
+ 1.0  16.0  81.0  256.0  625.0
+```
+
+The backslash operator \\ is overloaded to solve Vandermonde and adjoint
+Vandermonde systems in `O(n^2)` time using the algorithm of
+Björck & Pereyra (1970), https://doi.org/10.2307/2004623.
+
+```julia
+julia> A\a
+5-element Array{Float64,1}:
+ 0.0
+ 1.0
+ 0.0
+ 0.0
+ 0.0
+
+julia> r2 = A[2,:]
+julia> A'\r2
+5-element Array{Float64,1}:
+ 0.0
+ 1.0
+ 0.0
+ 0.0
+ 0.0
+```
+"""
 struct Vandermonde{T} <: AbstractArray{T, 2}
     c :: Vector{T}
 end

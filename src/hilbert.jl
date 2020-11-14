@@ -1,7 +1,41 @@
 #The m-by-n Hilbert matrix has matrix elements
 # H_{ij} = 1/(i+j-1)
 export Hilbert, InverseHilbert
+"""
+[`Hilbert` matrix](http://en.wikipedia.org/wiki/Hilbert_matrix)
 
+```julia
+julia> A=Hilbert(5)
+Hilbert{Rational{Int64}}(5,5)
+
+julia> Matrix(A)
+5x5 Array{Rational{Int64},2}:
+ 1//1  1//2  1//3  1//4  1//5
+ 1//2  1//3  1//4  1//5  1//6
+ 1//3  1//4  1//5  1//6  1//7
+ 1//4  1//5  1//6  1//7  1//8
+ 1//5  1//6  1//7  1//8  1//9
+
+julia> Matrix(Hilbert(5))
+5x5 Array{Rational{Int64},2}:
+ 1//1  1//2  1//3  1//4  1//5
+ 1//2  1//3  1//4  1//5  1//6
+ 1//3  1//4  1//5  1//6  1//7
+ 1//4  1//5  1//6  1//7  1//8
+ 1//5  1//6  1//7  1//8  1//9
+```
+Inverses are also integer matrices:
+
+```julia
+julia> inv(A)
+5x5 Array{Rational{Int64},2}:
+    25//1    -300//1     1050//1    -1400//1     630//1
+  -300//1    4800//1   -18900//1    26880//1  -12600//1
+  1050//1  -18900//1    79380//1  -117600//1   56700//1
+ -1400//1   26880//1  -117600//1   179200//1  -88200//1
+   630//1  -12600//1    56700//1   -88200//1   44100//1
+```
+"""
 struct Hilbert{T} <: AbstractMatrix{T}
     m :: Int
     n :: Int

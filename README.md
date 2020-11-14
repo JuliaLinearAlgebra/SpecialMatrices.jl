@@ -15,9 +15,12 @@ Always install the current master:
 
 ## Currently supported special matrices
 
-## [`Cauchy`](http://en.wikipedia.org/wiki/Cauchy_matrix) matrix
-
+## [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
 ```julia
+Cauchy(x,y)[i,j]=1/(x[i]+y[j])
+Cauchy(x)=Cauchy(x,x)
+cauchy(k::Number)=Cauchy(collect(1:k))
+
 julia> Cauchy([1,2,3],[3,4,5])
 3x3 Cauchy{Int64}:
  0.25      0.2       0.166667
@@ -37,7 +40,7 @@ julia> Cauchy(pi)
  0.25      0.2       0.166667
 ```
 
-## `Circulant` matrix
+## [`Circulant` matrix](https://en.wikipedia.org/wiki/Circulant_matrix)
 
 ```julia
 julia> Circulant([1,2,3,4])
@@ -48,7 +51,7 @@ julia> Circulant([1,2,3,4])
  4  3  2  1
 ```
 
-## [`Companion`](http://en.wikipedia.org/wiki/Companion_matrix) matrix
+## [`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
 
 ```julia
 julia> A=Companion([3,2,1])
@@ -72,7 +75,7 @@ julia> C=Companion(P)
  0.0  1.0  -0.8
 ```
 
-## [`Frobenius`](http://en.wikipedia.org/wiki/Frobenius_matrix) matrix
+## [`Frobenius` matrix](http://en.wikipedia.org/wiki/Frobenius_matrix)
 
 Example
 
@@ -125,7 +128,7 @@ julia> F*[10.0,20,30,40,50,60.0]
  150.0
 ```
 
-## [`Hankel`](http://en.wikipedia.org/wiki/Hankel_matrix) matrix
+## [`Hankel` matrix](http://en.wikipedia.org/wiki/Hankel_matrix)
 
 Input is a vector of odd length.
 
@@ -139,7 +142,7 @@ julia> Hankel(collect(-4:4))
   0   1   2   3  4
 ```
 
-## [`Hilbert`](http://en.wikipedia.org/wiki/Hilbert_matrix) matrix
+## [`Hilbert` matrix](http://en.wikipedia.org/wiki/Hilbert_matrix)
 
 ```julia
 julia> A=Hilbert(5)
@@ -173,7 +176,7 @@ julia> inv(A)
    630//1  -12600//1    56700//1   -88200//1   44100//1
 ```
 
-## [`Kahan`](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html) matrix
+## [`Kahan` matrix](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
 
 ```julia
 julia> A=Kahan(5,5,1,35)
@@ -227,8 +230,6 @@ For more details see [F. Roesler (1986)][Roesler1986].
 [Roesler1986]: http://www.sciencedirect.com/science/article/pii/0024379586902557 "Friedrich Roesler, Riemann's hypothesis as an eigenvalue problem, Linear Algebra and its Applications, Vol. 81, (1986)"
 
 
-
-
 ## `Strang` matrix
 
 A special `SymTridiagonal` matrix named after Gilbert Strang
@@ -244,7 +245,7 @@ julia> Strang(6)
   0.0   0.0   0.0   0.0  -1.0   2.0
 ```
 
-## [`Toeplitz`](http://en.wikipedia.org/wiki/Toeplitz_matrix) matrix
+## [`Toeplitz` matrix](http://en.wikipedia.org/wiki/Toeplitz_matrix)
 
 Input is a vector of odd length.
 
@@ -257,7 +258,7 @@ julia> Toeplitz(collect(-4:4))
  3   2   1   0  -1
  4   3   2   1   0
 ```
-## [`Vandermonde`](http://en.wikipedia.org/wiki/Vandermonde_matrix) matrix
+## [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
 
 ```julia
 julia> a = collect(1.0:5.0)
@@ -281,7 +282,7 @@ julia> A'
  1.0  16.0  81.0  256.0  625.0
 ```
 
-The backslash overator `\` is overloaded to solve Vandermonde and adjoint Vandermonde systems in ``O(n^2)`` time using the algorithm of [Björck & Pereyra (1970)](https://doi.org/10.2307/2004623
+The backslash operator `\` is overloaded to solve Vandermonde and adjoint Vandermonde systems in ``O(n^2)`` time using the algorithm of [Björck & Pereyra (1970)](https://doi.org/10.2307/2004623
 ),
 ```julia
 julia> A\a
