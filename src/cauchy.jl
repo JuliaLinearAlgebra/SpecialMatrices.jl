@@ -17,7 +17,7 @@ end
 
 # Define its size
 
-size(A::Cauchy, dim::Integer) = length(A.x)
+size(A::Cauchy, dim::Integer) = dim==1 ? length(A.x) : dim==2 ? length(A.y) : throw(ArgumentError("Invalid dimension $dim"))
 size(A::Cauchy)= size(A,1), size(A,1)
 
 # Index into a Cauchy
