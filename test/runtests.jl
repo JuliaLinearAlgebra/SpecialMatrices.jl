@@ -5,10 +5,8 @@ using LinearAlgebra
 const files = (
     "companion",
     "frobenius",
-    "hankel",
     "hilbert",
     "strang",
-    "toeplitz",
     "vandermonde",
 )
 
