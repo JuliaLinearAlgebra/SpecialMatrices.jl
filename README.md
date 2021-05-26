@@ -1,5 +1,9 @@
 # SpecialMatrices
 
+[![Build Status](https://github.com/JuliaMatrices/SpecialMatrices.jl/workflows/CI/badge.svg?branch=master)](https://github.com/JuliaMatrices/SpecialMatrices.jl/actions/workflows/CI.yml?query=branch%3Amaster)
+[![Coverage](https://codecov.io/gh/JuliaMatrices/SpecialMatrices.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/JuliaMatrices/SpecialMatrices.jl)
+[![Coverage](https://coveralls.io/repos/github/JuliaMatrices/SpecialMatrices.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaMatrices/SpecialMatrices.jl?branch=master)
+
 A [Julia](http://julialang.org) package for working with special matrix types.
 
 This package extends the `LinearAlgebra` library with support for special
@@ -9,9 +13,6 @@ The full matrix is accessed by the command `Matrix(A)`.
 Always install the current master:
 
 `pkg> add SpecialMatrices#master`
-
-[![Build Status](https://travis-ci.org/JuliaMatrices/SpecialMatrices.jl.svg)](https://travis-ci.org/JuliaMatrices/SpecialMatrices.jl) [![Coverage Status](https://img.shields.io/coveralls/jiahao/SpecialMatrices.jl.svg)](https://coveralls.io/r/jiahao/SpecialMatrices.jl)
-
 
 ## Currently supported special matrices
 
