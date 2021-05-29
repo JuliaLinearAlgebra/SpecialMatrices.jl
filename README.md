@@ -18,6 +18,11 @@ The package is registered and can be installed by running:
 julia> ] add SpecialMatrices
 ```
 
+## Related packages
+
+[ToeplitzMatrices.jl](https://github.com/JuliaMatrices/ToeplitzMatrices.jl) supports
+Toeplitz, Hankel, and circulant matrices.
+
 ## Currently supported special matrices
 
 ### [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
@@ -270,8 +275,3 @@ julia> A'\r2
  0.0
  0.0
 ```
-
-## Related packages
-
-[ToeplitzMatrices.jl](https://github.com/JuliaMatrices/ToeplitzMatrices.jl) supports
-Toeplitz, Hankel, and circulant matrices.
