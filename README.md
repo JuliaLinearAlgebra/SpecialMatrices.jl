@@ -6,14 +6,13 @@
 
 A [Julia](http://julialang.org) package for working with special matrix types.
 
-This package extends the `LinearAlgebra` library with support for special
+This Julia package extends the `LinearAlgebra` library with support for special
 matrices which are used in linear algebra. Every special matrix has its own type.
 The full matrix is accessed by the command `Matrix(A)`.
 
-Until v1.0.1 is registered and tagged,
-install the current master:
+## Installation
 
-`pkg> add SpecialMatrices#master`
+`pkg> add SpecialMatrices`
 
 ## Currently supported special matrices
 
