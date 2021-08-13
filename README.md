@@ -10,7 +10,8 @@ This package extends the `LinearAlgebra` library with support for special
 matrices which are used in linear algebra. Every special matrix has its own type.
 The full matrix is accessed by the command `Matrix(A)`.
 
-Always install the current master:
+Until v1.0.1 is registered and tagged,
+install the current master:
 
 `pkg> add SpecialMatrices#master`
 
