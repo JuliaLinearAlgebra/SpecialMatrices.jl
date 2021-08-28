@@ -12,11 +12,20 @@ The full matrix is accessed by the command `Matrix(A)`.
 
 ## Installation
 
-`pkg> add SpecialMatrices`
+```julia
+julia> ] add SpecialMatrices
+```
+
+## Related packages
+
+[ToeplitzMatrices.jl](https://github.com/JuliaMatrices/ToeplitzMatrices.jl) supports
+Toeplitz, Hankel, and circulant matrices.
+
 
 ## Currently supported special matrices
 
-## [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
+### [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
+
 ```julia
 Cauchy(x,y)[i,j]=1/(x[i]+y[j])
 Cauchy(x)=Cauchy(x,x)
@@ -41,18 +50,7 @@ julia> Cauchy(pi)
  0.25      0.2       0.166667
 ```
 
-## [`Circulant` matrix](https://en.wikipedia.org/wiki/Circulant_matrix)
-
-```julia
-julia> Circulant([1,2,3,4])
-4x4 Circulant{Int64}:
- 1  4  3  2
- 2  1  4  3
- 3  2  1  4
- 4  3  2  1
-```
-
-## [`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
+### [`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
 
 ```julia
 julia> A=Companion([3,2,1])
@@ -76,7 +74,7 @@ julia> C=Companion(P)
  0.0  1.0  -0.8
 ```
 
-## [`Frobenius` matrix](http://en.wikipedia.org/wiki/Frobenius_matrix)
+### [`Frobenius` matrix](http://en.wikipedia.org/wiki/Frobenius_matrix)
 
 Example
 
@@ -129,21 +127,7 @@ julia> F*[10.0,20,30,40,50,60.0]
  150.0
 ```
 
-## [`Hankel` matrix](http://en.wikipedia.org/wiki/Hankel_matrix)
-
-Input is a vector of odd length.
-
-```julia
-julia> Hankel(collect(-4:4))
-5x5 Hankel{Int64}:
- -4  -3  -2  -1  0
- -3  -2  -1   0  1
- -2  -1   0   1  2
- -1   0   1   2  3
-  0   1   2   3  4
-```
-
-## [`Hilbert` matrix](http://en.wikipedia.org/wiki/Hilbert_matrix)
+### [`Hilbert` matrix](http://en.wikipedia.org/wiki/Hilbert_matrix)
 
 ```julia
 julia> A=Hilbert(5)
@@ -177,7 +161,7 @@ julia> inv(A)
    630//1  -12600//1    56700//1   -88200//1   44100//1
 ```
 
-## [`Kahan` matrix](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
+### [`Kahan` matrix](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
 
 ```julia
 julia> A=Kahan(5,5,1,35)
@@ -207,7 +191,7 @@ For more details see [N. J. Higham (1987)][Higham87].
 
 [Higham87]: http://eprints.ma.man.ac.uk/695/01/covered/MIMS_ep2007_10.pdf "N. Higham, A Survey of Condition Number Estimation for Triangular Matrices, SIMAX, Vol. 29, No. 4, pp. 588, 1987"
 
-## `Riemann` matrix
+### `Riemann` matrix
 
 Riemann matrix is defined as `A = B[2:N+1, 2:N+1]`, where
 `B[i,j] = i-1` if `i` divides `j`, and `-1` otherwise.
@@ -231,7 +215,7 @@ For more details see [F. Roesler (1986)][Roesler1986].
 [Roesler1986]: http://www.sciencedirect.com/science/article/pii/0024379586902557 "Friedrich Roesler, Riemann's hypothesis as an eigenvalue problem, Linear Algebra and its Applications, Vol. 81, (1986)"
 
 
-## `Strang` matrix
+### `Strang` matrix
 
 A special `SymTridiagonal` matrix named after Gilbert Strang
 
@@ -246,20 +230,7 @@ julia> Strang(6)
   0.0   0.0   0.0   0.0  -1.0   2.0
 ```
 
-## [`Toeplitz` matrix](http://en.wikipedia.org/wiki/Toeplitz_matrix)
-
-Input is a vector of odd length.
-
-```julia
-julia> Toeplitz(collect(-4:4))
-5x5 Toeplitz{Int64}:
- 0  -1  -2  -3  -4
- 1   0  -1  -2  -3
- 2   1   0  -1  -2
- 3   2   1   0  -1
- 4   3   2   1   0
-```
-## [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
+### [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
 
 ```julia
 julia> a = collect(1.0:5.0)
