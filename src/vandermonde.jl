@@ -1,7 +1,7 @@
 export Vandermonde
 
 """
-    V = Vandermonde(c::AbstractVector)
+    Vandermonde(c::AbstractVector)
 
 Create a "lazy" `n × n`
 [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
