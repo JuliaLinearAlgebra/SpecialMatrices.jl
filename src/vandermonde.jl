@@ -1,7 +1,11 @@
 export Vandermonde
 
 """
+    V = Vandermonde(c::AbstractVector)
+
+Create a "lazy" `n × n`
 [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
+but requiring only `O(n)` storage for the vector `c`.
 
 ```jldoctest van
 julia> a = 1:5; A = Vandermonde(a)
