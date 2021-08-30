@@ -42,15 +42,20 @@ end
         x = zero(M \ rhs)
         copyto!(x, rhs)
         SpecialMatrices.dvand!(a, x)
+#       @which V \ rhs
         @test V \ rhs == x
 
         copyto!(x, rhs)
         SpecialMatrices.pvand!(a', x)
+#       @which V' \ rhs
         @test V' \ rhs == x
+
+#       @which rhs' / V
         @test rhs' / V == x'
 
         copyto!(x, rhs)
         SpecialMatrices.pvand!(a, x)
+#       @which transpose(V) \ rhs
         @test transpose(V) \ rhs == x
     end
 end

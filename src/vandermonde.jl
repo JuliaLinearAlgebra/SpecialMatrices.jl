@@ -9,7 +9,7 @@ but requiring only `O(n)` storage for the vector `c`.
 
 ```jldoctest van
 julia> a = 1:5; A = Vandermonde(a)
-5×5 Vandermonde{Int64}:
+5×5 Vandermonde{Int64, UnitRange{Int64}}:
  1  1   1    1    1
  1  2   4    8   16
  1  3   9   27   81
@@ -20,7 +20,7 @@ julia> a = 1:5; A = Vandermonde(a)
 Adjoint Vandermonde:
 ```jldoctest van
 julia> A'
-5×5 adjoint(::Vandermonde{Int64}) with eltype Int64:
+5×5 adjoint(::Vandermonde{Int64, UnitRange{Int64}}) with eltype Int64:
  1   1   1    1    1
  1   2   3    4    5
  1   4   9   16   25
@@ -52,12 +52,12 @@ julia> A' \\ A[2,:]
  0.0
 ```
 """
-struct Vandermonde{T} <: AbstractMatrix{T}
-    c :: AbstractVector{T}
+struct Vandermonde{T,C} <: AbstractMatrix{T}
+    c :: C
 
     function Vandermonde(c::AbstractVector{T}) where T
         axes(c,1) isa Base.OneTo || throw(ArgumentError("must be OneTo"))
-        new{T}(c)
+        new{T,typeof(c)}(c)
     end
 end
 
@@ -117,7 +117,7 @@ function Matrix(V::Transpose{T,Vandermonde{T}}) where T
 end
 =#
 
-function \(V::Adjoint{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 where T2
+function \(V::Adjoint{T1,Vandermonde{T1,C}}, y::AbstractVecOrMat{T2}) where {T1, C, T2}
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
     copyto!(x, y)
@@ -125,7 +125,7 @@ function \(V::Adjoint{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 whe
     return x
 end
 
-function \(V::Transpose{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 where T2
+function \(V::Transpose{T1,Vandermonde{T1,C}}, y::AbstractVecOrMat{T2}) where {T1, C, T2}
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
     copyto!(x, y)
@@ -183,6 +183,7 @@ function pvand!(alpha, B)
             end
         end
     end
+    return B
 end
 
 
@@ -216,4 +217,5 @@ function dvand!(alpha, B)
             end
         end
     end
+    return B
 end
