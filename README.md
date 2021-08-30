@@ -6,11 +6,11 @@
 
 A [Julia](http://julialang.org) package for working with special matrix types.
 
-This package extends the `LinearAlgebra` library with support for special
+This Julia package extends the `LinearAlgebra` library with support for special
 matrices which are used in linear algebra. Every special matrix has its own type.
 The full matrix is accessed by the command `Matrix(A)`.
 
-The package is registered and can be installed by running:
+## Installation
 
 ```julia
 julia> ] add SpecialMatrices
@@ -20,6 +20,7 @@ julia> ] add SpecialMatrices
 
 [ToeplitzMatrices.jl](https://github.com/JuliaMatrices/ToeplitzMatrices.jl) supports
 Toeplitz, Hankel, and circulant matrices.
+
 
 ## Currently supported special matrices
 
