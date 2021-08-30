@@ -23,7 +23,7 @@ julia> Riemann(7)
 
 For more details see Friedrich Roesler, Riemann's hypothesis as an eigenvalue problem,
 Linear Algebra and its Applications, Vol. 81, (1986)
-http://www.sciencedirect.com/science/article/pii/0024379586902557 
+http://www.sciencedirect.com/science/article/pii/0024379586902557
 """
 struct Riemann{Int} <: AbstractMatrix{Int}
     n::Int

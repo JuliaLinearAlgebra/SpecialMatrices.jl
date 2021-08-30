@@ -64,7 +64,7 @@ function Matrix(V::Vandermonde{T}) where T
     M[:,1] .= 1
     for j=2:n
         for i=1:n
-	    M[i,j] = M[i,j-1]*V.c[i]
+        M[i,j] = M[i,j-1]*V.c[i]
         end
     end
     M
@@ -76,7 +76,7 @@ function Matrix(V::Adjoint{T,Vandermonde{T}}) where T
     M[1,:] .= 1
     for j=1:n
         for i=2:n
-	    M[i,j] = M[i-1,j]*adjoint(V.parent.c[j])
+        M[i,j] = M[i-1,j]*adjoint(V.parent.c[j])
         end
     end
     M
@@ -88,7 +88,7 @@ function Matrix(V::Transpose{T,Vandermonde{T}}) where T
     M[1,:] .= 1
     for j=1:n
         for i=2:n
-	    M[i,j] = M[i-1,j]*V.parent.c[j]
+        M[i,j] = M[i-1,j]*V.parent.c[j]
         end
     end
     M
