@@ -125,7 +125,7 @@ function \(V::Adjoint{T1,<:Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where {T1,
     return x
 end
 
-function \(V::Transpose{T1,Vandermonde{T1,C}}, y::AbstractVecOrMat{T2}) where {T1, C, T2}
+function \(V::Transpose{T1,<:Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where {T1, T2}
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
     copyto!(x, y)
