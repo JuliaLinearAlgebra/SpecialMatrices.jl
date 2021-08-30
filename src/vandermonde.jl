@@ -1,45 +1,46 @@
 export Vandermonde
+
 """
 [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
 
-```julia
-julia> a = collect(1.0:5.0)
-julia> A = Vandermonde(a)
-5×5 Vandermonde{Float64}:
- 1.0  1.0   1.0    1.0    1.0
- 1.0  2.0   4.0    8.0   16.0
- 1.0  3.0   9.0   27.0   81.0
- 1.0  4.0  16.0   64.0  256.0
- 1.0  5.0  25.0  125.0  625.0
+```jldoctest van
+julia> a = 1:5; A = Vandermonde(a)
+5×5 Vandermonde{Int64}:
+ 1  1   1    1    1
+ 1  2   4    8   16
+ 1  3   9   27   81
+ 1  4  16   64  256
+ 1  5  25  125  625
 ```
 
 Adjoint Vandermonde:
-```julia
+```jldoctest van
 julia> A'
-5×5 LinearAlgebra.Adjoint{Float64,Vandermonde{Float64}}:
- 1.0   1.0   1.0    1.0    1.0
- 1.0   2.0   3.0    4.0    5.0
- 1.0   4.0   9.0   16.0   25.0
- 1.0   8.0  27.0   64.0  125.0
- 1.0  16.0  81.0  256.0  625.0
+5×5 adjoint(::Vandermonde{Int64}) with eltype Int64:
+ 1   1   1    1    1
+ 1   2   3    4    5
+ 1   4   9   16   25
+ 1   8  27   64  125
+ 1  16  81  256  625
 ```
 
-The backslash operator \\ is overloaded to solve Vandermonde and adjoint
+The backslash operator `\\` is overloaded to solve Vandermonde and adjoint
 Vandermonde systems in `O(n^2)` time using the algorithm of
 Björck & Pereyra (1970), https://doi.org/10.2307/2004623.
 
-```julia
-julia> A\a
-5-element Array{Float64,1}:
+```jldoctest van
+julia> A \\ a
+5-element Vector{Float64}:
  0.0
  1.0
  0.0
  0.0
  0.0
+```
 
-julia> r2 = A[2,:]
-julia> A'\r2
-5-element Array{Float64,1}:
+```jldoctest van
+julia> A' \\ A[2,:]
+5-element Vector{Float64}:
  0.0
  1.0
  0.0
@@ -47,17 +48,34 @@ julia> A'\r2
  0.0
 ```
 """
-struct Vandermonde{T} <: AbstractArray{T, 2}
-    c :: Vector{T}
+struct Vandermonde{T} <: AbstractMatrix{T}
+    c :: AbstractVector{T}
+
+    function Vandermonde(c::AbstractVector{T}) where T
+        axes(c,1) isa Base.OneTo || throw(ArgumentError("must be OneTo"))
+        new{T}(c)
+    end
 end
 
-getindex(V::Vandermonde, i::Int, j::Int) = V.c[i]^(j-1)
-isassigned(V::Vandermonde, i::Int, j::Int) = isassigned(V.c, i)
+@inline Base.@propagate_inbounds function getindex(
+    V::Vandermonde,
+    i::Int,
+    j::Int,
+)
+    @boundscheck checkbounds(V, i, j)
+    return (@inbounds V.c[i])^(j-1)
+end
 
-size(V::Vandermonde, r::Int) = (r==1 || r==2) ? length(V.c) :
-    throw(ArgumentError("Invalid dimension $r"))
-size(V::Vandermonde) = length(V.c), length(V.c)
+# not needed: comes from size(V)
+#isassigned(V::Vandermonde, i::Int, j::Int) = isassigned(V.c, i)
 
+# not needed: comes from size(V)
+#size(V::Vandermonde, r::Int) = (r==1 || r==2) ? length(V.c) :
+#   throw(ArgumentError("Invalid dimension $r"))
+size(V::Vandermonde) = (length(V.c), length(V.c))
+
+#=
+# not needed: comes from getindex(V)
 function Matrix(V::Vandermonde{T}) where T
     n=size(V, 1)
     M=Array{T}(undef, n, n)
@@ -93,6 +111,7 @@ function Matrix(V::Transpose{T,Vandermonde{T}}) where T
     end
     M
 end
+=#
 
 function \(V::Adjoint{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 where T2
     T = vandtype(T1,T2)
@@ -122,7 +141,7 @@ end
 function vandtype(T1::Type, T2::Type)
     # Figure out the return type of Vandermonde{T1} \ Vector{T2}
     T = promote_type(T1, T2)
-    S = typeof(oneunit(T)/oneunit(T1))
+    S = typeof(oneunit(T) / oneunit(T1))
     return S
 end
 
@@ -161,6 +180,8 @@ function pvand!(alpha, B)
         end
     end
 end
+
+
 """
     dvand!(a, b) -> b
 
@@ -174,9 +195,8 @@ https://doi.org/10.2307/2004623
 """
 function dvand!(alpha, B)
     n = length(alpha)
-    if n != size(B,1)
+    n == size(B,1) ||
         throw(DimensionMismatch("matrix has dimensions ($n,$n) but right hand side has $(size(B,1)) rows"))
-    end
     nrhs = size(B,2)
     @inbounds begin
         for j=1:nrhs
