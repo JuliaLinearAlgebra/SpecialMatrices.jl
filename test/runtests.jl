@@ -6,6 +6,7 @@ const files = (
     "companion",
     "frobenius",
     "hilbert",
+    "riemann",
     "strang",
     "vandermonde",
 )
