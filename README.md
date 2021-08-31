@@ -1,20 +1,28 @@
-# SpecialMatrices
+# SpecialMatrices.jl
 
-[![Build Status](https://github.com/JuliaMatrices/SpecialMatrices.jl/workflows/CI/badge.svg?branch=master)](https://github.com/JuliaMatrices/SpecialMatrices.jl/actions/workflows/CI.yml?query=branch%3Amaster)
-[![Coverage](https://codecov.io/gh/JuliaMatrices/SpecialMatrices.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/JuliaMatrices/SpecialMatrices.jl)
-[![Coverage](https://coveralls.io/repos/github/JuliaMatrices/SpecialMatrices.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaMatrices/SpecialMatrices.jl?branch=master)
+[![action status][action-img]][action-url]
+[![pkgeval status][pkgeval-img]][pkgeval-url]
+[![codecov][codecov-img]][codecov-url]
+[![coveralls][coveralls-img]][coveralls-url]
+[![license][license-img]][license-url]
+[![docs-stable][docs-stable-img]][docs-stable-url]
+[![docs-dev][docs-dev-img]][docs-dev-url]
 
 A [Julia](http://julialang.org) package for working with special matrix types.
 
-This Julia package extends the `LinearAlgebra` library with support for special
-matrices which are used in linear algebra. Every special matrix has its own type.
+This Julia package extends the `LinearAlgebra` library
+with support for special matrices that are used in linear algebra.
+Every special matrix has its own type
+and is stored efficiently.
 The full matrix is accessed by the command `Matrix(A)`.
+
 
 ## Installation
 
 ```julia
 julia> ] add SpecialMatrices
 ```
+
 
 ## Related packages
 
@@ -50,6 +58,7 @@ julia> Cauchy(pi)
  0.25      0.2       0.166667
 ```
 
+
 ### [`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
 
 ```julia
@@ -73,6 +82,7 @@ julia> C=Companion(P)
  1.0  0.0  -0.6
  0.0  1.0  -0.8
 ```
+
 
 ### [`Frobenius` matrix](http://en.wikipedia.org/wiki/Frobenius_matrix)
 
@@ -127,6 +137,7 @@ julia> F*[10.0,20,30,40,50,60.0]
  150.0
 ```
 
+
 ### [`Hilbert` matrix](http://en.wikipedia.org/wiki/Hilbert_matrix)
 
 ```julia
@@ -161,6 +172,7 @@ julia> inv(A)
    630//1  -12600//1    56700//1   -88200//1   44100//1
 ```
 
+
 ### [`Kahan` matrix](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
 
 ```julia
@@ -190,6 +202,7 @@ julia> A=Kahan(3,5,0.5,1e-3)
 For more details see [N. J. Higham (1987)][Higham87].
 
 [Higham87]: http://eprints.ma.man.ac.uk/695/01/covered/MIMS_ep2007_10.pdf "N. Higham, A Survey of Condition Number Estimation for Triangular Matrices, SIMAX, Vol. 29, No. 4, pp. 588, 1987"
+
 
 ### `Riemann` matrix
 
@@ -230,47 +243,69 @@ julia> Strang(6)
   0.0   0.0   0.0   0.0  -1.0   2.0
 ```
 
+
 ### [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
 
 ```julia
-julia> a = collect(1.0:5.0)
+julia> a = 1:5
 julia> A = Vandermonde(a)
-5×5 Vandermonde{Float64}:
- 1.0  1.0   1.0    1.0    1.0
- 1.0  2.0   4.0    8.0   16.0
- 1.0  3.0   9.0   27.0   81.0
- 1.0  4.0  16.0   64.0  256.0
- 1.0  5.0  25.0  125.0  625.0
+5×5 Vandermonde{Int64}:
+ 1  1   1    1    1
+ 1  2   4    8   16
+ 1  3   9   27   81
+ 1  4  16   64  256
+ 1  5  25  125  625
 ```
 
 Adjoint Vandermonde:
 ```julia
 julia> A'
-5×5 LinearAlgebra.Adjoint{Float64,Vandermonde{Float64}}:
- 1.0   1.0   1.0    1.0    1.0
- 1.0   2.0   3.0    4.0    5.0
- 1.0   4.0   9.0   16.0   25.0
- 1.0   8.0  27.0   64.0  125.0
- 1.0  16.0  81.0  256.0  625.0
+5×5 adjoint(::Vandermonde{Int64}) with eltype Int64:
+ 1   1   1    1    1
+ 1   2   3    4    5
+ 1   4   9   16   25
+ 1   8  27   64  125
+ 1  16  81  256  625
 ```
 
-The backslash operator `\` is overloaded to solve Vandermonde and adjoint Vandermonde systems in ``O(n^2)`` time using the algorithm of [Björck & Pereyra (1970)](https://doi.org/10.2307/2004623
-),
+The backslash operator `\` is overloaded
+to solve Vandermonde and adjoint Vandermonde systems in ``O(n^2)`` time
+using the algorithm of
+[Björck & Pereyra (1970)](https://doi.org/10.2307/2004623):
 ```julia
-julia> A\a
-5-element Array{Float64,1}:
+julia> A \ a
+5-element Vector{Float64}:
  0.0
  1.0
  0.0
  0.0
  0.0
 
-julia> r2 = A[2,:]
-julia> A'\r2
-5-element Array{Float64,1}:
+julia> A' \ A[2,:]
+5-element Vector{Float64}:
  0.0
  1.0
  0.0
  0.0
  0.0
 ```
+
+<!-- URLs -->
+[action-img]: https://github.com/JuliaMatrices/SpecialMatrices.jl/workflows/CI/badge.svg
+[action-url]: https://github.com/JuliaMatrices/SpecialMatrices.jl/actions
+[build-img]: https://github.com/JuliaMatrices/SpecialMatrices.jl/workflows/CI/badge.svg?branch=master
+[build-url]: https://github.com/JuliaMatrices/SpecialMatrices.jl/actions?query=workflow%3ACI+branch%3Amaster
+[pkgeval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/S/SpecialMatrices.svg
+[pkgeval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/S/SpecialMatrices.html
+[code-blue-img]: https://img.shields.io/badge/code%20style-blue-4495d1.svg
+[code-blue-url]: https://github.com/invenia/BlueStyle
+[codecov-img]: https://codecov.io/github/JuliaMatrices/SpecialMatrices.jl/coverage.svg?branch=master
+[codecov-url]: https://codecov.io/github/JuliaMatrices/SpecialMatrices.jl?branch=master
+[coveralls-img]: https://coveralls.io/repos/JuliaMatrices/SpecialMatrices.jl/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/JuliaMatrices/SpecialMatrices.jl?branch=master
+[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-url]: https://JuliaMatrices.github.io/SpecialMatrices.jl/stable
+[docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
+[docs-dev-url]: https://JuliaMatrices.github.io/SpecialMatrices.jl/dev
+[license-img]: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
+[license-url]: LICENSE
