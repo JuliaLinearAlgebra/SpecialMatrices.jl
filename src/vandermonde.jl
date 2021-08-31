@@ -1,45 +1,51 @@
 export Vandermonde
+
+using LinearAlgebra: Adjoint, Transpose
+
+
 """
+    Vandermonde(c::AbstractVector)
+
+Create a "lazy" `n × n`
 [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
+where ``A_{ij} = c_i^{j-1}``,
+requiring only `O(n)` storage for the vector `c`.
 
-```julia
-julia> a = collect(1.0:5.0)
-julia> A = Vandermonde(a)
-5×5 Vandermonde{Float64}:
- 1.0  1.0   1.0    1.0    1.0
- 1.0  2.0   4.0    8.0   16.0
- 1.0  3.0   9.0   27.0   81.0
- 1.0  4.0  16.0   64.0  256.0
- 1.0  5.0  25.0  125.0  625.0
-```
+The `transpose` and `adjoint` operations are also lazy.
 
-Adjoint Vandermonde:
-```julia
+```jldoctest van
+julia> a = 1:5; A = Vandermonde(a)
+5×5 Vandermonde{Int64}:
+ 1  1   1    1    1
+ 1  2   4    8   16
+ 1  3   9   27   81
+ 1  4  16   64  256
+ 1  5  25  125  625
+
 julia> A'
-5×5 LinearAlgebra.Adjoint{Float64,Vandermonde{Float64}}:
- 1.0   1.0   1.0    1.0    1.0
- 1.0   2.0   3.0    4.0    5.0
- 1.0   4.0   9.0   16.0   25.0
- 1.0   8.0  27.0   64.0  125.0
- 1.0  16.0  81.0  256.0  625.0
+5×5 adjoint(::Vandermonde{Int64}) with eltype Int64:
+ 1   1   1    1    1
+ 1   2   3    4    5
+ 1   4   9   16   25
+ 1   8  27   64  125
+ 1  16  81  256  625
 ```
 
-The backslash operator \\ is overloaded to solve Vandermonde and adjoint
+The backslash operator `\\` is overloaded to solve Vandermonde and adjoint
 Vandermonde systems in `O(n^2)` time using the algorithm of
 Björck & Pereyra (1970), https://doi.org/10.2307/2004623.
 
-```julia
-julia> A\a
-5-element Array{Float64,1}:
+```jldoctest van
+julia> A \\ a
+5-element Vector{Float64}:
  0.0
  1.0
  0.0
  0.0
  0.0
 
-julia> r2 = A[2,:]
-julia> A'\r2
-5-element Array{Float64,1}:
+julia> A' \\ A[2,:]
+5-element Vector{Float64}:
  0.0
  1.0
  0.0
@@ -47,54 +53,29 @@ julia> A'\r2
  0.0
 ```
 """
-struct Vandermonde{T} <: AbstractArray{T, 2}
+struct Vandermonde{T} <: AbstractMatrix{T}
     c :: Vector{T}
 end
 
-getindex(V::Vandermonde, i::Int, j::Int) = V.c[i]^(j-1)
-isassigned(V::Vandermonde, i::Int, j::Int) = isassigned(V.c, i)
-
-size(V::Vandermonde, r::Int) = (r==1 || r==2) ? length(V.c) :
-    throw(ArgumentError("Invalid dimension $r"))
-size(V::Vandermonde) = length(V.c), length(V.c)
-
-function Matrix(V::Vandermonde{T}) where T
-    n=size(V, 1)
-    M=Array{T}(undef, n, n)
-    M[:,1] .= 1
-    for j=2:n
-        for i=1:n
-        M[i,j] = M[i,j-1]*V.c[i]
-        end
-    end
-    M
+function Vandermonde(c::AbstractVector{T}) where T
+    return Vandermonde{T}(convert(Vector{T}, c))
 end
 
-function Matrix(V::Adjoint{T,Vandermonde{T}}) where T
-    n=size(V, 1)
-    M=Array{T}(undef, n, n)
-    M[1,:] .= 1
-    for j=1:n
-        for i=2:n
-        M[i,j] = M[i-1,j]*adjoint(V.parent.c[j])
-        end
-    end
-    M
+@inline Base.@propagate_inbounds function getindex(
+    V::Vandermonde,
+    i::Int,
+    j::Int,
+)
+    @boundscheck checkbounds(V, i, j)
+    return (@inbounds V.c[i])^(j-1)
 end
 
-function Matrix(V::Transpose{T,Vandermonde{T}}) where T
-    n=size(V, 1)
-    M=Array{T}(undef, n, n)
-    M[1,:] .= 1
-    for j=1:n
-        for i=2:n
-        M[i,j] = M[i-1,j]*V.parent.c[j]
-        end
-    end
-    M
-end
+size(V::Vandermonde) = (length(V.c), length(V.c))
 
-function \(V::Adjoint{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 where T2
+
+# solvers
+
+function \(V::Adjoint{T1,<:Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where {T1, T2}
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
     copyto!(x, y)
@@ -102,7 +83,7 @@ function \(V::Adjoint{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 whe
     return x
 end
 
-function \(V::Transpose{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 where T2
+function \(V::Transpose{T1,<:Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where {T1, T2}
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
     copyto!(x, y)
@@ -110,7 +91,7 @@ function \(V::Transpose{T1,Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where T1 w
     return x
 end
 
-function \(V::Vandermonde{T1}, y::AbstractVecOrMat{T2}) where T1 where T2
+function \(V::Vandermonde{T1}, y::AbstractVecOrMat{T2}) where {T1, T2}
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
     copyto!(x, y)
@@ -119,17 +100,21 @@ function \(V::Vandermonde{T1}, y::AbstractVecOrMat{T2}) where T1 where T2
 end
 
 
+"""
+    vandtype(T1::Type, T2::Type)
+Determine the return type of `Vandermonde{T1} \\ Vector{T2}`.
+"""
 function vandtype(T1::Type, T2::Type)
-    # Figure out the return type of Vandermonde{T1} \ Vector{T2}
     T = promote_type(T1, T2)
-    S = typeof(oneunit(T)/oneunit(T1))
+    S = typeof(oneunit(T) / oneunit(T1))
     return S
 end
+
 
 """
     pvand!(a, b) -> b
 
-Solves system ``A^T*x = b`` in-place.
+Solve system ``A^T*x = b`` in-place.
 
 ``A^T`` is transpose of Vandermonde matrix ``A_{ij} = a_i^{j-1}``.
 
@@ -138,35 +123,37 @@ Mathematics of Computation, Vol. 24, No. 112 (1970), pp. 893-903,
 https://doi.org/10.2307/2004623
 """
 function pvand!(alpha, B)
-    n = length(alpha);
-    if n != size(B,1)
+    n = length(alpha)
+    n == size(B,1) ||
         throw(DimensionMismatch("matrix has dimensions ($n,$n) but right hand side has $(size(B,1)) rows"))
-    end
     nrhs = size(B,2)
     @inbounds begin
         for j=1:nrhs
             for k=1:n-1
                 for i=n:-1:k+1
-                    B[i,j] = B[i,j]-alpha[k]*B[i-1,j]
+                    B[i,j] -= alpha[k] * B[i-1,j]
                 end
             end
             for k=n-1:-1:1
                 for i=k+1:n
-                    B[i,j] = B[i,j]/(alpha[i]-alpha[i-k])
+                    B[i,j] = B[i,j] / (alpha[i] - alpha[i-k])
                 end
                 for i=k:n-1
-                    B[i,j] = B[i,j]-B[i+1,j]
+                    B[i,j] -= B[i+1,j]
                 end
             end
         end
     end
+    return B
 end
+
+
 """
     dvand!(a, b) -> b
 
-Solves system ``A*x = b`` in-place.
+Solve system ``A*x = b`` in-place.
 
-``A`` is Vandermonde matrix ``A_{ij} = a_i^{j-1}``.
+`A` is Vandermonde matrix ``A_{ij} = a_i^{j-1}``.
 
 Algorithm by Bjorck & Pereyra,
 Mathematics of Computation, Vol. 24, No. 112 (1970), pp. 893-903,
@@ -174,22 +161,22 @@ https://doi.org/10.2307/2004623
 """
 function dvand!(alpha, B)
     n = length(alpha)
-    if n != size(B,1)
+    n == size(B,1) ||
         throw(DimensionMismatch("matrix has dimensions ($n,$n) but right hand side has $(size(B,1)) rows"))
-    end
     nrhs = size(B,2)
     @inbounds begin
         for j=1:nrhs
             for k=1:n-1
                 for i=n:-1:k+1
-                    B[i,j] = (B[i,j]-B[i-1,j])/(alpha[i]-alpha[i-k])
+                    B[i,j] = (B[i,j] - B[i-1,j]) / (alpha[i] - alpha[i-k])
                 end
             end
             for k=n-1:-1:1
                 for i=k:n-1
-                    B[i,j] = B[i,j]-alpha[k]*B[i+1,j]
+                    B[i,j] -= alpha[k] * B[i+1,j]
                 end
             end
         end
     end
+    return B
 end
