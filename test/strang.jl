@@ -1,23 +1,20 @@
-Z = Strang(1)
-@test Matrix(Z) == reshape([2.0],(1,1))
+# strang.jl
 
-n = rand(1:10)
-Z = Strang(n)
+using SpecialMatrices: Strang
+using LinearAlgebra: diagm, SymTridiagonal
+using Test: @test, @testset, @test_throws, @inferred
 
-for i in 1:n, j in 1:n
-    i==j && @test Z[i,j] == 2
-    abs(i-j)==1 && @test Z[i,j] == -1
-    abs(i-j)>1 && @test Z[i,j] == 0
+@testset "strang" begin
+    @test_throws ArgumentError Strang(0)
+
+    Z = @inferred Strang(1)
+    @test Matrix(Z) == reshape([2.0],(1,1))
+
+    n = 5
+    Z = @inferred Strang(Int64, 5)
+    @test Z == diagm(0 => 2ones(n), 1 => -ones(n-1), -1 => -ones(n-1))
+
+    @test Z isa SymTridiagonal
 end
 
-A = Strang(10)
-u = ones(10)
-@test A*u == [1.0;zeros(8);1.0]
-
-#Matvec product
-b = randn(n)
-@test Z*b ≈ Matrix(Z)*b
-
-m = rand(1:10)
-A = randn(m, n)
-@test A*Z ≈ A*Matrix(Z)
+# no further tests are needed because SymTridiagonal is tested elsewhere
