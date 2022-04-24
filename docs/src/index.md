@@ -20,5 +20,21 @@ See the Examples.
 
 ## Function Documentation
 ```@docs
+Cauchy
+
+Companion
+
+Frobenius
+
+Hilbert
+
+Kahan
+
 Kronecker
+
+Riemann
+
+Strang
+
+Vandermonde
 ```
