@@ -17,3 +17,8 @@ See the package README
 for details.
 
 See the Examples.
+
+## Function Documentation
+```@docs
+Kronecker
+```
