@@ -8,6 +8,7 @@ const files = (
     "hilbert",
     "strang",
     "vandermonde",
+    "kronecker"
 )
 
 @testset "SpecialMatrices.jl" begin
