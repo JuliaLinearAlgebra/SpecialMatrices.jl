@@ -3,10 +3,10 @@ name: Documentation
 on:
   pull_request:
     paths-ignore:
-    - 'README.md'
+      - 'README.md'
   push:
     paths-ignore:
-    - 'README.md'
+      - 'README.md'
     branches:
       - 'master'
       - 'release-'
@@ -16,12 +16,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@latest
       - uses: julia-actions/setup-julia@latest
         with:
-          version: '1.6'
+          version: '1'
       - name: Cache artifacts
-        uses: actions/cache@v3
+        uses: actions/cache@latest
         env:
           cache-name: cache-artifacts
         with:
