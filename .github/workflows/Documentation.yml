@@ -21,7 +21,7 @@ jobs:
         with:
           version: '1'
       - name: Cache artifacts
-        uses: actions/cache@latest
+        uses: actions/cache@v1
         env:
           cache-name: cache-artifacts
         with:
