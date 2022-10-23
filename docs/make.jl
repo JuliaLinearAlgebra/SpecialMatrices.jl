@@ -36,7 +36,7 @@ isci = get(ENV, "CI", nothing) == "true"
 
 format = Documenter.HTML(;
     prettyurls = isci,
-    edit_link = "main",
+    edit_link = "master",
     canonical = "https://JuliaMatrices.github.io/SpecialMatrices.jl/stable/",
 #   assets = String[],
 )
@@ -55,7 +55,7 @@ makedocs(;
 if isci
     deploydocs(;
         repo = "github.com/JuliaMatrices/SpecialMatrices.jl",
-        devbranch = "main",
+        devbranch = "master",
         devurl = "dev",
         versions = ["stable" => "v^", "dev" => "dev"],
         forcepush = true,
