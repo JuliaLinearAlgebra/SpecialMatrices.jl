@@ -2,9 +2,13 @@ name: Documentation
 
 on:
   pull_request:
+    paths-ignore:
+    - 'README.md'
   push:
+    paths-ignore:
+    - 'README.md'
     branches:
-      - 'main'
+      - 'master'
       - 'release-'
     tags: '*'
 
@@ -12,12 +16,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: julia-actions/setup-julia@latest
         with:
           version: '1.6'
       - name: Cache artifacts
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         env:
           cache-name: cache-artifacts
         with:
@@ -30,10 +34,10 @@ jobs:
       - name: Install dependencies
         run: |
           julia --project=docs/ -e '
-          ENV["JULIA_PKG_SERVER"] = ""
-          using Pkg
-          Pkg.develop(PackageSpec(path=pwd()))
-          Pkg.instantiate()'
+            ENV["JULIA_PKG_SERVER"] = ""
+            using Pkg
+            Pkg.develop(PackageSpec(path=pwd()))
+            Pkg.instantiate()'
       - name: BuildAndDeploy
         env:
 # https://juliadocs.github.io/Documenter.jl/stable/man/hosting/#Authentication:-GITHUB_TOKEN
