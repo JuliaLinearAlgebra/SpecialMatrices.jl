@@ -32,3 +32,6 @@ Hf = Hilbert(Float64, n)
 
 Hs = Hilbert(5)
 @test (@inferred det(Hs)) ≈ det(Matrix(Hs))
+
+Hb = @inferred Hilbert(BigInt, n)
+@test Hb[n,n] isa Rational{BigInt}
