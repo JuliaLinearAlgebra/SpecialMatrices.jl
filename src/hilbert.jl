@@ -59,9 +59,9 @@ function getindex(H::Hilbert{T}, i::Integer, j::Integer) where {T}
 end
 
 # Dense version (provided in Core)
-if VERSION < v"1.6"
-    Matrix(H::Hilbert) = [H[i,j] for i in 1:size(H,1), j in 1:size(H,2)]
-end
+#if VERSION < v"1.6"
+#    Matrix(H::Hilbert) = [H[i,j] for i in 1:size(H,1), j in 1:size(H,2)]
+#end
 
 # Some properties
 ishermitian(H::Hilbert) = H.m==H.n
@@ -104,9 +104,9 @@ Caution: this function overflows easily.
 det(A::InverseHilbert{T}) where {T} = prod(T, (2k+1) * binomial(2k,k)^2 for k in 1:A.n-1)
 
 # Dense version (in Core)
-if VERSION < v"1.6"
-    Matrix(A::InverseHilbert) = [A[i,j] for i in 1:size(A,1), j in 1:size(A,2)]
-end
+#if VERSION < v"1.6"
+#    Matrix(A::InverseHilbert) = [A[i,j] for i in 1:size(A,1), j in 1:size(A,2)]
+#end
 
 # Define Base.inv
 function inv(H::Hilbert{T}) where {T}
