@@ -6,7 +6,7 @@ H = @inferred Hilbert(n)
 @test H[n,n] == 1//(2n-1)
 
 @test size(H) == (n,n)
-@test ishermitian(H)
+@test (@inferred ishermitian(H))
 @test (@inferred Matrix(H)) isa Matrix
 
 Hi = @inferred inv(H)
@@ -15,7 +15,7 @@ Hi = @inferred inv(H)
 @test Hi[1,1] == n^2//1
 
 @test size(Hi) == (n,n)
-@test ishermitian(Hi)
+@test (@inferred ishermitian(Hi))
 @test (@inferred Matrix(Hi)) isa Matrix
 
 if VERSION >= v"1.6" # This test fails with 1.0 so exclude it there.
@@ -30,11 +30,12 @@ Hii = @inferred inv(Hi)
 # For "large" n the determinant overflows for Int type:
 @test_throws OverflowError det(H)
 # But it works fine for Float64 type:
-Hf = Hilbert(Float64, n)
+Hf = @inferred Hilbert(Float64, n)
 @test (@inferred det(Hf)) isa Float64
 
 Hs = Hilbert(5)
 @test (@inferred det(Hs)) ≈ det(Matrix(Hs))
 
-Hb = @inferred Hilbert(BigInt, n)
-@test Hb[n,n] isa Rational{BigInt}
+Hb = @inferred InverseHilbert{BigInt}(n)
+@test (@inferred getindex(Hb,n,n)) isa BigInt
+@test Hb[n,n] isa BigInt
