@@ -81,6 +81,10 @@ InverseHilbert(n::Integer) = InverseHilbert(Int, n)
 size(A::InverseHilbert, dim::Integer) = dim==1 || dim==2 ? A.n : 1
 size(A::InverseHilbert) = size(A,1), size(A,2)
 
+# Properties
+ishermitian(::InverseHilbert) = true
+isposdef(::InverseHilbert) = true
+
 # Index into a inverse Hilbert matrix
 function getindex(A::InverseHilbert{T}, i::Integer, j::Integer) where {T}
     out = (-1)^(i+j) * (i+j-1) * binomial(A.n+i-1, A.n-j) *
