@@ -26,7 +26,8 @@ julia> ] add SpecialMatrices
 
 ## Related packages
 
-[ToeplitzMatrices.jl](https://github.com/JuliaMatrices/ToeplitzMatrices.jl) supports
+[ToeplitzMatrices.jl](https://github.com/JuliaMatrices/ToeplitzMatrices.jl)
+supports
 Toeplitz, Hankel, and circulant matrices.
 
 
@@ -40,19 +41,19 @@ Cauchy(x)=Cauchy(x,x)
 cauchy(k::Number)=Cauchy(collect(1:k))
 
 julia> Cauchy([1,2,3],[3,4,5])
-3x3 Cauchy{Int64}:
+3×3 Cauchy{Int64}:
  0.25      0.2       0.166667
  0.2       0.166667  0.142857
  0.166667  0.142857  0.125
 
 julia> Cauchy([1,2,3])
-3x3 Cauchy{Int64}:
+3×3 Cauchy{Int64}:
  0.5       0.333333  0.25
  0.333333  0.25      0.2
  0.25      0.2       0.166667
 
 julia> Cauchy(pi)
-3x3 Cauchy{Float64}:
+3×3 Cauchy{Float64}:
  0.5       0.333333  0.25
  0.333333  0.25      0.2
  0.25      0.2       0.166667
@@ -63,7 +64,7 @@ julia> Cauchy(pi)
 
 ```julia
 julia> A=Companion([3,2,1])
-3x3 Companion{Int64}:
+3×3 Companion{Int64}:
  0  0  -3
  1  0  -2
  0  1  -1
@@ -92,7 +93,7 @@ Example
 julia> using SpecialMatrices
 
 julia> F=Frobenius(3, [1.0,2.0,3.0]) #Specify subdiagonals of column 3
-6x6 Frobenius{Float64}:
+6×6 Frobenius{Float64}:
  1.0  0.0  0.0  0.0  0.0  0.0
  0.0  1.0  0.0  0.0  0.0  0.0
  0.0  0.0  1.0  0.0  0.0  0.0
@@ -101,7 +102,7 @@ julia> F=Frobenius(3, [1.0,2.0,3.0]) #Specify subdiagonals of column 3
  0.0  0.0  3.0  0.0  0.0  1.0
 
 julia> inv(F) #Special form of inverse
-6x6 Frobenius{Float64}:
+6×6 Frobenius{Float64}:
  1.0  0.0   0.0  0.0  0.0  0.0
  0.0  1.0   0.0  0.0  0.0  0.0
  0.0  0.0   1.0  0.0  0.0  0.0
@@ -110,7 +111,7 @@ julia> inv(F) #Special form of inverse
  0.0  0.0  -3.0  0.0  0.0  1.0
 
 julia> F*F #Special form preserved if the same column has the subdiagonals
-6x6 Frobenius{Float64}:
+6×6 Frobenius{Float64}:
  1.0  0.0  0.0  0.0  0.0  0.0
  0.0  1.0  0.0  0.0  0.0  0.0
  0.0  0.0  1.0  0.0  0.0  0.0
@@ -119,7 +120,7 @@ julia> F*F #Special form preserved if the same column has the subdiagonals
  0.0  0.0  6.0  0.0  0.0  1.0
 
 julia> F*Frobenius(2, [5.0,4.0,3.0,2.0]) #Promotes to Matrix
-6x6 Array{Float64,2}:
+6×6 Array{Float64,2}:
  1.0   0.0  0.0  0.0  0.0  0.0
  0.0   1.0  0.0  0.0  0.0  0.0
  0.0   5.0  1.0  0.0  0.0  0.0
@@ -145,7 +146,7 @@ julia> A=Hilbert(5)
 Hilbert{Rational{Int64}}(5,5)
 
 julia> Matrix(A)
-5x5 Array{Rational{Int64},2}:
+5×5 Array{Rational{Int64},2}:
  1//1  1//2  1//3  1//4  1//5
  1//2  1//3  1//4  1//5  1//6
  1//3  1//4  1//5  1//6  1//7
@@ -153,7 +154,7 @@ julia> Matrix(A)
  1//5  1//6  1//7  1//8  1//9
 
 julia> Matrix(Hilbert(5))
-5x5 Array{Rational{Int64},2}:
+5×5 Array{Rational{Int64},2}:
  1//1  1//2  1//3  1//4  1//5
  1//2  1//3  1//4  1//5  1//6
  1//3  1//4  1//5  1//6  1//7
@@ -164,7 +165,7 @@ Inverses are also integer matrices:
 
 ```julia
 julia> inv(A)
-5x5 Array{Rational{Int64},2}:
+5×5 Array{Rational{Int64},2}:
     25//1    -300//1     1050//1    -1400//1     630//1
   -300//1    4800//1   -18900//1    26880//1  -12600//1
   1050//1  -18900//1    79380//1  -117600//1   56700//1
@@ -177,7 +178,7 @@ julia> inv(A)
 
 ```julia
 julia> A=Kahan(5,5,1,35)
-5x5 Kahan{Int64,Int64}:
+5×5 Kahan{Int64,Int64}:
  1.0  -0.540302  -0.540302  -0.540302  -0.540302
  0.0   0.841471  -0.454649  -0.454649  -0.454649
  0.0   0.0        0.708073  -0.382574  -0.382574
@@ -185,7 +186,7 @@ julia> A=Kahan(5,5,1,35)
  0.0   0.0        0.0        0.0        0.501368
 
 julia> A=Kahan(5,3,0.5,0)
-5x3 Kahan{Float64,Int64}:
+5×3 Kahan{Float64,Int64}:
  1.0  -0.877583  -0.877583
  0.0   0.479426  -0.420735
  0.0   0.0        0.229849
@@ -193,7 +194,7 @@ julia> A=Kahan(5,3,0.5,0)
  0.0   0.0        0.0
 
 julia> A=Kahan(3,5,0.5,1e-3)
-3x5 Kahan{Float64,Float64}:
+3×5 Kahan{Float64,Float64}:
  1.0  -0.877583  -0.877583  -0.877583  -0.877583
  0.0   0.479426  -0.420735  -0.420735  -0.420735
  0.0   0.0        0.229849  -0.201711  -0.201711
@@ -209,11 +210,11 @@ For more details see [N. J. Higham (1987)][Higham87].
 Riemann matrix is defined as `A = B[2:N+1, 2:N+1]`, where
 `B[i,j] = i-1` if `i` divides `j`, and `-1` otherwise.
 [Riemann hypothesis](http://en.wikipedia.org/wiki/Riemann_hypothesis) holds
-if and only if `det(A) = O( N! N^(-1/2+epsilon))` for every `epsilon > 0`.
+if and only if `det(A) = O( N! N^(-1/2+ϵ))` for every `ϵ > 0`.
 
 ```julia
 julia> Riemann(7)
-7x7 Riemann{Int64}:
+7×7 Riemann{Int64}:
   1  -1   1  -1   1  -1   1
  -1   2  -1  -1   2  -1  -1
  -1  -1   3  -1  -1  -1   3
@@ -225,22 +226,24 @@ julia> Riemann(7)
 
 For more details see [F. Roesler (1986)][Roesler1986].
 
-[Roesler1986]: http://www.sciencedirect.com/science/article/pii/0024379586902557 "Friedrich Roesler, Riemann's hypothesis as an eigenvalue problem, Linear Algebra and its Applications, Vol. 81, (1986)"
+[Roesler1986]: https://doi.org/10.1016/0024-3795(86)90255-7 "Friedrich Roesler,
+Riemann's hypothesis as an eigenvalue problem,
+Linear Algebra and its Applications, Vol. 81, p.153-198, Sep. 1986"
 
 
-### `Strang` matrix
+### [`Strang` matrix](http://doi.org/10.1137/141000671)
 
 A special `SymTridiagonal` matrix named after Gilbert Strang
 
 ```julia
 julia> Strang(6)
-6x6 Strang{Float64}:
-  2.0  -1.0   0.0   0.0   0.0   0.0
- -1.0   2.0  -1.0   0.0   0.0   0.0
-  0.0  -1.0   2.0  -1.0   0.0   0.0
-  0.0   0.0  -1.0   2.0  -1.0   0.0
-  0.0   0.0   0.0  -1.0   2.0  -1.0
-  0.0   0.0   0.0   0.0  -1.0   2.0
+6×6 Strang{Float64}:
+  2  -1   0   0   0   0
+ -1   2  -1   0   0   0
+  0  -1   2  -1   0   0
+  0   0  -1   2  -1   0
+  0   0   0  -1   2  -1
+  0   0   0   0  -1   2
 ```
 
 
