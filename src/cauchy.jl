@@ -5,7 +5,6 @@ export Cauchy
 """
     [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
 
-
 * `Cauchy(x,y)[i,j] = 1/(x[i]+y[j])`
 * `Cauchy(x) = Cauchy(x,x)`
 * `Cauchy(k::Int) = Cauchy(1:k)`
@@ -35,12 +34,11 @@ struct Cauchy{T} <: AbstractMatrix{T}
     y::Vector{T}
 end # immutable
 
-function Cauchy(x, y)
-    cx = collect(x)
-    cy = collect(y)
-    T = promote_type(eltype(cx), eltype(cy), eltype(1f0*one(eltype(cx)))) # ensure at least Float32
-    vx = Vector{T}(cx)
-    vy = Vector{T}(cy)
+function Cauchy(x::AbstractVector{Tx}, y::AbstractVector{Ty}) where {Tx <: Number, Ty <: Number}
+    T = promote_type(Tx, Ty)
+    T = eltype(1f0 * one(T)) # ensure at least Float32
+    vx = Vector{T}(x)
+    vy = Vector{T}(y)
     Cauchy(vx, vy)
 end
 
