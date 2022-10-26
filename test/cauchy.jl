@@ -4,7 +4,7 @@ C = @inferred Cauchy(3)
 Cf = @inferred Matrix(C)
 @test Cf isa Matrix
 
-@test C[1,1] = 1
+@test C[1,1] == 1
 @inferred getindex(C, 1, 1)
 
 x = 1:3
