@@ -38,7 +38,7 @@ end # immutable
 function Cauchy(x, y)
     cx = collect(x)
     cy = collect(y)
-    T = promote_type(eltype(cx), eltype(cy), 1f0*one(eltype(cx))) # ensure at least Float32
+    T = promote_type(eltype(cx), eltype(cy), eltype(1f0*one(eltype(cx)))) # ensure at least Float32
     vx = Vector{T}(cx)
     vy = Vector{T}(cy)
     Cauchy(vx, vy)
