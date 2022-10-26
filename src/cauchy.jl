@@ -3,32 +3,57 @@
 export Cauchy
 
 """
-    Cauchy
-Cauchy matrix where `A[i,j] = 1 / (x[i] y[j])` for vectors `x` and `y`.
+    [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
 
-Construct with `Cauchy(x,y)` or `Cauchy(x)` or `Cauchy(k::Int)`.
+
+* `Cauchy(x,y)[i,j] = 1/(x[i]+y[j])`
+* `Cauchy(x) = Cauchy(x,x)`
+* `Cauchy(k::Int) = Cauchy(1:k)`
+
+```julia
+julia> Cauchy(1:3, 3:5)
+3x3 Cauchy{Int64}:
+ 0.25      0.2       0.166667
+ 0.2       0.166667  0.142857
+ 0.166667  0.142857  0.125
+
+julia> Cauchy(1:3)
+3x3 Cauchy{Int64}:
+ 0.5       0.333333  0.25
+ 0.333333  0.25      0.2
+ 0.25      0.2       0.166667
+
+julia> Cauchy(3)
+3x3 Cauchy{Float64}:
+ 0.5       0.333333  0.25
+ 0.333333  0.25      0.2
+ 0.25      0.2       0.166667
+```
 """
-immutable Cauchy{T<:Number} <: AbstractMatrix{T}
+struct Cauchy{T} <: AbstractMatrix{T}
     x::Vector{T}
     y::Vector{T}
-end
+end # immutable
 
 function Cauchy(x, y)
     cx = collect(x)
     cy = collect(y)
-    T = promote_type(eltype(cx), eltype(cy))
+    T = promote_type(eltype(cx), eltype(cy), 1f0*one(eltype(cx))) # ensure at least Float32
     vx = Vector{T}(cx)
     vy = Vector{T}(cy)
     Cauchy(vx, vy)
 end
+
 function Cauchy(x)
     vx = collect(x)
     Cauchy(vx, vx)
 end
-Cauchy(k::Number) =  Cauchy(1:k)
+
+Cauchy(k::Int) = Cauchy(1:k)
 
 size(A::Cauchy) = (size(A.x,1), size(A.y,1))
 
-function getindex(A::Cauchy,i::Integer,j::Integer)
-    return 1.0/(A.x[i]+A.y[j])
+function getindex(A::Cauchy{T}, i::Integer, j::Integer) where {T}
+    @boundscheck checkbounds(A, i, j)
+    @inbounds return 1 / (A.x[i] + A.y[j])
 end

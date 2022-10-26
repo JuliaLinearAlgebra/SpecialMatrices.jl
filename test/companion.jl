@@ -2,12 +2,21 @@ n = rand(1:10)
 Z = Companion(randn(n))
 
 #Special properties
-@test_approx_eq full(inv(Z)) inv(full(Z))
+@test Matrix(inv(Z)) ≈ inv(Matrix(Z))
 
 #Matvec product
 b = randn(n)
-@test_approx_eq Z*b full(Z)*b
+@test Z*b ≈ Matrix(Z)*b
 
 m = rand(1:10)
 A = randn(m, n)
-@test_approx_eq A*Z A*full(Z)
+@test A*Z ≈ A*Matrix(Z)
+
+# Polynomial construction
+using Polynomials
+p = Polynomial([-1,0,1])
+p_c = Companion(p)
+v1 = [1,1]
+v2 = [-1,1]
+@test p_c*v1 == v1
+@test p_c*v2 == -v2
