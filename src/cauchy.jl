@@ -2,6 +2,12 @@
 
 export Cauchy
 
+"""
+    Cauchy
+Cauchy matrix where `A[i,j] = 1 / (x[i] y[j])` for vectors `x` and `y`.
+
+Construct with `Cauchy(x,y)` or `Cauchy(x)` or `Cauchy(k::Int)`.
+"""
 immutable Cauchy{T<:Number} <: AbstractMatrix{T}
     x::Vector{T}
     y::Vector{T}
