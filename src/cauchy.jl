@@ -49,7 +49,7 @@ function Cauchy(x)
     Cauchy(vx, vx)
 end
 
-Cauchy(k::Int) = Cauchy(1:k)
+Cauchy(k::Int) = Cauchy(Rational{Int}.(1:k))
 
 size(A::Cauchy) = (size(A.x,1), size(A.y,1))
 
