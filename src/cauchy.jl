@@ -32,5 +32,3 @@ size(A::Cauchy) = (size(A.x,1), size(A.y,1))
 function getindex(A::Cauchy,i::Integer,j::Integer)
     return 1.0/(A.x[i]+A.y[j])
 end
-
-full(A::Cauchy) = [A[i,j] for i=1:size(A,1), j=1:size(A,2)]
