@@ -1,22 +1,47 @@
-n = rand(1:10)
-Z = Companion(randn(n))
+# test/companion.jl
 
-#Special properties
-@test Matrix(inv(Z)) ≈ inv(Matrix(Z))
+import LinearAlgebra: mul!
 
-#Matvec product
-b = randn(n)
-@test Z*b ≈ Matrix(Z)*b
+n = 9
+c = rand(n)
+Z = @inferred Companion(c)
 
-m = rand(1:10)
-A = randn(m, n)
-@test A*Z ≈ A*Matrix(Z)
+@test Z isa Companion{Float64}
+@test (@inferred size(Z)) == (n,n)
+@test size(Z,1) == n
+
+@test Z[2,1] == 1
+@test (@inferred getindex(Z, 2, n)) == -c[2]
+
+# Special properties
+Zi = @inferred inv(Z)
+Zm = @inferred Matrix(Z)
+@test Matrix(Zi) ≈ inv(Zm)
+
+# Matvec product
+x = randn(n)
+@test Z * x ≈ Zm * x
+
+y = similar(x)
+@inferred mul!(y, Z, x)
+@test y ≈ Z * x
+
+
+# matrix * companion
+m = 8
+B = randn(m, n)
+@test B * Z ≈ B * Zm
+
+A = copy(B)
+@inferred mul!(A, B, Z)
+@test A ≈ B * Zm
+
 
 # Polynomial construction
 using Polynomials
 p = Polynomial([-1,0,1])
-p_c = Companion(p)
+C = @inferred Companion(p)
 v1 = [1,1]
 v2 = [-1,1]
-@test p_c*v1 == v1
-@test p_c*v2 == -v2
+@test C * v1 == v1
+@test C * v2 == -v2
