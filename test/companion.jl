@@ -2,6 +2,8 @@
 
 import LinearAlgebra: mul!
 
+Z = @inferred Companion(1:3) # AbstractVector
+
 n = 9
 c = rand(n)
 Z = @inferred Companion(c)
