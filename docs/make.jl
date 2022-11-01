@@ -7,13 +7,13 @@ using Literate
 
 # https://juliadocs.github.io/Documenter.jl/stable/man/syntax/#@example-block
 ENV["GKSwstype"] = "100"
+ENV["GKS_ENCODING"] = "utf-8"
 
-# generate tutorials and how-to guides using Literate
+# generate examples using Literate
 lit = joinpath(@__DIR__, "lit")
 src = joinpath(@__DIR__, "src")
 notebooks = joinpath(src, "notebooks")
 
-ENV["GKS_ENCODING"] = "utf-8"
 
 DocMeta.setdocmeta!(SpecialMatrices, :DocTestSetup, :(using SpecialMatrices); recursive=true)
 
@@ -26,6 +26,7 @@ for (root, _, files) in walkdir(lit), file in files
     Literate.markdown(ipath, opath, documenter = execute)
     nb && Literate.notebook(ipath, notebooks, execute = execute)
 end
+
 
 # Documentation structure
 ismd(f) = splitext(f)[2] == ".md"
@@ -59,9 +60,7 @@ if isci
         devurl = "dev",
         versions = ["stable" => "v^", "dev" => "dev"],
         forcepush = true,
-        push_preview = true,
+#       push_preview = true,
         # see https://JuliaMatrices.github.io/SpecialMatrices.jl/previews/PR##
     )
-else
-    @warn "may need to: rm -r src/examples"
 end
