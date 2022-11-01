@@ -3,7 +3,7 @@
 #---------------------------------------------------------
 
 # This page illustrates the Julia package
-# [`SpecialMatrices`](https://github.com/JuliaMatrices/SpecialMatrices.jl).
+# [`SpecialMatrices`](https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl).
 
 # ### Setup
 

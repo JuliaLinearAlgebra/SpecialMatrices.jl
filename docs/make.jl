@@ -1,49 +1,59 @@
-using SpecialMatrices
+execute = isempty(ARGS) || ARGS[1] == "run"
+
+org, reps = :JuliaLinearAlgebra, :SpecialMatrices
+eval(:(using $reps))
 using Documenter
 using Literate
 
-# based on:
-# https://github.com/jw3126/UnitfulRecipes.jl/blob/master/docs/make.jl
-
 # https://juliadocs.github.io/Documenter.jl/stable/man/syntax/#@example-block
 ENV["GKSwstype"] = "100"
-
-# generate tutorials and how-to guides using Literate
-lit = joinpath(@__DIR__, "lit")
-src = joinpath(@__DIR__, "src")
-notebooks = joinpath(src, "notebooks")
-
 ENV["GKS_ENCODING"] = "utf-8"
 
-DocMeta.setdocmeta!(SpecialMatrices, :DocTestSetup, :(using SpecialMatrices); recursive=true)
+# generate examples using Literate
+lit = joinpath(@__DIR__, "lit")
+src = joinpath(@__DIR__, "src")
+gen = joinpath(@__DIR__, "src/generated")
 
-execute = true # Set to true for executing notebooks and documenter!
-nb = false # Set to true to generate the notebooks
+base = "$org/$reps.jl"
+repo_root_url =
+    "https://github.com/$base/blob/main/docs/lit/examples"
+nbviewer_root_url =
+    "https://nbviewer.org/github/$base/tree/gh-pages/dev/generated/examples"
+binder_root_url =
+    "https://mybinder.org/v2/gh/$base/gh-pages?filepath=dev/generated/examples"
+
+
+repo = eval(:($reps))
+DocMeta.setdocmeta!(repo, :DocTestSetup, :(using $reps); recursive=true)
+
 for (root, _, files) in walkdir(lit), file in files
-    splitext(file)[2] == ".jl" || continue
+    splitext(file)[2] == ".jl" || continue # process .jl files only
     ipath = joinpath(root, file)
-    opath = splitdir(replace(ipath, lit=>src))[1]
-    Literate.markdown(ipath, opath, documenter = execute)
-    nb && Literate.notebook(ipath, notebooks, execute = execute)
+    opath = splitdir(replace(ipath, lit => gen))[1]
+    Literate.markdown(ipath, opath; documenter = execute, # run examples
+        repo_root_url, nbviewer_root_url, binder_root_url)
+    Literate.notebook(ipath, opath; execute = false, # no-run notebooks
+        repo_root_url, nbviewer_root_url, binder_root_url)
 end
+
 
 # Documentation structure
 ismd(f) = splitext(f)[2] == ".md"
 pages(folder) =
-    [joinpath(folder, f) for f in readdir(joinpath(src, folder)) if ismd(f)]
+    [joinpath("generated/", folder, f) for f in readdir(joinpath(gen, folder)) if ismd(f)]
 
 isci = get(ENV, "CI", nothing) == "true"
 
 format = Documenter.HTML(;
     prettyurls = isci,
     edit_link = "master",
-    canonical = "https://JuliaMatrices.github.io/SpecialMatrices.jl/stable/",
+    canonical = "https://$org.github.io/$repo.jl/stable/",
 #   assets = String[],
 )
 
 makedocs(;
-    modules = [SpecialMatrices],
-    sitename = "SpecialMatrices.jl",
+    modules = [repo],
+    sitename = "$repo.jl",
     format,
     pages = [
         "Home" => "index.md",
@@ -54,14 +64,12 @@ makedocs(;
 
 if isci
     deploydocs(;
-        repo = "github.com/JuliaMatrices/SpecialMatrices.jl",
+        repo = "github.com/$base",
         devbranch = "master",
         devurl = "dev",
         versions = ["stable" => "v^", "dev" => "dev"],
         forcepush = true,
-        push_preview = true,
-        # see https://JuliaMatrices.github.io/SpecialMatrices.jl/previews/PR##
+#       push_preview = true,
+        # see https://$org.github.io/$repo.jl/previews/PR##
     )
-else
-    @warn "may need to: rm -r src/examples"
 end
