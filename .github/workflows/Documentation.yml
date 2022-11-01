@@ -3,10 +3,10 @@ name: Documentation
 on:
   pull_request:
     paths-ignore:
-    - 'README.md'
+      - 'README.md'
   push:
     paths-ignore:
-    - 'README.md'
+      - 'README.md'
     branches:
       - 'master'
       - 'release-'
