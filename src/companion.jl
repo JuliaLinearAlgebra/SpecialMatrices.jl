@@ -32,7 +32,7 @@ Also, directly from a polynomial:
 julia> using Polynomials
 
 julia> P = Polynomial(2:5)
-Polynomial(2 + 3x + 4x^2 + 5x^3)
+Polynomials.Polynomial(2 + 3*x + 4*x^2 + 5*x^3)
 
 julia> C = Companion(P)
 3×3 Companion{Float64}:
