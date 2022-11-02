@@ -11,6 +11,7 @@ Z = @inferred Companion(c)
 @test Z isa Companion{Float64}
 @test (@inferred size(Z)) == (n,n)
 @test size(Z,1) == n
+@test size(Z,3) == 1
 
 @test Z[2,1] == 1
 @test (@inferred getindex(Z, 2, n)) == -c[2]
