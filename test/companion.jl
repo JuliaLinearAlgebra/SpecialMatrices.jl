@@ -1,8 +1,11 @@
 # test/companion.jl
 
 import LinearAlgebra: mul!
+using OffsetArrays: OffsetArray
 
-Z = @inferred Companion(1:3) # AbstractVector
+v = OffsetArray(1:3, -5) # test non-1-based indexing and AbstractVector
+
+Z = @inferred Companion(v)
 
 n = 9
 c = rand(n)
