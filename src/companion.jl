@@ -13,7 +13,7 @@ julia> A = Companion([3,2,1])
 ```
 Also, directly from a polynomial:
 
-```julia
+```jldoctest
 julia> using Polynomials
 
 julia> P = Polynomial(2:5)
