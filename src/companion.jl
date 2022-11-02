@@ -4,7 +4,7 @@ using LinearAlgebra: dot
 """
 [`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
 
-```julia
+```jldoctest
 julia> A = Companion([3,2,1])
 3×3 Companion{Int64}:
  0  0  -3
