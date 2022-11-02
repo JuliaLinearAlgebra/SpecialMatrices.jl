@@ -73,6 +73,7 @@ end
 function mul!(A::Matrix{T}, B::AbstractMatrix, C::Companion) where T
     @boundscheck (size(A) == (size(B,1), size(C,2)) && size(B, 2) == size(C,1)) ||
         throw(DimensionMismatch("mul! arguments incompatible sizes"))
+    Base.require_one_based_indexing(B)
     @views for j in 1:size(A,2)-1
         @inbounds A[:,j] = B[:,j+1]
     end
