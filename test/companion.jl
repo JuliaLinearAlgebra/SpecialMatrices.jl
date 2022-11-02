@@ -48,6 +48,12 @@ A = copy(B)
 @test A ≈ B * Zm
 
 
+# OffsetMatrix * companion
+
+B = OffsetArray(randn(size(B)), 9, -5) # test non-1-based indexing and AbstractMatrix
+@test_throws ArgumentError mul!(A, B, Z)
+
+
 # Polynomial construction
 using Polynomials
 p = Polynomial([-1,0,1])
