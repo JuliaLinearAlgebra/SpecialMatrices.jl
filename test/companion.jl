@@ -15,6 +15,11 @@ Z = @inferred Companion(c)
 @test Z[2,1] == 1
 @test (@inferred getindex(Z, 2, n)) == -c[2]
 
+@test isassigned(Z, 1)
+@test isassigned(Z, n^2)
+@test !isassigned(Z, 0)
+@test !isassigned(Z, n^2+1)
+
 # Special properties
 Zi = @inferred inv(Z)
 Zm = @inferred Matrix(Z)
