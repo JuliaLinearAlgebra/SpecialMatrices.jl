@@ -35,8 +35,7 @@ Companion(v::AbstractVector) = Companion(collect(v))
 # Construct companion matrix from a polynomial
 
 function Companion(P::Polynomial)
-    n = length(P)
-    c = P.coeffs[1:(n-1)] / P.coeffs[n]
+    c = P.coeffs[begin:end-1] ./ P.coeffs[end]
     return Companion(c)
 end
 
