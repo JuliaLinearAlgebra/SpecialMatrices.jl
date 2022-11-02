@@ -24,7 +24,7 @@ the subdiagonal of the nonzero column is stored as a dense vector,
 so that the size can be inferred automatically as j+k,
 where j is the column index and k is the number of subdiagonal elements.
 
-```julia
+```jldoctest
 julia> using SpecialMatrices
 
 julia> F = Frobenius(3, 4:6) # Specify subdiagonals of column 3
@@ -103,6 +103,7 @@ end
 # 3-argument mul! mutates first argument: y <= F * x
 # *(F, x) = F * x derives from this automatically in Base
 function mul!(y::Vector, F::Frobenius, x::AbstractVector)
+    Base.require_one_based_indexing(x)
     @boundscheck (n = size(F, 2)) == length(x) == length(y) ||
         throw(DimensionMismatch("$n $(length(y)) $(length(x))"))
     j = F.colidx
