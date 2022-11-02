@@ -55,7 +55,7 @@ julia> F*F # Special form preserved if the same column has the subdiagonals
  0  0  12  0  0  1
 
 julia> F*Frobenius(2, 2:5) # Promotes to Matrix
-6×6 Matrix{Float64}:
+6×6 Matrix{Int64}:
  1   0  0  0  0  0
  0   1  0  0  0  0
  0   2  1  0  0  0

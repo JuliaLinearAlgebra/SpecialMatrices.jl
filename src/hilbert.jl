@@ -4,33 +4,36 @@
 export Hilbert, InverseHilbert
 
 """
+   Hilbert(m [,n])
+
+Construct `m × m` or `m × n`
 [`Hilbert` matrix](http://en.wikipedia.org/wiki/Hilbert_matrix)
+from its specified dimensions,
+where element `i,j` equal to `1 / (i+j-1)`.
 
-```julia
-julia> A=Hilbert(5)
-Hilbert{Rational{Int64}}(5,5)
-
-julia> Matrix(A)
-5x5 Array{Rational{Int64},2}:
+```jldoctest hilbert1
+julia> A = Hilbert(5)
+5×5 Hilbert{Rational{Int64}}:
  1//1  1//2  1//3  1//4  1//5
  1//2  1//3  1//4  1//5  1//6
  1//3  1//4  1//5  1//6  1//7
  1//4  1//5  1//6  1//7  1//8
  1//5  1//6  1//7  1//8  1//9
 
-julia> Matrix(Hilbert(5))
-5x5 Array{Rational{Int64},2}:
+julia> Matrix(A)
+5×5 Matrix{Rational{Int64}}:
  1//1  1//2  1//3  1//4  1//5
  1//2  1//3  1//4  1//5  1//6
  1//3  1//4  1//5  1//6  1//7
  1//4  1//5  1//6  1//7  1//8
  1//5  1//6  1//7  1//8  1//9
 ```
+
 Inverses are also integer matrices:
 
-```julia
+```jldoctest hilbert1
 julia> inv(A)
-5x5 Array{Rational{Int64},2}:
+5×5 InverseHilbert{Rational{Int64}}:
     25//1    -300//1     1050//1    -1400//1     630//1
   -300//1    4800//1   -18900//1    26880//1  -12600//1
   1050//1  -18900//1    79380//1  -117600//1   56700//1
