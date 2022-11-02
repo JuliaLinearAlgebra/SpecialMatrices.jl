@@ -65,7 +65,7 @@ function mul!(y::Vector, C::Companion, x::AbstractVector)
         throw(DimensionMismatch("mul! arguments incompatible sizes"))
     z = x[end]
     y[1] = -C.c[1] * z
-    y[2:end] = x[1:(end-1)] - C.c[2:end] * z
+    y[2:end] = x[begin:end-1] - C.c[2:end] * z
     return y
 end
 
