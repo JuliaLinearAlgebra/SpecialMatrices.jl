@@ -2,7 +2,22 @@ export Companion
 using LinearAlgebra: dot
 
 """
-[`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
+   Companion(v::Union{AbstractVector,Polynomial})::AbstractMatrix
+
+Construct a lazy
+[`companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
+from the coefficients of its characteristic (monic) polynomial.
+
+The matrix is `n × n` for a vector input of length `n`
+or an input `Polynomial` of degree `n`,
+but the storage here is only `O(n)`.
+This version puts the coefficients
+along the last column of the matrix.
+Some texts put the coefficients along the first row,
+the transpose of the convention used here.
+
+This type has efficient methods
+for `mul!` and `inv`.
 
 ```jldoctest
 julia> A = Companion([3,2,1])
