@@ -4,6 +4,11 @@ Z = Companion(randn(n))
 #Special properties
 @test Matrix(inv(Z)) ≈ inv(Matrix(Z))
 
+@test isassigned(Z, 1)
+@test isassigned(Z, n^2)
+@test !isassigned(Z, 0)
+@test !isassigned(Z, n^2+1)
+
 #Matvec product
 b = randn(n)
 @test Z*b ≈ Matrix(Z)*b
