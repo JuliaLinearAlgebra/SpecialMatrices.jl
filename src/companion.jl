@@ -45,7 +45,7 @@ struct Companion{T} <: AbstractMatrix{T}
     c :: Vector{T}
 end
 
-Companion(v::AbstractVector) = Companion(collect(v))
+Companion(v::AbstractVector{T}) where T = Companion{T}(v)
 
 # Construct companion matrix from a polynomial
 
