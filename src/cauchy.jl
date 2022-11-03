@@ -12,7 +12,7 @@ export Cauchy
 Both `x` and `y` can be any iterable (typically vectors),
 but all elements of `x` must have the same type; likewise for `y`.
 
-```julia
+```jldoctest
 julia> Cauchy([2.0 1], (0, 1, 2))
 2×3 Cauchy{Float64, Matrix{Float64}, Tuple{Int64, Int64, Int64}}:
  0.5  0.333333  0.25
