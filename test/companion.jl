@@ -5,7 +5,7 @@ using OffsetArrays: OffsetArray
 
 v = OffsetArray(1:3, -5) # test non-1-based indexing and AbstractVector
 
-Z = @inferred Companion(v)
+Z = @inferred Companion(OffsetArrays.no_offset_view(v))
 
 n = 9
 c = rand(n)
