@@ -2,6 +2,7 @@
 
 import LinearAlgebra: mul!
 using OffsetArrays: OffsetArray
+import OffsetArrays # for no_offset_view
 
 v = OffsetArray(1:3, -5) # test non-1-based indexing and AbstractVector
 
