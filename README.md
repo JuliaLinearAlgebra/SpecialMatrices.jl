@@ -26,7 +26,7 @@ julia> ] add SpecialMatrices
 
 ## Related packages
 
-[ToeplitzMatrices.jl](https://github.com/JuliaMatrices/ToeplitzMatrices.jl)
+[ToeplitzMatrices.jl](https://github.com/JuliaLinearAlgebra/ToeplitzMatrices.jl)
 supports
 Toeplitz, Hankel, and circulant matrices.
 
@@ -294,21 +294,21 @@ julia> A' \ A[2,:]
 ```
 
 <!-- URLs -->
-[action-img]: https://github.com/JuliaMatrices/SpecialMatrices.jl/workflows/CI/badge.svg
-[action-url]: https://github.com/JuliaMatrices/SpecialMatrices.jl/actions
-[build-img]: https://github.com/JuliaMatrices/SpecialMatrices.jl/workflows/CI/badge.svg?branch=master
-[build-url]: https://github.com/JuliaMatrices/SpecialMatrices.jl/actions?query=workflow%3ACI+branch%3Amaster
+[action-img]: https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/workflows/CI/badge.svg
+[action-url]: https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/actions
+[build-img]: https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/workflows/CI/badge.svg?branch=master
+[build-url]: https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/actions?query=workflow%3ACI+branch%3Amaster
 [pkgeval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/S/SpecialMatrices.svg
 [pkgeval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/S/SpecialMatrices.html
 [code-blue-img]: https://img.shields.io/badge/code%20style-blue-4495d1.svg
 [code-blue-url]: https://github.com/invenia/BlueStyle
-[codecov-img]: https://codecov.io/github/JuliaMatrices/SpecialMatrices.jl/coverage.svg?branch=master
-[codecov-url]: https://codecov.io/github/JuliaMatrices/SpecialMatrices.jl?branch=master
-[coveralls-img]: https://coveralls.io/repos/JuliaMatrices/SpecialMatrices.jl/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/JuliaMatrices/SpecialMatrices.jl?branch=master
+[codecov-img]: https://codecov.io/github/JuliaLinearAlgebra/SpecialMatrices.jl/coverage.svg?branch=master
+[codecov-url]: https://codecov.io/github/JuliaLinearAlgebra/SpecialMatrices.jl?branch=master
+[coveralls-img]: https://coveralls.io/repos/JuliaLinearAlgebra/SpecialMatrices.jl/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/JuliaLinearAlgebra/SpecialMatrices.jl?branch=master
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
-[docs-stable-url]: https://JuliaMatrices.github.io/SpecialMatrices.jl/stable
+[docs-stable-url]: https://JuliaLinearAlgebra.github.io/SpecialMatrices.jl/stable
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
-[docs-dev-url]: https://JuliaMatrices.github.io/SpecialMatrices.jl/dev
+[docs-dev-url]: https://JuliaLinearAlgebra.github.io/SpecialMatrices.jl/dev
 [license-img]: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
 [license-url]: LICENSE
