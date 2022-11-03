@@ -5,7 +5,7 @@ using Polynomials
 
 import LinearAlgebra: Matrix, inv, det, ishermitian, isposdef, mul!
 
-import Base: getindex, isassigned, size, *
+import Base: getindex, size, *
 import Base.\
 
 include("cauchy.jl") # Cauchy matrix

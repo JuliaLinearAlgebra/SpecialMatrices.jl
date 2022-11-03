@@ -1,100 +1,108 @@
 export Companion
+using LinearAlgebra: dot
 
 """
-[`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
+   Companion(v::Union{AbstractVector,Polynomial})::AbstractMatrix
 
-```julia
-julia> A=Companion([3,2,1])
-3x3 Companion{Int64}:
+Construct a lazy
+[`companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
+from the coefficients of its characteristic (monic) polynomial.
+
+The matrix is `n × n` for a vector input of length `n`
+or an input `Polynomial` of degree `n`,
+but the storage here is only `O(n)`.
+This version puts the coefficients
+along the last column of the matrix.
+Some texts put the coefficients along the first row,
+the transpose of the convention used here.
+
+This type has efficient methods
+for `mul!` and `inv`.
+
+```jldoctest
+julia> A = Companion([3,2,1])
+3×3 Companion{Int64}:
  0  0  -3
  1  0  -2
  0  1  -1
 ```
 Also, directly from a polynomial:
 
-```julia
+```jldoctest
 julia> using Polynomials
 
-julia> P=Polynomial([2.0,3,4,5])
-Polynomial(2 + 3x + 4x^2 + 5x^3)
+julia> P = Polynomial(2:5)
+Polynomials.Polynomial(2 + 3*x + 4*x^2 + 5*x^3)
 
-julia> C=Companion(P)
+julia> C = Companion(P)
 3×3 Companion{Float64}:
  0.0  0.0  -0.4
  1.0  0.0  -0.6
  0.0  1.0  -0.8
 ```
 """
-struct Companion{T} <: AbstractArray{T, 2}
+struct Companion{T} <: AbstractMatrix{T}
     c :: Vector{T}
 end
 
-# Generate companion matrix from a polynomial
+Companion(v::AbstractVector{T}) where T = Companion{T}(v)
 
-function Companion(P::Polynomial{T}) where T
-   n = length(P)
-   c = Array{T}(undef, n-1)
-   d=P.coeffs[n]
-   for i=1:n-1
-       c[i]=P.coeffs[i]/d
-   end
-   Companion(c)
+# Construct companion matrix from a polynomial
+
+function Companion(P::Polynomial)
+    c = P.coeffs[begin:end-1] ./ P.coeffs[end]
+    return Companion(c)
 end
 
-#Basic property computations
-size(C::Companion, r::Int) = (r==1 || r==2) ? length(C.c) :
-    throw(ArgumentError("Companion is of rank 2"))
+# Basic properties
 
 function size(C::Companion)
     n = length(C.c)
-    n, n
+    return n, n
 end
 
-#XXX Inefficient but works
-# getindex(C::Companion, i, j) = getindex(Matrix(C), i, j)
-# isassigned(C::Companion, i, j) = isassigned(Matrix(C), i, j)
-getindex(C::Companion{T}, i::Int, j::Int) where T = (j==length(C.c)) ? -C.c[i] : (i==j+1 ? one(T) : zero(T) )
-isassigned(C::Companion, i::Int, j::Int) = (j==length(C.c)) ? isassigned(C.c,i) : true
+@inline Base.@propagate_inbounds function getindex(
+    C::Companion{T},
+    i::Int,
+    j::Int,
+) where T
+    @boundscheck checkbounds(C, i, j)
+    return (j == length(C.c)) ? (@inbounds -C.c[i]) :
+        i == j+1 ? one(T) : zero(T)
+end
 
 
-function Matrix(C::Companion{T}) where T
-    M = zeros(T, size(C)...)
-    M[:,end]=-C.c
-    for i=1:size(C,1)-1
-        M[i+1, i] = one(T)
+# Linear algebra
+
+# 3-argument mul! mutates first argument: y <= C * x
+function mul!(y::Vector, C::Companion, x::AbstractVector)
+    @boundscheck length(y) == length(x) == size(C, 1) ||
+        throw(DimensionMismatch("mul! arguments incompatible sizes"))
+    z = x[end]
+    y[1] = -C.c[1] * z
+    y[2:end] = x[begin:end-1] - C.c[2:end] * z
+    return y
+end
+
+# A <= B * C
+function mul!(A::Matrix, B::AbstractMatrix, C::Companion)
+    @boundscheck (size(A) == (size(B,1), size(C,2)) && size(B, 2) == size(C,1)) ||
+        throw(DimensionMismatch("mul! arguments incompatible sizes"))
+    Base.require_one_based_indexing(B)
+    @views for j in 1:size(A,2)-1
+        @inbounds A[:,j] = B[:,j+1]
     end
-    M
+    @inbounds mul!((@view A[:,end]), B, C.c, -1, 0) # A[:,end] <= - B * c
+    return A
 end
 
-#Linear algebra stuff
-function mul!(C::Companion{T}, b::Vector{T}) where T
-    x = b[end]
-    y = -C.c[1]*x
-    b[2:end] = b[1:end-1]-C.c[2:end]*x
-    b[1] = y
-    b
-end
-*(C::Companion{T}, b::Vector{T}) where T = mul!(C, copy(b))
-
-function mul!(A::Matrix{T}, C::Companion{T}) where T
-    v = Array{T}(undef, size(A,1))
-    for i=1:size(A,1)
-        v[i] =dot(vec(A[i,:]),-C.c)
-    end
-    for i=1:size(A,1), j=1:size(A,2)-1
-        A[i,j] = A[i,j+1]
-    end
-    A[:,end] = v
-    A
-end
-*(A::Matrix{T}, C::Companion{T}) where T = mul!(copy(A), C)
 
 function inv(C::Companion{T}) where T
     M = zeros(T, size(C)...)
-    for i=1:size(C,1)-1
+    for i in 1:size(C,1)-1
         M[i, i+1] = one(T)
     end
-    d = M[end, 1] = -one(T)/C.c[1]
-    M[1:end-1, 1] = d*C.c[2:end]
-    M
+    d = M[end, 1] = -one(T) / C.c[1]
+    M[1:end-1, 1] = d * C.c[2:end]
+    return M
 end
