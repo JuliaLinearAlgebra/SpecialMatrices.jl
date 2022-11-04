@@ -38,6 +38,8 @@ struct Cauchy{T,X,Y} <: AbstractMatrix{T}
     # The element type T corresponds to the reciprocal
     # of the sum of pairs of elements of x and y
     function Cauchy(x::X, y::Y) where {X, Y}
+        allunique(x) || @warn("x elements should be unique")
+        allunique(y) || @warn("y elements should be unique")
         Tx = eltype(first(x))
         Ty = eltype(first(y))
         all(==(Tx), eltype.(x)) || throw(ArgumentError("inconsistent x element types"))
