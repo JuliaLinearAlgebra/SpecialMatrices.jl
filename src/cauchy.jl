@@ -3,14 +3,18 @@
 export Cauchy
 
 """
-    [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
+    Cauchy(x [,y])
 
+Construct lazy
+[`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
+where
 * `Cauchy(x,y)[i,j] = 1 / (x[i] + y[j])`
 * `Cauchy(x) = Cauchy(x,x)`
 * `Cauchy(k::Int) = Cauchy(1:k)`
 
 Both `x` and `y` can be any iterable (typically vectors),
 but all elements of `x` must have the same type; likewise for `y`.
+The elements of `x` and of `y` should be distinct.
 
 ```jldoctest
 julia> Cauchy([2.0 1], (0, 1, 2))
