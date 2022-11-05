@@ -2,7 +2,18 @@
 
 export Cauchy
 
+function _cauchy_check(x, y)
+    allunique(x) || @warn("x elements should be unique")
+    allunique(y) || @warn("y elements should be unique")
+end
+
+function _cauchy_eltype(Tx::DataType, Ty::DataType)
+    T = eltype(one(Tx) + one(Ty))
+    return T <: Integer ? Rational{T} : eltype(1 / one(T))
+end
+
 """
+    Cauchy{T,X,Y} <: AbstractMatrix{T}
     Cauchy(x [,y])
 
 Construct lazy
@@ -15,6 +26,9 @@ where
 Both `x` and `y` can be any iterable (typically vectors),
 but all elements of `x` must have the same type; likewise for `y`.
 The elements of `x` and of `y` should be distinct.
+
+The element type `T` corresponds to the reciprocal
+of the sum of pairs of elements of `x` and `y`.
 
 ```jldoctest
 julia> Cauchy([2.0 1], (0, 1, 2))
@@ -39,17 +53,19 @@ struct Cauchy{T,X,Y} <: AbstractMatrix{T}
     x::X
     y::Y
 
-    # The element type T corresponds to the reciprocal
-    # of the sum of pairs of elements of x and y
+    function Cauchy(x::AbstractVector{Tx}, y::AbstractVector{Ty}) where {Tx <: Number, Ty <: Number}
+        _cauchy_check(x, y)
+        T = _cauchy_eltype(Tx, Ty)
+        return new{T,typeof(x),typeof(y)}(x, y)
+    end
+
     function Cauchy(x::X, y::Y) where {X, Y}
-        allunique(x) || @warn("x elements should be unique")
-        allunique(y) || @warn("y elements should be unique")
+        _cauchy_check(x, y)
         Tx = eltype(first(x))
         Ty = eltype(first(y))
         all(==(Tx), eltype.(x)) || throw(ArgumentError("inconsistent x element types"))
         all(==(Ty), eltype.(y)) || throw(ArgumentError("inconsistent y element types"))
-        T = eltype(one(Tx) + one(Ty)) 
-        T = T <: Integer ? Rational{T} : eltype(1 / one(T))
+        T = _cauchy_eltype(Tx, Ty)
         return new{T,X,Y}(x, y)
     end
 end
