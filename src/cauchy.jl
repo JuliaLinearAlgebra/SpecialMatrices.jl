@@ -23,7 +23,7 @@ where
 * `Cauchy(x) = Cauchy(x,x)`
 * `Cauchy(k::Int) = Cauchy(1:k)`
 
-Both `x` and `y` can be any iterable (typically vectors),
+Both `x` and `y` can be any `AbstractArray` or `NTuple` of `Number`s.
 but all elements of `x` must have the same type; likewise for `y`.
 The elements of `x` and of `y` should be distinct.
 
