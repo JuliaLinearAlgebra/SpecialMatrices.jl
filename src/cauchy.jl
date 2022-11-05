@@ -53,20 +53,15 @@ struct Cauchy{T,X,Y} <: AbstractMatrix{T}
     x::X
     y::Y
 
-    function Cauchy(x::AbstractVector{Tx}, y::AbstractVector{Ty}) where {Tx <: Number, Ty <: Number}
+    function Cauchy(
+        x::Union{NTuple{N,<:Tx}, AbstractArray{Tx}},
+        y::Union{NTuple{M,<:Ty}, AbstractArray{Ty}},
+    ) where {N, M, Tx <: Number, Ty <: Number}
+        Base.require_one_based_indexing(x)
+        Base.require_one_based_indexing(y)
         _cauchy_check(x, y)
         T = _cauchy_eltype(Tx, Ty)
         return new{T,typeof(x),typeof(y)}(x, y)
-    end
-
-    function Cauchy(x::X, y::Y) where {X, Y}
-        _cauchy_check(x, y)
-        Tx = eltype(first(x))
-        Ty = eltype(first(y))
-        all(==(Tx), eltype.(x)) || throw(ArgumentError("inconsistent x element types"))
-        all(==(Ty), eltype.(y)) || throw(ArgumentError("inconsistent y element types"))
-        T = _cauchy_eltype(Tx, Ty)
-        return new{T,X,Y}(x, y)
     end
 end
 

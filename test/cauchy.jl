@@ -6,7 +6,7 @@ Cf = @inferred Matrix(C)
 @inferred getindex(C, 1, 1)
 @test C[1,1] == 1//2
 
-x = (1, 2, 3) # test iterator
+x = (1, 2, 3) # test NTuple
 y = [2im 10f0] # test row vector
 C = @inferred Cauchy(x, y)
 Cf = @inferred Matrix(C)
@@ -14,6 +14,6 @@ Cf = @inferred Matrix(C)
 @inferred getindex(C, 1, 1)
 @test C[1,1] ≈ 1 / (1 + 2im)
 
-x = (1, 2.0) # inconsistent element types
+x = (1, 2.0) # inconsistent element types unsupported
 y = 1:3
-@test_throws ArgumentError Cauchy(x, y)
+@test_throws MethodError Cauchy(x, y)
