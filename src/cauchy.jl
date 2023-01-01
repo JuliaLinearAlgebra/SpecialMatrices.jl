@@ -7,9 +7,9 @@ function _cauchy_check(x, y)
     allunique(y) || @warn("y elements should be unique")
 end
 
-function _cauchy_eltype(Tx::DataType, Ty::DataType)
-    T = eltype(one(Tx) + one(Ty))
-    return T <: Integer ? Rational{T} : eltype(1 / one(T))
+function _cauchy_type(Tx::Type{<:Number}, Ty::Type{<:Number})
+    T = typeof(oneunit(Tx) + oneunit(Ty))
+    return T <: Integer ? Rational{T} : typeof(1 / oneunit(T))
 end
 
 """
@@ -60,7 +60,7 @@ struct Cauchy{T,X,Y} <: AbstractMatrix{T}
         Base.require_one_based_indexing(x)
         Base.require_one_based_indexing(y)
         _cauchy_check(x, y)
-        T = _cauchy_eltype(Tx, Ty)
+        T = _cauchy_type(Tx, Ty)
         return new{T,typeof(x),typeof(y)}(x, y)
     end
 end
