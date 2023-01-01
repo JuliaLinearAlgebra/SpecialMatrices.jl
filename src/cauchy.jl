@@ -1,54 +1,89 @@
 #### Cauchy matrix
 
 export Cauchy
+
+function _cauchy_check(x, y)
+    allunique(x) || @warn("x elements should be unique")
+    allunique(y) || @warn("y elements should be unique")
+end
+
+function _cauchy_type(Tx::Type{<:Number}, Ty::Type{<:Number})
+    T = typeof(oneunit(Tx) + oneunit(Ty))
+    return T <: Integer ? Rational{T} : typeof(1 / oneunit(T))
+end
+
 """
+    Cauchy{T,X,Y} <: AbstractMatrix{T}
+    Cauchy(x [,y])
+
+Construct lazy
 [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
-```julia
-Cauchy(x,y)[i,j]=1/(x[i]+y[j])
-Cauchy(x)=Cauchy(x,x)
-cauchy(k::Number)=Cauchy(collect(1:k))
+where
+* `Cauchy(x,y)[i,j] = 1 / (x[i] + y[j])`
+* `Cauchy(x) = Cauchy(x,x)`
+* `Cauchy(k::Int) = Cauchy(1:k)`
 
-julia> Cauchy([1,2,3],[3,4,5])
-3x3 Cauchy{Int64}:
- 0.25      0.2       0.166667
- 0.2       0.166667  0.142857
- 0.166667  0.142857  0.125
+Both `x` and `y` can be any `AbstractArray` or `NTuple` of `Number`s,
+but all elements of `x` must have the same type; likewise for `y`.
+The elements of `x` and of `y` should be distinct.
 
-julia> Cauchy([1,2,3])
-3x3 Cauchy{Int64}:
- 0.5       0.333333  0.25
- 0.333333  0.25      0.2
- 0.25      0.2       0.166667
+The element type `T` corresponds to the reciprocal
+of the sum of pairs of elements of `x` and `y`.
 
-julia> Cauchy(pi)
-3x3 Cauchy{Float64}:
- 0.5       0.333333  0.25
- 0.333333  0.25      0.2
- 0.25      0.2       0.166667
+```jldoctest
+julia> Cauchy([2.0 1], (0, 1, 2))
+2×3 Cauchy{Float64, Matrix{Float64}, Tuple{Int64, Int64, Int64}}:
+ 0.5  0.333333  0.25
+ 1.0  0.5       0.333333
+
+julia> Cauchy(1:3)
+3×3 Cauchy{Rational{Int64}, UnitRange{Int64}, UnitRange{Int64}}:
+ 1//2  1//3  1//4
+ 1//3  1//4  1//5
+ 1//4  1//5  1//6
+
+julia> Cauchy(3)
+3×3 Cauchy{Rational{Int64}, UnitRange{Int64}, UnitRange{Int64}}:
+ 1//2  1//3  1//4
+ 1//3  1//4  1//5
+ 1//4  1//5  1//6
 ```
 """
-struct Cauchy{T} <: AbstractMatrix{T}
-    x::Vector{T} #
-    y::Vector{T} #
-end # immutable
+struct Cauchy{T,X,Y} <: AbstractMatrix{T}
+    x::X
+    y::Y
 
-function Cauchy(k::Number)
-         Cauchy(collect(1:k),collect(1:k))
+    function Cauchy(
+        x::Union{NTuple{N,<:Tx}, AbstractArray{Tx}},
+        y::Union{NTuple{M,<:Ty}, AbstractArray{Ty}},
+    ) where {N, M, Tx <: Number, Ty <: Number}
+        Base.require_one_based_indexing(x)
+        Base.require_one_based_indexing(y)
+        _cauchy_check(x, y)
+        T = _cauchy_type(Tx, Ty)
+        return new{T,typeof(x),typeof(y)}(x, y)
+    end
 end
 
-function Cauchy(x::Vector)
-         Cauchy(x,x)
+Cauchy(x) = Cauchy(x, x)
+Cauchy(k::Integer) = Cauchy(1:k)
+
+size(A::Cauchy) = (length(A.x), length(A.y))
+
+@inline Base.@propagate_inbounds function getindex(
+    A::Cauchy{<:Rational},
+    i::Integer,
+    j::Integer,
+)
+    @boundscheck checkbounds(A, i, j)
+    @inbounds return 1 // (A.x[i] + A.y[j])
 end
 
-# Define its size
-
-size(A::Cauchy, dim::Integer) = dim==1 ? length(A.x) : dim==2 ? length(A.y) : throw(ArgumentError("Invalid dimension $dim"))
-size(A::Cauchy)= length(A.x), length(A.y)
-
-# Index into a Cauchy
-function getindex(A::Cauchy,i::Integer,j::Integer)
-    return 1.0/(A.x[i]+A.y[j])
-end # getindex
-
-# Dense version of Cauchy
-Matrix(A::Cauchy) = [A[i,j] for i=1:size(A,1), j=1:size(A,2)]
+@inline Base.@propagate_inbounds function getindex(
+    A::Cauchy,
+    i::Integer,
+    j::Integer,
+)
+    @boundscheck checkbounds(A, i, j)
+    @inbounds return 1 / (A.x[i] + A.y[j])
+end

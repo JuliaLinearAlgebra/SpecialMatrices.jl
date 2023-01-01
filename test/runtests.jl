@@ -3,6 +3,7 @@ using Test
 using LinearAlgebra
 
 const files = (
+    "cauchy",
     "companion",
     "frobenius",
     "hilbert",
