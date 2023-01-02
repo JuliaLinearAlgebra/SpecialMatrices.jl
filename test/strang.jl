@@ -1,23 +1,32 @@
-Z = Strang(1)
-@test Matrix(Z) == reshape([2.0],(1,1))
+# strang.jl
 
-n = rand(1:10)
-Z = Strang(n)
+using SpecialMatrices: Strang
+using LinearAlgebra: diagm, issymmetric, ishermitian, isposdef
+using Test: @test, @testset, @test_throws, @inferred
 
-for i in 1:n, j in 1:n
-    i==j && @test Z[i,j] == 2
-    abs(i-j)==1 && @test Z[i,j] == -1
-    abs(i-j)>1 && @test Z[i,j] == 0
+@testset "strang" begin
+    @test_throws ArgumentError Strang(0)
+
+    A = @inferred Strang(1)
+    @test Matrix(A) == reshape([2.0], (1,1))
+
+    n = 5
+    A = @inferred Strang(Int16, 5)
+    @test A isa Strang{Int16}
+    @test A == diagm(0 => 2ones(n), 1 => -ones(n-1), -1 => -ones(n-1))
+
+    @test (@inferred getindex(A, 1, 2)) == -1
+    @test A[begin] == 2
+    @test A[end] == 2
+    @test A[1,end] == 0
+
+    x = rand(n)
+    y = @inferred *(A, x)
+    @test y ≈ Matrix(A) * x
+
+    @test transpose(A) === A
+    @test adjoint(A) === A
+    @test issymmetric(A)
+    @test ishermitian(A)
+    @test isposdef(A)
 end
-
-A = Strang(10)
-u = ones(10)
-@test A*u == [1.0;zeros(8);1.0]
-
-#Matvec product
-b = randn(n)
-@test Z*b ≈ Matrix(Z)*b
-
-m = rand(1:10)
-A = randn(m, n)
-@test A*Z ≈ A*Matrix(Z)
