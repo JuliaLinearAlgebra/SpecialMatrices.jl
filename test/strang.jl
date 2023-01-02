@@ -15,6 +15,12 @@ using Test: @test, @testset, @test_throws, @inferred
     @test A isa Strang{Int16}
     @test A == diagm(0 => 2ones(n), 1 => -ones(n-1), -1 => -ones(n-1))
 
+    @test (@inferred getindex(A, 1, 2)) == -1
+    @test A[begin] == 2
+    @test A[end] == 2
+    @test A[1,end] == 0
+
     x = rand(n)
-    @test A * x ≈ Matrix(A) * x
+    y = @inferred *(A, x)
+    @test y ≈ Matrix(A) * x
 end

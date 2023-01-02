@@ -46,7 +46,7 @@ LinearAlgebra.isposdef(s::Strang) = true
     @boundscheck checkbounds(A, i, j)
     if i == j
         return T(2)
-    elseif i == j + 1 || i == j - 1
+    elseif abs(i-j) == 1
         return -one(T)
     else
         return zero(T)
