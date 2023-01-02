@@ -23,6 +23,7 @@ Toeplitz, Hankel, and circulant matrices.
 
 using SpecialMatrices
 using Polynomials
+using LinearAlgebra: factorize, Diagonal
 
 
 # ## [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
@@ -111,7 +112,14 @@ Riemann(5)
 A special symmetric, tridiagonal, Toeplitz matrix named after Gilbert Strang.
 =#
 
-Strang(5)
+S = Strang(5)
+
+# The Strang matrix has a special ``L D L'`` factorization:
+F = factorize(S)
+
+# Here is a verification:
+F.L * Diagonal(F.D) * F.L'
+
 
 # ## [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
 
