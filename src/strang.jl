@@ -1,5 +1,7 @@
 export Strang
 
+using LinearAlgebra: LDLt, SymTridiagonal
+
 """
     Strang([T=Int,] n::Int)
 
@@ -60,4 +62,30 @@ end
     y[1:end-1] .-= @view x[2:end]
     y[2:end] .-= @view x[1:end-1]
     return y
+end
+
+
+# LU factors for future reference:
+#=
+SparseArrays: spdiagm
+   L = spdiagm(0 => ones(n), -1 => -(1:n-1) ./ (2:n))
+   U = spdiagm(0 => (2:n+1) ./ (1:n), 1 => -ones(n-1))
+=#
+
+if VERSION >= v"1.8"
+#=
+Strang is a special case of SymTridiagonal,
+and the default factorization of that class is LDLt
+https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/#LinearAlgebra.factorize
+so we use that here,
+even though it does not fully exploit the sparse structure
+of the LL' and LDL' factorizations of a Strang matrix.
+=#
+function LinearAlgebra.factorize(A::Strang)
+    n = A.n
+    ev = -(1:n-1) ./ (2:n) # L = spdiagm(0 => ones(n), -1 => ev)
+    dv = (2:n+1) ./ (1:n) # D = Diagonal(dv)
+    S = SymTridiagonal(dv, ev)
+    return LDLt(S)
+end
 end

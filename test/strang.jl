@@ -2,6 +2,7 @@
 
 using SpecialMatrices: Strang
 using LinearAlgebra: diagm, issymmetric, ishermitian, isposdef
+using LinearAlgebra: factorize, SymTridiagonal, Diagonal
 using Test: @test, @testset, @test_throws, @inferred
 
 @testset "strang" begin
@@ -29,4 +30,23 @@ using Test: @test, @testset, @test_throws, @inferred
     @test issymmetric(A)
     @test ishermitian(A)
     @test isposdef(A)
+end
+
+
+if VERSION >= v"1.8"
+
+@testset "strang-factor" begin
+    # factorize:
+    n = 5
+    A = Strang(5)
+    M = Matrix(A)
+    T = SymTridiagonal(M)
+    F = factorize(T)
+    G = factorize(A)
+    H = G.L * Diagonal(G.D) * G.L'
+    @test H ≈ M
+    @test F.L ≈ G.L
+    @test F.D ≈ G.D
+end
+
 end
