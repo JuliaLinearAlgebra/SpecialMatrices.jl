@@ -1,7 +1,7 @@
 # strang.jl
 
 using SpecialMatrices: Strang
-using LinearAlgebra: diagm
+using LinearAlgebra: diagm, issymmetric, ishermitian, isposdef
 using Test: @test, @testset, @test_throws, @inferred
 
 @testset "strang" begin
@@ -23,4 +23,10 @@ using Test: @test, @testset, @test_throws, @inferred
     x = rand(n)
     y = @inferred *(A, x)
     @test y ≈ Matrix(A) * x
+
+    @test transpose(A) === A
+    @test adjoint(A) === A
+    @test issymmetric(A)
+    @test ishermitian(A)
+    @test isposdef(A)
 end
