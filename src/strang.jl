@@ -72,6 +72,7 @@ SparseArrays: spdiagm
    U = spdiagm(0 => (2:n+1) ./ (1:n), 1 => -ones(n-1))
 =#
 
+if VERSION >= v"1.8"
 #=
 Strang is a special case of SymTridiagonal,
 and the default factorization of that class is LDLt
@@ -86,4 +87,5 @@ function LinearAlgebra.factorize(A::Strang)
     dv = (2:n+1) ./ (1:n) # D = Diagonal(dv)
     S = SymTridiagonal(dv, ev)
     return LDLt(S)
+end
 end

@@ -30,7 +30,12 @@ using Test: @test, @testset, @test_throws, @inferred
     @test issymmetric(A)
     @test ishermitian(A)
     @test isposdef(A)
+end
 
+
+if VERSION >= v"1.8"
+
+@testset "strang-factor" begin
     # factorize:
     n = 5
     A = Strang(5)
@@ -42,4 +47,6 @@ using Test: @test, @testset, @test_throws, @inferred
     @test H ≈ M
     @test F.L ≈ G.L
     @test F.D ≈ G.D
+end
+
 end
