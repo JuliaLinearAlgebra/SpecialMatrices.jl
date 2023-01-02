@@ -76,6 +76,7 @@ size(V::Vandermonde) = (length(V.c), length(V.c))
 # solvers
 
 function \(V::Adjoint{T1,<:Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where {T1, T2}
+    Base.require_one_based_indexing(y)
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
     copyto!(x, y)
@@ -84,6 +85,7 @@ function \(V::Adjoint{T1,<:Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where {T1,
 end
 
 function \(V::Transpose{T1,<:Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where {T1, T2}
+    Base.require_one_based_indexing(y)
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
     copyto!(x, y)
@@ -92,6 +94,7 @@ function \(V::Transpose{T1,<:Vandermonde{T1}}, y::AbstractVecOrMat{T2}) where {T
 end
 
 function \(V::Vandermonde{T1}, y::AbstractVecOrMat{T2}) where {T1, T2}
+    Base.require_one_based_indexing(y)
     T = vandtype(T1,T2)
     x = Array{T}(undef, size(y))
     copyto!(x, y)
