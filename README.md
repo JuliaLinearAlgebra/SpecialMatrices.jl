@@ -36,9 +36,9 @@ Toeplitz, Hankel, and circulant matrices.
 ### [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
 
 ```julia
-Cauchy(x,y)[i,j]=1/(x[i]+y[j])
-Cauchy(x)=Cauchy(x,x)
-cauchy(k::Number)=Cauchy(collect(1:k))
+Cauchy(x,y)[i,j] = 1/(x[i] + y[j])
+Cauchy(x) = Cauchy(x,x)
+Cauchy(k::Int) = Cauchy(1:k)
 
 julia> Cauchy([1,2,3],[3,4,5])
 3×3 Cauchy{Int64}:
@@ -52,7 +52,7 @@ julia> Cauchy([1,2,3])
  0.333333  0.25      0.2
  0.25      0.2       0.166667
 
-julia> Cauchy(pi)
+julia> Cauchy(3)
 3×3 Cauchy{Float64}:
  0.5       0.333333  0.25
  0.333333  0.25      0.2
@@ -120,7 +120,7 @@ julia> F*F #Special form preserved if the same column has the subdiagonals
  0.0  0.0  6.0  0.0  0.0  1.0
 
 julia> F*Frobenius(2, [5.0,4.0,3.0,2.0]) #Promotes to Matrix
-6×6 Array{Float64,2}:
+6×6 Matrix{Float64}:
  1.0   0.0  0.0  0.0  0.0  0.0
  0.0   1.0  0.0  0.0  0.0  0.0
  0.0   5.0  1.0  0.0  0.0  0.0
@@ -129,7 +129,7 @@ julia> F*Frobenius(2, [5.0,4.0,3.0,2.0]) #Promotes to Matrix
  0.0  17.0  3.0  0.0  0.0  1.0
 
 julia> F*[10.0,20,30,40,50,60.0]
-6-element Array{Float64,1}:
+6-element Vector{Float64}:
   10.0
   20.0
   30.0
@@ -143,18 +143,7 @@ julia> F*[10.0,20,30,40,50,60.0]
 
 ```julia
 julia> A=Hilbert(5)
-Hilbert{Rational{Int64}}(5,5)
-
-julia> Matrix(A)
-5×5 Array{Rational{Int64},2}:
- 1//1  1//2  1//3  1//4  1//5
- 1//2  1//3  1//4  1//5  1//6
- 1//3  1//4  1//5  1//6  1//7
- 1//4  1//5  1//6  1//7  1//8
- 1//5  1//6  1//7  1//8  1//9
-
-julia> Matrix(Hilbert(5))
-5×5 Array{Rational{Int64},2}:
+5×5 Hilbert{Rational{Int64}}:
  1//1  1//2  1//3  1//4  1//5
  1//2  1//3  1//4  1//5  1//6
  1//3  1//4  1//5  1//6  1//7
@@ -165,7 +154,7 @@ Inverses are also integer matrices:
 
 ```julia
 julia> inv(A)
-5×5 Array{Rational{Int64},2}:
+5×5 InverseHilbert{Rational{Int64}}:
     25//1    -300//1     1050//1    -1400//1     630//1
   -300//1    4800//1   -18900//1    26880//1  -12600//1
   1050//1  -18900//1    79380//1  -117600//1   56700//1
@@ -177,7 +166,7 @@ julia> inv(A)
 ### [`Kahan` matrix](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
 
 ```julia
-julia> A=Kahan(5,5,1,35)
+julia> Kahan(5,5,1,35)
 5×5 Kahan{Int64,Int64}:
  1.0  -0.540302  -0.540302  -0.540302  -0.540302
  0.0   0.841471  -0.454649  -0.454649  -0.454649
@@ -185,7 +174,7 @@ julia> A=Kahan(5,5,1,35)
  0.0   0.0        0.0        0.595823  -0.321925
  0.0   0.0        0.0        0.0        0.501368
 
-julia> A=Kahan(5,3,0.5,0)
+julia> Kahan(5,3,0.5,0)
 5×3 Kahan{Float64,Int64}:
  1.0  -0.877583  -0.877583
  0.0   0.479426  -0.420735
@@ -193,7 +182,7 @@ julia> A=Kahan(5,3,0.5,0)
  0.0   0.0        0.0
  0.0   0.0        0.0
 
-julia> A=Kahan(3,5,0.5,1e-3)
+julia> Kahan(3,5,0.5,1e-3)
 3×5 Kahan{Float64,Float64}:
  1.0  -0.877583  -0.877583  -0.877583  -0.877583
  0.0   0.479426  -0.420735  -0.420735  -0.420735
@@ -233,11 +222,11 @@ Linear Algebra and its Applications, Vol. 81, p.153-198, Sep. 1986"
 
 ### [`Strang` matrix](http://doi.org/10.1137/141000671)
 
-A special `SymTridiagonal` matrix named after Gilbert Strang
+A special symmetric, tridiagonal, Toeplitz matrix named after Gilbert Strang.
 
 ```julia
 julia> Strang(6)
-6×6 Strang{Float64}:
+6×6 Strang{Int64}:
   2  -1   0   0   0   0
  -1   2  -1   0   0   0
   0  -1   2  -1   0   0
@@ -272,9 +261,9 @@ julia> A'
 ```
 
 The backslash operator `\` is overloaded
-to solve Vandermonde and adjoint Vandermonde systems in ``O(n^2)`` time
-using the algorithm of
-[Björck & Pereyra (1970)](https://doi.org/10.2307/2004623):
+to solve Vandermonde and adjoint Vandermonde systems
+in ``O(n^2)`` time using the algorithm of
+[Björck & Pereyra (1970)](https://doi.org/10.2307/2004623).
 ```julia
 julia> A \ a
 5-element Vector{Float64}:

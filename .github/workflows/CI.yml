@@ -4,22 +4,25 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
   pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
 
 jobs:
   test:
     name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }}
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.version == 'nightly' }}
     strategy:
       fail-fast: false
       matrix:
-        version:
-          - '1.6'
-          - '1'
-          - 'nightly'
-        os:
-          - ubuntu-latest
-          - macOS-latest
+        version: ['1.6', '1', 'nightly']
+        os: [ubuntu-latest, windows-latest, macOS-latest]
         arch:
           - x64
         include:
