@@ -74,8 +74,9 @@ end
 
 # Linear algebra
 
-# 3-argument mul! mutates first argument: y <= C * x
+# 3-argument mul! mutates first argument: y ⇐ C * x
 function mul!(y::Vector, C::Companion, x::AbstractVector)
+    Base.require_one_based_indexing(x)
     @boundscheck length(y) == length(x) == size(C, 1) ||
         throw(DimensionMismatch("mul! arguments incompatible sizes"))
     z = x[end]
