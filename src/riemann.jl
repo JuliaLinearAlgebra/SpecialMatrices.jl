@@ -10,7 +10,7 @@ Construct `N × N` `Riemann` matrix,
 defined as `A = B[2:N+1, 2:N+1]`, where
 `B[i,j] = i-1` if `i` divides `j`, and `-1` otherwise.
 The
-[Riemann hypothesis](http://en.wikipedia.org/wiki/Riemann_hypothesis) holds
+[Riemann hypothesis](https://en.wikipedia.org/wiki/Riemann_hypothesis) holds
 if and only if `det(A) = O(N! N^(-1/2+ϵ))` for every `ϵ > 0`.
 
 ```jldoctest

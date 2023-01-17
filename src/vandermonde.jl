@@ -7,7 +7,7 @@ using LinearAlgebra: Adjoint, Transpose
     Vandermonde(c::AbstractVector)
 
 Create a "lazy" `n × n`
-[`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
+[`Vandermonde` matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix)
 where ``A_{ij} = c_i^{j-1}``,
 requiring only `O(n)` storage for the vector `c`.
 

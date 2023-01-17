@@ -8,7 +8,7 @@
 [![docs-stable][docs-stable-img]][docs-stable-url]
 [![docs-dev][docs-dev-img]][docs-dev-url]
 
-A [Julia](http://julialang.org) package for working with special matrix types.
+A [Julia](https://julialang.org) package for working with special matrix types.
 
 This Julia package extends the `LinearAlgebra` library
 with support for special matrices that are used in linear algebra.
@@ -33,7 +33,7 @@ Toeplitz, Hankel, and circulant matrices.
 
 ## Currently supported special matrices
 
-### [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
+### [`Cauchy` matrix](https://en.wikipedia.org/wiki/Cauchy_matrix)
 
 ```julia
 Cauchy(x,y)[i,j] = 1/(x[i] + y[j])
@@ -60,7 +60,7 @@ julia> Cauchy(3)
 ```
 
 
-### [`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
+### [`Companion` matrix](https://en.wikipedia.org/wiki/Companion_matrix)
 
 ```julia
 julia> A=Companion([3,2,1])
@@ -85,7 +85,7 @@ julia> C=Companion(P)
 ```
 
 
-### [`Frobenius` matrix](http://en.wikipedia.org/wiki/Frobenius_matrix)
+### [`Frobenius` matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)
 
 Example
 
@@ -139,7 +139,7 @@ julia> F*[10.0,20,30,40,50,60.0]
 ```
 
 
-### [`Hilbert` matrix](http://en.wikipedia.org/wiki/Hilbert_matrix)
+### [`Hilbert` matrix](https://en.wikipedia.org/wiki/Hilbert_matrix)
 
 ```julia
 julia> A=Hilbert(5)
@@ -163,7 +163,7 @@ julia> inv(A)
 ```
 
 
-### [`Kahan` matrix](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
+### [`Kahan` matrix](https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
 
 ```julia
 julia> Kahan(5,5,1,35)
@@ -191,14 +191,14 @@ julia> Kahan(3,5,0.5,1e-3)
 
 For more details see [N. J. Higham (1987)][Higham87].
 
-[Higham87]: http://eprints.ma.man.ac.uk/695/01/covered/MIMS_ep2007_10.pdf "N. Higham, A Survey of Condition Number Estimation for Triangular Matrices, SIMAX, Vol. 29, No. 4, pp. 588, 1987"
+[Higham87]: https://eprints.ma.man.ac.uk/695/01/covered/MIMS_ep2007_10.pdf "N. Higham, A Survey of Condition Number Estimation for Triangular Matrices, SIMAX, Vol. 29, No. 4, pp. 588, 1987"
 
 
 ### `Riemann` matrix
 
 Riemann matrix is defined as `A = B[2:N+1, 2:N+1]`, where
 `B[i,j] = i-1` if `i` divides `j`, and `-1` otherwise.
-[Riemann hypothesis](http://en.wikipedia.org/wiki/Riemann_hypothesis) holds
+[Riemann hypothesis](https://en.wikipedia.org/wiki/Riemann_hypothesis) holds
 if and only if `det(A) = O( N! N^(-1/2+ϵ))` for every `ϵ > 0`.
 
 ```julia
@@ -220,7 +220,7 @@ Riemann's hypothesis as an eigenvalue problem,
 Linear Algebra and its Applications, Vol. 81, p.153-198, Sep. 1986"
 
 
-### [`Strang` matrix](http://doi.org/10.1137/141000671)
+### [`Strang` matrix](https://doi.org/10.1137/141000671)
 
 A special symmetric, tridiagonal, Toeplitz matrix named after Gilbert Strang.
 
@@ -236,7 +236,7 @@ julia> Strang(6)
 ```
 
 
-### [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
+### [`Vandermonde` matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix)
 
 ```julia
 julia> a = 1:5
@@ -299,5 +299,5 @@ julia> A' \ A[2,:]
 [docs-stable-url]: https://JuliaLinearAlgebra.github.io/SpecialMatrices.jl/stable
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
 [docs-dev-url]: https://JuliaLinearAlgebra.github.io/SpecialMatrices.jl/dev
-[license-img]: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
+[license-img]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [license-url]: LICENSE

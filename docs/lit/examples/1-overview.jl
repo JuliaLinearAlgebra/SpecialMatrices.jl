@@ -26,7 +26,7 @@ using Polynomials
 using LinearAlgebra: factorize, Diagonal
 
 
-# ## [`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
+# ## [`Cauchy` matrix](https://en.wikipedia.org/wiki/Cauchy_matrix)
 
 Cauchy(1:3, 2:4)
 
@@ -37,7 +37,7 @@ Cauchy((1., 2.), 1:3)
 Cauchy(3)
 
 
-# ## [`Companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
+# ## [`Companion` matrix](https://en.wikipedia.org/wiki/Companion_matrix)
 
 Companion(1:3)
 
@@ -48,7 +48,7 @@ p = Polynomial(4:-1:1)
 Companion(p)
 
 
-# ## [`Frobenius` matrix](http://en.wikipedia.org/wiki/Frobenius_matrix)
+# ## [`Frobenius` matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)
 
 F = Frobenius(3, 2:4) # Specify subdiagonals of column 3
 
@@ -65,7 +65,7 @@ F * Frobenius(2, 2:5)
 F * (1:6)
 
 
-# ## [`Hilbert` matrix](http://en.wikipedia.org/wiki/Hilbert_matrix)
+# ## [`Hilbert` matrix](https://en.wikipedia.org/wiki/Hilbert_matrix)
 
 H = Hilbert(5)
 
@@ -74,7 +74,7 @@ inv(H)
 
 
 #=
-## [`Kahan` matrix](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
+## [`Kahan` matrix](https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
 
 See [N. J. Higham (1987)](https://doi.org/10.1137/1029112).
 =#
@@ -95,7 +95,7 @@ A Riemann matrix is defined as
 `A = B[2:N+1, 2:N+1]`,
 where
 `B[i,j] = i-1` if `i` divides `j`, and `-1` otherwise.
-The [Riemann hypothesis](http://en.wikipedia.org/wiki/Riemann_hypothesis)
+The [Riemann hypothesis](https://en.wikipedia.org/wiki/Riemann_hypothesis)
 holds if and only if
 `det(A) = O( N! N^(-1/2+ϵ))` for every `ϵ > 0`.
 
@@ -107,7 +107,7 @@ Riemann(5)
 
 
 #=
-## [`Strang` matrix](http://doi.org/10.1137/141000671)
+## [`Strang` matrix](https://doi.org/10.1137/141000671)
 
 A special symmetric, tridiagonal, Toeplitz matrix named after Gilbert Strang.
 =#
@@ -121,7 +121,7 @@ F = factorize(S)
 F.L * Diagonal(F.D) * F.L'
 
 
-# ## [`Vandermonde` matrix](http://en.wikipedia.org/wiki/Vandermonde_matrix)
+# ## [`Vandermonde` matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix)
 
 a = 1:4
 V = Vandermonde(a)

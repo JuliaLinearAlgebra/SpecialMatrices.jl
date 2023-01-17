@@ -17,7 +17,7 @@ end
     Cauchy(x [,y])
 
 Construct lazy
-[`Cauchy` matrix](http://en.wikipedia.org/wiki/Cauchy_matrix)
+[`Cauchy` matrix](https://en.wikipedia.org/wiki/Cauchy_matrix)
 where
 * `Cauchy(x,y)[i,j] = 1 / (x[i] + y[j])`
 * `Cauchy(x) = Cauchy(x,x)`

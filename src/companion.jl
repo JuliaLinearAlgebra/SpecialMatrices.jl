@@ -5,7 +5,7 @@ using LinearAlgebra: dot
    Companion(v::Union{AbstractVector,Polynomial})::AbstractMatrix
 
 Construct a lazy
-[`companion` matrix](http://en.wikipedia.org/wiki/Companion_matrix)
+[`companion` matrix](https://en.wikipedia.org/wiki/Companion_matrix)
 from the coefficients of its characteristic (monic) polynomial.
 
 The matrix is `n × n` for a vector input of length `n`

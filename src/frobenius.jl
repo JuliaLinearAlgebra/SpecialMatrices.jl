@@ -1,7 +1,7 @@
 export Frobenius
 
 """
-    [`Frobenius` matrix](http://en.wikipedia.org/wiki/Frobenius_matrix)
+    [`Frobenius` matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)
 
 Frobenius matrices or Gaussian elimination matrices of the form
 

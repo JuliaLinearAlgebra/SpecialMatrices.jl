@@ -7,7 +7,7 @@ export Hilbert, InverseHilbert
    Hilbert(m [,n])
 
 Construct `m × m` or `m × n`
-[`Hilbert` matrix](http://en.wikipedia.org/wiki/Hilbert_matrix)
+[`Hilbert` matrix](https://en.wikipedia.org/wiki/Hilbert_matrix)
 from its specified dimensions,
 where element `i,j` equal to `1 / (i+j-1)`.
 

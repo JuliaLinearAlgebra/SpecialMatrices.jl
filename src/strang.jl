@@ -8,7 +8,7 @@ using LinearAlgebra: LDLt, SymTridiagonal
 Construct `Strang` matrix with elements of type `T`.
 This special matrix named after Gilbert Strang
 is symmetric, tridiagonal, and Toeplitz.
-See Fig. 1 of [Julia paper](http://doi.org/10.1137/141000671).
+See Fig. 1 of [Julia paper](https://doi.org/10.1137/141000671).
 
 ```jldoctest
 julia> Strang(4)
