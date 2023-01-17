@@ -3,7 +3,7 @@
 export Kahan
 
 """
-[`Kahan` matrix](http://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
+[`Kahan` matrix](https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)
 
 ```jldoctest
 julia> A = Kahan(5,5,1,35)
