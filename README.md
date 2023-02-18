@@ -8,6 +8,8 @@
 [![docs-stable][docs-stable-img]][docs-stable-url]
 [![docs-dev][docs-dev-img]][docs-dev-url]
 
+https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl
+
 A [Julia](https://julialang.org) package for working with special matrix types.
 
 This Julia package extends the `LinearAlgebra` library
