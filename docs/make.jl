@@ -16,7 +16,7 @@ gen = joinpath(@__DIR__, "src/generated")
 
 base = "$org/$reps.jl"
 repo_root_url =
-    "https://github.com/$base/blob/main/docs/lit/examples"
+    "https://github.com/$base/blob/main"
 nbviewer_root_url =
     "https://nbviewer.org/github/$base/tree/gh-pages/dev/generated/examples"
 binder_root_url =
