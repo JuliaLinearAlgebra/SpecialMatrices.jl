@@ -46,7 +46,7 @@ isci = get(ENV, "CI", nothing) == "true"
 
 format = Documenter.HTML(;
     prettyurls = isci,
-    edit_link = "master",
+    edit_link = "main",
     canonical = "https://$org.github.io/$repo.jl/stable/",
 #   assets = String[],
 )
@@ -65,7 +65,7 @@ makedocs(;
 if isci
     deploydocs(;
         repo = "github.com/$base",
-        devbranch = "master",
+        devbranch = "main",
         devurl = "dev",
         versions = ["stable" => "v^", "dev" => "dev"],
         forcepush = true,
