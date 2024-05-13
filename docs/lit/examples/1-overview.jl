@@ -17,6 +17,9 @@ supports
 Toeplitz, Hankel, and circulant matrices.
 =#
 
+#srcURL
+
+
 # ### Setup
 
 # Packages needed here.
@@ -88,6 +91,7 @@ Kahan(5, 3, 0.5, 0)
 #
 Kahan(3, 5, 0.5, 1e-3)
 
+
 #=
 ## `Riemann` matrix
 
@@ -140,3 +144,6 @@ V \ a
 
 #
 V' \ V[3,:]
+
+
+include("../../../inc/reproduce.jl")
