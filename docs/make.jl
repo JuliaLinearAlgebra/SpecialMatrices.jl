@@ -2,8 +2,8 @@ execute = isempty(ARGS) || ARGS[1] == "run"
 
 org, reps = :JuliaLinearAlgebra, :SpecialMatrices
 eval(:(using $reps))
-using Documenter
-using Literate
+import Documenter
+import Literate
 
 # https://juliadocs.github.io/Documenter.jl/stable/man/syntax/#@example-block
 ENV["GKSwstype"] = "100"
@@ -15,8 +15,7 @@ src = joinpath(@__DIR__, "src")
 gen = joinpath(@__DIR__, "src/generated")
 
 base = "$org/$reps.jl"
-repo_root_url =
-    "https://github.com/$base/blob/main"
+repo_root_url = "https://github.com/$base/blob/main"
 nbviewer_root_url =
     "https://nbviewer.org/github/$base/tree/gh-pages/dev/generated/examples"
 binder_root_url =
@@ -24,16 +23,43 @@ binder_root_url =
 
 
 repo = eval(:($reps))
-DocMeta.setdocmeta!(repo, :DocTestSetup, :(using $reps); recursive=true)
+Documenter.DocMeta.setdocmeta!(repo, :DocTestSetup, :(using $reps); recursive=true)
+
+# preprocessing
+inc1 = "include(\"../../../inc/reproduce.jl\")"
+
+function prep_markdown(str, root, file)
+    inc_read(file) = read(joinpath("docs/inc", file), String)
+    repro = inc_read("reproduce.jl")
+    str = replace(str, inc1 => repro)
+    urls = inc_read("urls.jl")
+    file = joinpath(splitpath(root)[end], splitext(file)[1])
+    tmp = splitpath(root)[end-3:end] # docs lit demos 00
+    urls = replace(urls,
+        "xxxrepo" => joinpath(repo_root_url, tmp...),
+        "xxxnb" => joinpath(nbviewer_root_url, tmp[end]),
+        "xxxbinder" => joinpath(binder_root_url, tmp[end]),
+    )
+    str = replace(str, "#srcURL" => urls)
+end
+
+function prep_notebook(str)
+    str = replace(str, inc1 => "", "#srcURL" => "")
+end
 
 for (root, _, files) in walkdir(lit), file in files
     splitext(file)[2] == ".jl" || continue # process .jl files only
     ipath = joinpath(root, file)
     opath = splitdir(replace(ipath, lit => gen))[1]
-    Literate.markdown(ipath, opath; documenter = execute, # run examples
-        repo_root_url, nbviewer_root_url, binder_root_url)
-    Literate.notebook(ipath, opath; execute = false, # no-run notebooks
-        repo_root_url, nbviewer_root_url, binder_root_url)
+    Literate.markdown(ipath, opath;
+        repo_root_url,
+        preprocess = str -> prep_markdown(str, root, file),
+        documenter = execute, # run examples
+    )
+    Literate.notebook(ipath, opath;
+        preprocess = prep_notebook,
+        execute = false, # no-run notebooks
+    )
 end
 
 
@@ -48,10 +74,10 @@ format = Documenter.HTML(;
     prettyurls = isci,
     edit_link = "main",
     canonical = "https://$org.github.io/$repo.jl/stable/",
-#   assets = String[],
+    assets = ["assets/custom.css"],
 )
 
-makedocs(;
+Documenter.makedocs(;
     modules = [repo],
     sitename = "$repo.jl",
     format,
@@ -63,7 +89,7 @@ makedocs(;
 )
 
 if isci
-    deploydocs(;
+    Documenter.deploydocs(;
         repo = "github.com/$base",
         devbranch = "main",
         devurl = "dev",
