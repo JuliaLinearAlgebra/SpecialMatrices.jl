@@ -17,9 +17,9 @@ gen = joinpath(@__DIR__, "src/generated")
 base = "$org/$reps.jl"
 repo_root_url = "https://github.com/$base/blob/main"
 nbviewer_root_url =
-    "https://nbviewer.org/github/$base/tree/gh-pages/dev/generated/examples"
+    "https://nbviewer.org/github/$base/tree/gh-pages/dev/generated"
 binder_root_url =
-    "https://mybinder.org/v2/gh/$base/gh-pages?filepath=dev/generated/examples"
+    "https://mybinder.org/v2/gh/$base/gh-pages?filepath=dev/generated"
 
 
 repo = eval(:($reps))
@@ -34,7 +34,7 @@ function prep_markdown(str, root, file)
     str = replace(str, inc1 => repro)
     urls = inc_read("urls.jl")
     file = joinpath(splitpath(root)[end], splitext(file)[1])
-    tmp = splitpath(root)[end-3:end] # docs lit demos 00
+    tmp = splitpath(root)[end-2:end] # docs lit examples
     urls = replace(urls,
         "xxxrepo" => joinpath(repo_root_url, tmp...),
         "xxxnb" => joinpath(nbviewer_root_url, tmp[end]),
