@@ -19,7 +19,7 @@ jobs:
         uses: julia-actions/setup-julia@latest
         with:
           version: '1'
-          arch: ${{ runner.arch }}
+          # arch: ${{ runner.arch }}
         if: steps.julia_in_path.outcome != 'success'
       - name: "Add the General registry via Git"
         run: |
@@ -43,3 +43,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMPATHELPER_PRIV: ${{ secrets.DOCUMENTER_KEY }}
+
+# based on:
+# https://github.com/JuliaRegistries/CompatHelper.jl
