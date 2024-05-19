@@ -54,9 +54,9 @@ struct Cauchy{T,X,Y} <: AbstractMatrix{T}
     y::Y
 
     function Cauchy(
-        x::Union{NTuple{N,<:Tx}, AbstractArray{Tx}},
-        y::Union{NTuple{M,<:Ty}, AbstractArray{Ty}},
-    ) where {N, M, Tx <: Number, Ty <: Number}
+        x::Union{NTuple{N,<:Tx} where {N}, AbstractArray{Tx}},
+        y::Union{NTuple{M,<:Ty} where {M}, AbstractArray{Ty}},
+    ) where {Tx <: Number, Ty <: Number}
         Base.require_one_based_indexing(x)
         Base.require_one_based_indexing(y)
         _cauchy_check(x, y)
