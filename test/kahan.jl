@@ -1,5 +1,8 @@
 # test/kahan.jl
 
+using SpecialMatrices: Kahan
+using Test: @test, @inferred
+
 m, n = 3, 5
 A = Kahan(m, n, 0.5, 1e-3)
 

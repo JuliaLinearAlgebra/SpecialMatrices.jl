@@ -1,4 +1,5 @@
 [deps]
+Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 OffsetArrays = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
 Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"

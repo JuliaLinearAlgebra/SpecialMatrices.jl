@@ -1,5 +1,9 @@
 # test/hilbert.jl
 
+using SpecialMatrices: Hilbert, InverseHilbert
+using LinearAlgebra: I, det, ishermitian, isposdef
+using Test: @test, @test_throws, @inferred
+
 n = 10
 H = @inferred Hilbert(n)
 @test H isa Hilbert

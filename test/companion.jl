@@ -1,5 +1,8 @@
 # test/companion.jl
 
+using SpecialMatrices: Companion
+using Test: @test, @test_throws, @inferred
+
 import LinearAlgebra: mul!
 using OffsetArrays: OffsetArray
 import OffsetArrays # for no_offset_view

@@ -1,3 +1,8 @@
+# test/cauchy.jl
+
+using SpecialMatrices: Cauchy
+using Test: @test, @test_throws, @inferred
+
 C = @inferred Cauchy(3)
 @test 1 ./ C ≈ [2 3 4; 3 4 5; 4 5 6]
 @test size(C) == (3,3)
