@@ -1,3 +1,7 @@
+# test/frobenius.jl
+
+using SpecialMatrices: Frobenius
+using Test: @test, @test_throws, @inferred
 using LinearAlgebra: I
 import LinearAlgebra: mul!
 

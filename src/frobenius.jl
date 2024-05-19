@@ -100,7 +100,7 @@ end
 
 # Linear algebra
 
-# 3-argument mul! mutates first argument: y <= F * x
+# 3-argument mul! mutates first argument: y ⟸ F * x
 # *(F, x) = F * x derives from this automatically in Base
 function mul!(y::Vector, F::Frobenius, x::AbstractVector)
     Base.require_one_based_indexing(x)
