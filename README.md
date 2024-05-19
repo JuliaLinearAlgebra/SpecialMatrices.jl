@@ -7,6 +7,9 @@
 [![license][license-img]][license-url]
 [![docs-stable][docs-stable-img]][docs-stable-url]
 [![docs-dev][docs-dev-img]][docs-dev-url]
+[![deps](https://juliahub.com/docs/SpecialMatrices/deps.svg)](https://juliahub.com/ui/Packages/SpecialMatrices)
+[![version](https://juliahub.com/docs/SpecialMatrices/version.svg)](https://juliahub.com/ui/Packages/SpecialMatrices)
+[![pkgeval](https://juliahub.com/docs/SpecialMatrices/pkgeval.svg)](https://juliahub.com/ui/Packages/SpecialMatrices)
 
 https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl
 
