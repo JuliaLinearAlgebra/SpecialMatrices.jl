@@ -1,5 +1,5 @@
 using SpecialMatrices: SpecialMatrices
-using Test: @test_broken, @testset, detect_ambiguities
+using Test: @test, @test_broken, @testset, detect_ambiguities
 
 include("aqua.jl")
 
@@ -21,5 +21,9 @@ const files = (
 end
 
 @testset "ambiguities" begin
+if VERSION < v"1.11"
     @test_broken isempty(detect_ambiguities(SpecialMatrices)) # see aqua.jl
+else
+    @test isempty(detect_ambiguities(SpecialMatrices))
+end
 end
