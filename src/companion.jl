@@ -85,7 +85,7 @@ function mul!(y::Vector, C::Companion, x::AbstractVector)
     return y
 end
 
-# A <= B * C
+# A ⟸ B * C
 function mul!(A::Matrix, B::AbstractMatrix, C::Companion)
     @boundscheck (size(A) == (size(B,1), size(C,2)) && size(B, 2) == size(C,1)) ||
         throw(DimensionMismatch("mul! arguments incompatible sizes"))
@@ -93,7 +93,7 @@ function mul!(A::Matrix, B::AbstractMatrix, C::Companion)
     @views for j in 1:size(A,2)-1
         @inbounds A[:,j] = B[:,j+1]
     end
-    @inbounds mul!((@view A[:,end]), B, C.c, -1, 0) # A[:,end] <= - B * c
+    @inbounds mul!((@view A[:,end]), B, C.c, -1, 0) # A[:,end] ⟸ - B * c
     return A
 end
 
