@@ -1,6 +1,6 @@
 name = "SpecialMatrices"
 uuid = "928aab9d-ef52-54ac-8ca1-acd7ca42c160"
-version = "3.0.0"
+version = "3.1.0"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
