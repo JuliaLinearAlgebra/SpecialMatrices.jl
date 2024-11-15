@@ -13,6 +13,4 @@ using SpecialMatrices
 
 # ### Cauchy
 
-Cauchy(x::AbstractArray, y::AbstractArray) = Cauchy(collect(x), collect(y))
-
-Cauchy(1:3, 2:4)
+Cauchy(collect(1:3), collect(2:4))
