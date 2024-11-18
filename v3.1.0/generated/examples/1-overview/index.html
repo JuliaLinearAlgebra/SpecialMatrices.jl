@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>SpecialMatrices overview · SpecialMatrices.jl</title><script data-outdated-warner src="../../../assets/warner.js"></script><link rel="canonical" href="https://JuliaLinearAlgebra.github.io/SpecialMatrices.jl/stable/generated/examples/1-overview/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../assets/documenter.js"></script><script src="../../../siteinfo.js"></script><script src="../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../assets/themeswap.js"></script><link href="../../../assets/custom.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../../">SpecialMatrices.jl</a></span></div><form class="docs-search" action="../../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../../">Home</a></li><li><a class="tocitem" href="../../../methods/">Methods</a></li><li><span class="tocitem">Examples</span><ul><li class="is-active"><a class="tocitem" href>SpecialMatrices overview</a><ul class="internal"><li><a class="tocitem" href="#Related-packages"><span>Related packages</span></a></li><li><a class="tocitem" href="#[Cauchy-matrix](https://en.wikipedia.org/wiki/Cauchy_matrix)"><span><code>Cauchy</code> matrix</span></a></li><li><a class="tocitem" href="#[Companion-matrix](https://en.wikipedia.org/wiki/Companion_matrix)"><span><code>Companion</code> matrix</span></a></li><li><a class="tocitem" href="#[Frobenius-matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)"><span><code>Frobenius</code> matrix</span></a></li><li><a class="tocitem" href="#[Hilbert-matrix](https://en.wikipedia.org/wiki/Hilbert_matrix)"><span><code>Hilbert</code> matrix</span></a></li><li><a class="tocitem" href="#[Kahan-matrix](https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)"><span><code>Kahan</code> matrix</span></a></li><li><a class="tocitem" href="#Riemann-matrix"><span><code>Riemann</code> matrix</span></a></li><li><a class="tocitem" href="#[Strang-matrix](https://doi.org/10.1137/141000671)"><span><code>Strang</code> matrix</span></a></li><li><a class="tocitem" href="#[Vandermonde-matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix)"><span><code>Vandermonde</code> matrix</span></a></li></ul></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>SpecialMatrices overview</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>SpecialMatrices overview</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/main/docs/lit/examples/1-overview.jl" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="overview"><a class="docs-heading-anchor" href="#overview">SpecialMatrices overview</a><a id="overview-1"></a><a class="docs-heading-anchor-permalink" href="#overview" title="Permalink"></a></h1><p>This page illustrates the Julia package <a href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl"><code>SpecialMatrices</code></a>.</p><p>This package extends the <code>LinearAlgebra</code> library with support for special matrices that are used in linear algebra. Every special matrix has its own type and is stored efficiently. Use <code>Matrix(A)</code> to access the full matrix if needed.</p><h2 id="Related-packages"><a class="docs-heading-anchor" href="#Related-packages">Related packages</a><a id="Related-packages-1"></a><a class="docs-heading-anchor-permalink" href="#Related-packages" title="Permalink"></a></h2><p><a href="https://github.com/JuliaLinearAlgebra/ToeplitzMatrices.jl">ToeplitzMatrices.jl</a> supports Toeplitz, Hankel, and circulant matrices.</p><p>This page comes from a single Julia file: <a href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/main/docs/lit/examples/1-overview.jl"><code>1-overview.jl</code></a>.</p><p>You can access the source code for such Julia documentation using the &#39;Edit on GitHub&#39; link in the top right. You can view the corresponding notebook in <a href="https://nbviewer.org/">nbviewer</a> here: <a href="https://nbviewer.org/github/JuliaLinearAlgebra/SpecialMatrices.jl/tree/gh-pages/dev/generated/examples/1-overview.ipynb"><code>1-overview.ipynb</code></a>, or open it in <a href="https://mybinder.org/">binder</a> here: <a href="https://mybinder.org/v2/gh/JuliaLinearAlgebra/SpecialMatrices.jl/gh-pages?filepath=dev/generated/examples/1-overview.ipynb"><code>1-overview.ipynb</code></a>.</p><h3 id="Setup"><a class="docs-heading-anchor" href="#Setup">Setup</a><a id="Setup-1"></a><a class="docs-heading-anchor-permalink" href="#Setup" title="Permalink"></a></h3><p>Packages needed here.</p><pre><code class="language-julia hljs">using SpecialMatrices
+using Polynomials
+using LinearAlgebra: factorize, Diagonal</code></pre><h2 id="[Cauchy-matrix](https://en.wikipedia.org/wiki/Cauchy_matrix)"><a class="docs-heading-anchor" href="#[Cauchy-matrix](https://en.wikipedia.org/wiki/Cauchy_matrix)"><a href="https://en.wikipedia.org/wiki/Cauchy_matrix"><code>Cauchy</code> matrix</a></a><a id="[Cauchy-matrix](https://en.wikipedia.org/wiki/Cauchy_matrix)-1"></a><a class="docs-heading-anchor-permalink" href="#[Cauchy-matrix](https://en.wikipedia.org/wiki/Cauchy_matrix)" title="Permalink"></a></h2><pre><code class="language-julia hljs">Cauchy(1:3, 2:4)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3×3 Cauchy{Rational{Int64}, UnitRange{Int64}, UnitRange{Int64}}:
+ 1//3  1//4  1//5
+ 1//4  1//5  1//6
+ 1//5  1//6  1//7</code></pre><pre><code class="language-julia hljs">Cauchy((1., 2.), 1:3)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">2×3 Cauchy{Float64, Tuple{Float64, Float64}, UnitRange{Int64}}:
+ 0.5       0.333333  0.25
+ 0.333333  0.25      0.2</code></pre><pre><code class="language-julia hljs">Cauchy(3)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3×3 Cauchy{Rational{Int64}, UnitRange{Int64}, UnitRange{Int64}}:
+ 1//2  1//3  1//4
+ 1//3  1//4  1//5
+ 1//4  1//5  1//6</code></pre><h2 id="[Companion-matrix](https://en.wikipedia.org/wiki/Companion_matrix)"><a class="docs-heading-anchor" href="#[Companion-matrix](https://en.wikipedia.org/wiki/Companion_matrix)"><a href="https://en.wikipedia.org/wiki/Companion_matrix"><code>Companion</code> matrix</a></a><a id="[Companion-matrix](https://en.wikipedia.org/wiki/Companion_matrix)-1"></a><a class="docs-heading-anchor-permalink" href="#[Companion-matrix](https://en.wikipedia.org/wiki/Companion_matrix)" title="Permalink"></a></h2><pre><code class="language-julia hljs">Companion(1:3)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3×3 Companion{Int64}:
+ 0  0  -1
+ 1  0  -2
+ 0  1  -3</code></pre><p>From a polynomial</p><pre><code class="language-julia hljs">p = Polynomial(4:-1:1)</code></pre>4 &#43; 3&#8729;x &#43; 2&#8729;x<sup>2</sup> &#43; x<sup>3</sup><pre><code class="language-julia hljs">Companion(p)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3×3 Companion{Float64}:
+ 0.0  0.0  -4.0
+ 1.0  0.0  -3.0
+ 0.0  1.0  -2.0</code></pre><h2 id="[Frobenius-matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)"><a class="docs-heading-anchor" href="#[Frobenius-matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)"><a href="https://en.wikipedia.org/wiki/Frobenius_matrix"><code>Frobenius</code> matrix</a></a><a id="[Frobenius-matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)-1"></a><a class="docs-heading-anchor-permalink" href="#[Frobenius-matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)" title="Permalink"></a></h2><pre><code class="language-julia hljs">F = Frobenius(3, 2:4) # Specify subdiagonals of column 3</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">6×6 Frobenius{Int64}:
+ 1  0  0  0  0  0
+ 0  1  0  0  0  0
+ 0  0  1  0  0  0
+ 0  0  2  1  0  0
+ 0  0  3  0  1  0
+ 0  0  4  0  0  1</code></pre><p>Special form of inverse:</p><pre><code class="language-julia hljs">inv(F)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">6×6 Frobenius{Int64}:
+ 1  0   0  0  0  0
+ 0  1   0  0  0  0
+ 0  0   1  0  0  0
+ 0  0  -2  1  0  0
+ 0  0  -3  0  1  0
+ 0  0  -4  0  0  1</code></pre><p>Special form preserved if the same column has the subdiagonals</p><pre><code class="language-julia hljs">F * F</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">6×6 Frobenius{Int64}:
+ 1  0  0  0  0  0
+ 0  1  0  0  0  0
+ 0  0  1  0  0  0
+ 0  0  4  1  0  0
+ 0  0  6  0  1  0
+ 0  0  8  0  0  1</code></pre><p>Otherwise it promotes to a <code>Matrix</code>:</p><pre><code class="language-julia hljs">F * Frobenius(2, 2:5)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">6×6 Matrix{Int64}:
+ 1   0  0  0  0  0
+ 0   1  0  0  0  0
+ 0   2  1  0  0  0
+ 0   7  2  1  0  0
+ 0  10  3  0  1  0
+ 0  13  4  0  0  1</code></pre><p>Efficient matrix-vector multiplication:</p><pre><code class="language-julia hljs">F * (1:6)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">6-element Vector{Int64}:
+  1
+  2
+  3
+ 10
+ 14
+ 18</code></pre><h2 id="[Hilbert-matrix](https://en.wikipedia.org/wiki/Hilbert_matrix)"><a class="docs-heading-anchor" href="#[Hilbert-matrix](https://en.wikipedia.org/wiki/Hilbert_matrix)"><a href="https://en.wikipedia.org/wiki/Hilbert_matrix"><code>Hilbert</code> matrix</a></a><a id="[Hilbert-matrix](https://en.wikipedia.org/wiki/Hilbert_matrix)-1"></a><a class="docs-heading-anchor-permalink" href="#[Hilbert-matrix](https://en.wikipedia.org/wiki/Hilbert_matrix)" title="Permalink"></a></h2><pre><code class="language-julia hljs">H = Hilbert(5)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5×5 Hilbert{Rational{Int64}}:
+  1    1//2  1//3  1//4  1//5
+ 1//2  1//3  1//4  1//5  1//6
+ 1//3  1//4  1//5  1//6  1//7
+ 1//4  1//5  1//6  1//7  1//8
+ 1//5  1//6  1//7  1//8  1//9</code></pre><p>Inverses are also integer matrices:</p><pre><code class="language-julia hljs">inv(H)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5×5 InverseHilbert{Rational{Int64}}:
+    25    -300     1050    -1400     630
+  -300    4800   -18900    26880  -12600
+  1050  -18900    79380  -117600   56700
+ -1400   26880  -117600   179200  -88200
+   630  -12600    56700   -88200   44100</code></pre><h2 id="[Kahan-matrix](https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)"><a class="docs-heading-anchor" href="#[Kahan-matrix](https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)"><a href="https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html"><code>Kahan</code> matrix</a></a><a id="[Kahan-matrix](https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)-1"></a><a class="docs-heading-anchor-permalink" href="#[Kahan-matrix](https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html)" title="Permalink"></a></h2><p>See <a href="https://doi.org/10.1137/1029112">N. J. Higham (1987)</a>.</p><pre><code class="language-julia hljs">Kahan(5, 5, 1, 35)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5×5 Kahan{Int64, Int64}:
+ 1.0  -0.540302  -0.540302  -0.540302  -0.540302
+ 0.0   0.841471  -0.454649  -0.454649  -0.454649
+ 0.0   0.0        0.708073  -0.382574  -0.382574
+ 0.0   0.0        0.0        0.595823  -0.321925
+ 0.0   0.0        0.0        0.0        0.501368</code></pre><pre><code class="language-julia hljs">Kahan(5, 3, 0.5, 0)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5×3 Kahan{Float64, Int64}:
+ 1.0  -0.877583  -0.877583
+ 0.0   0.479426  -0.420735
+ 0.0   0.0        0.229849
+ 0.0   0.0        0.0
+ 0.0   0.0        0.0</code></pre><pre><code class="language-julia hljs">Kahan(3, 5, 0.5, 1e-3)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3×5 Kahan{Float64, Float64}:
+ 1.0  -0.877583  -0.877583  -0.877583  -0.877583
+ 0.0   0.479426  -0.420735  -0.420735  -0.420735
+ 0.0   0.0        0.229849  -0.201711  -0.201711</code></pre><h2 id="Riemann-matrix"><a class="docs-heading-anchor" href="#Riemann-matrix"><code>Riemann</code> matrix</a><a id="Riemann-matrix-1"></a><a class="docs-heading-anchor-permalink" href="#Riemann-matrix" title="Permalink"></a></h2><p>A Riemann matrix is defined as <code>A = B[2:N+1, 2:N+1]</code>, where <code>B[i,j] = i-1</code> if <code>i</code> divides <code>j</code>, and <code>-1</code> otherwise. The <a href="https://en.wikipedia.org/wiki/Riemann_hypothesis">Riemann hypothesis</a> holds if and only if <code>det(A) = O( N! N^(-1/2+ϵ))</code> for every <code>ϵ &gt; 0</code>.</p><p>See <a href="https://doi.org/10.1016/0024-3795(86)90255-7">F. Roesler (1986)</a>.</p><pre><code class="language-julia hljs">Riemann(5)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5×5 Riemann{Int64}:
+  1  -1   1  -1   1
+ -1   2  -1  -1   2
+ -1  -1   3  -1  -1
+ -1  -1  -1   4  -1
+ -1  -1  -1  -1   5</code></pre><h2 id="[Strang-matrix](https://doi.org/10.1137/141000671)"><a class="docs-heading-anchor" href="#[Strang-matrix](https://doi.org/10.1137/141000671)"><a href="https://doi.org/10.1137/141000671"><code>Strang</code> matrix</a></a><a id="[Strang-matrix](https://doi.org/10.1137/141000671)-1"></a><a class="docs-heading-anchor-permalink" href="#[Strang-matrix](https://doi.org/10.1137/141000671)" title="Permalink"></a></h2><p>A special symmetric, tridiagonal, Toeplitz matrix named after Gilbert Strang.</p><pre><code class="language-julia hljs">S = Strang(5)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5×5 Strang{Int64}:
+  2  -1   0   0   0
+ -1   2  -1   0   0
+  0  -1   2  -1   0
+  0   0  -1   2  -1
+  0   0   0  -1   2</code></pre><p>The Strang matrix has a special <span>$L D L&#39;$</span> factorization:</p><pre><code class="language-julia hljs">F = factorize(S)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">LinearAlgebra.LDLt{Float64, LinearAlgebra.SymTridiagonal{Float64, Vector{Float64}}}
+L factor:
+5×5 LinearAlgebra.UnitLowerTriangular{Float64, LinearAlgebra.SymTridiagonal{Float64, Vector{Float64}}}:
+  1.0    ⋅          ⋅      ⋅    ⋅ 
+ -0.5   1.0         ⋅      ⋅    ⋅ 
+  0.0  -0.666667   1.0     ⋅    ⋅ 
+  0.0   0.0       -0.75   1.0   ⋅ 
+  0.0   0.0        0.0   -0.8  1.0
+D factor:
+5×5 LinearAlgebra.Diagonal{Float64, Vector{Float64}}:
+ 2.0   ⋅    ⋅        ⋅     ⋅ 
+  ⋅   1.5   ⋅        ⋅     ⋅ 
+  ⋅    ⋅   1.33333   ⋅     ⋅ 
+  ⋅    ⋅    ⋅       1.25   ⋅ 
+  ⋅    ⋅    ⋅        ⋅    1.2</code></pre><p>Here is a verification:</p><pre><code class="language-julia hljs">F.L * Diagonal(F.D) * F.L&#39;</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5×5 Matrix{Float64}:
+  2.0  -1.0   0.0   0.0   0.0
+ -1.0   2.0  -1.0   0.0   0.0
+  0.0  -1.0   2.0  -1.0   0.0
+  0.0   0.0  -1.0   2.0  -1.0
+  0.0   0.0   0.0  -1.0   2.0</code></pre><h2 id="[Vandermonde-matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix)"><a class="docs-heading-anchor" href="#[Vandermonde-matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix)"><a href="https://en.wikipedia.org/wiki/Vandermonde_matrix"><code>Vandermonde</code> matrix</a></a><a id="[Vandermonde-matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix)-1"></a><a class="docs-heading-anchor-permalink" href="#[Vandermonde-matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix)" title="Permalink"></a></h2><pre><code class="language-julia hljs">a = 1:4
+V = Vandermonde(a)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">4×4 Vandermonde{Int64}:
+ 1  1   1   1
+ 1  2   4   8
+ 1  3   9  27
+ 1  4  16  64</code></pre><p>Adjoint Vandermonde:</p><pre><code class="language-julia hljs">V&#39;</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">4×4 adjoint(::Vandermonde{Int64}) with eltype Int64:
+ 1  1   1   1
+ 1  2   3   4
+ 1  4   9  16
+ 1  8  27  64</code></pre><p>The backslash operator <code>\</code> is overloaded to solve Vandermonde and adjoint Vandermonde systems in <span>$O(n^2)$</span> time using the algorithm of <a href="https://doi.org/10.2307/2004623">Björck &amp; Pereyra (1970)</a>.</p><pre><code class="language-julia hljs">V \ a</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">4-element Vector{Float64}:
+ 0.0
+ 1.0
+ 0.0
+ 0.0</code></pre><pre><code class="language-julia hljs">V&#39; \ V[3,:]</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">4-element Vector{Float64}:
+ 0.0
+ 0.0
+ 1.0
+ 0.0</code></pre><h3 id="Reproducibility"><a class="docs-heading-anchor" href="#Reproducibility">Reproducibility</a><a id="Reproducibility-1"></a><a class="docs-heading-anchor-permalink" href="#Reproducibility" title="Permalink"></a></h3><p>This page was generated with the following version of Julia:</p><pre><code class="language-julia hljs">using InteractiveUtils: versioninfo
+io = IOBuffer(); versioninfo(io); split(String(take!(io)), &#39;\n&#39;)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">11-element Vector{SubString{String}}:
+ &quot;Julia Version 1.11.1&quot;
+ &quot;Commit 8f5b7ca12ad (2024-10-16 10:53 UTC)&quot;
+ &quot;Build Info:&quot;
+ &quot;  Official https://julialang.org/ release&quot;
+ &quot;Platform Info:&quot;
+ &quot;  OS: Linux (x86_64-linux-gnu)&quot;
+ &quot;  CPU: 4 × AMD EPYC 7763 64-Core Processor&quot;
+ &quot;  WORD_SIZE: 64&quot;
+ &quot;  LLVM: libLLVM-16.0.6 (ORCJIT, znver3)&quot;
+ &quot;Threads: 1 default, 0 interactive, 1 GC (on 4 virtual cores)&quot;
+ &quot;&quot;</code></pre><p>And with the following package versions</p><pre><code class="language-julia hljs">import Pkg; Pkg.status()</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Status `~/work/SpecialMatrices.jl/SpecialMatrices.jl/docs/Project.toml`
+⌅ [e30172f5] Documenter v0.27.25
+  [98b081ad] Literate v2.20.1
+  [f27b6e38] Polynomials v4.0.11
+  [928aab9d] SpecialMatrices v3.1.0 `~/work/SpecialMatrices.jl/SpecialMatrices.jl`
+Info Packages marked with ⌅ have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated`</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../../methods/">« Methods</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Friday 15 November 2024 22:19">Friday 15 November 2024</span>. Using Julia version 1.11.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
