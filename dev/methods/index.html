@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Methods · SpecialMatrices.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link rel="canonical" href="https://JuliaLinearAlgebra.github.io/SpecialMatrices.jl/stable/methods/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="../assets/custom.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">SpecialMatrices.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li class="is-active"><a class="tocitem" href>Methods</a><ul class="internal"><li><a class="tocitem" href="#Methods-list"><span>Methods list</span></a></li><li><a class="tocitem" href="#Methods-usage"><span>Methods usage</span></a></li></ul></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../generated/examples/1-overview/">SpecialMatrices overview</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Methods</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Methods</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/main/docs/src/methods.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h2 id="Methods-list"><a class="docs-heading-anchor" href="#Methods-list">Methods list</a><a id="Methods-list-1"></a><a class="docs-heading-anchor-permalink" href="#Methods-list" title="Permalink"></a></h2><ul><li><a href="#SpecialMatrices.Cauchy"><code>SpecialMatrices.Cauchy</code></a></li><li><a href="#SpecialMatrices.Companion"><code>SpecialMatrices.Companion</code></a></li><li><a href="#SpecialMatrices.Frobenius"><code>SpecialMatrices.Frobenius</code></a></li><li><a href="#SpecialMatrices.Hilbert"><code>SpecialMatrices.Hilbert</code></a></li><li><a href="#SpecialMatrices.Kahan"><code>SpecialMatrices.Kahan</code></a></li><li><a href="#SpecialMatrices.Riemann"><code>SpecialMatrices.Riemann</code></a></li><li><a href="#SpecialMatrices.Strang"><code>SpecialMatrices.Strang</code></a></li><li><a href="#SpecialMatrices.Vandermonde"><code>SpecialMatrices.Vandermonde</code></a></li><li><a href="#LinearAlgebra.det-Union{Tuple{InverseHilbert{T}}, Tuple{T}} where T"><code>LinearAlgebra.det</code></a></li><li><a href="#SpecialMatrices.dvand!-Tuple{Any, Any}"><code>SpecialMatrices.dvand!</code></a></li><li><a href="#SpecialMatrices.pvand!-Tuple{Any, Any}"><code>SpecialMatrices.pvand!</code></a></li><li><a href="#SpecialMatrices.vandtype-Tuple{Type, Type}"><code>SpecialMatrices.vandtype</code></a></li></ul><h2 id="Methods-usage"><a class="docs-heading-anchor" href="#Methods-usage">Methods usage</a><a id="Methods-usage-1"></a><a class="docs-heading-anchor-permalink" href="#Methods-usage" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.Cauchy" href="#SpecialMatrices.Cauchy"><code>SpecialMatrices.Cauchy</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">Cauchy{T,X,Y} &lt;: AbstractMatrix{T}
+Cauchy(x [,y])</code></pre><p>Construct lazy <a href="https://en.wikipedia.org/wiki/Cauchy_matrix"><code>Cauchy</code> matrix</a> where</p><ul><li><code>Cauchy(x,y)[i,j] = 1 / (x[i] + y[j])</code></li><li><code>Cauchy(x) = Cauchy(x,x)</code></li><li><code>Cauchy(k::Int) = Cauchy(1:k)</code></li></ul><p>Both <code>x</code> and <code>y</code> can be any <code>AbstractArray</code> or <code>NTuple</code> of <code>Number</code>s, but all elements of <code>x</code> must have the same type; likewise for <code>y</code>. The elements of <code>x</code> and of <code>y</code> should be distinct.</p><p>The element type <code>T</code> corresponds to the reciprocal of the sum of pairs of elements of <code>x</code> and <code>y</code>.</p><pre><code class="language-julia-repl hljs">julia&gt; Cauchy([2.0 1], (0, 1, 2))
+2×3 Cauchy{Float64, Matrix{Float64}, Tuple{Int64, Int64, Int64}}:
+ 0.5  0.333333  0.25
+ 1.0  0.5       0.333333
+
+julia&gt; Cauchy(1:3)
+3×3 Cauchy{Rational{Int64}, UnitRange{Int64}, UnitRange{Int64}}:
+ 1//2  1//3  1//4
+ 1//3  1//4  1//5
+ 1//4  1//5  1//6
+
+julia&gt; Cauchy(3)
+3×3 Cauchy{Rational{Int64}, UnitRange{Int64}, UnitRange{Int64}}:
+ 1//2  1//3  1//4
+ 1//3  1//4  1//5
+ 1//4  1//5  1//6</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/cauchy.jl#L15-L51">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.Companion" href="#SpecialMatrices.Companion"><code>SpecialMatrices.Companion</code></a> — <span class="docstring-category">Type</span></header><section><div><p>Companion(v::Union{AbstractVector,Polynomial})::AbstractMatrix</p><p>Construct a lazy <a href="https://en.wikipedia.org/wiki/Companion_matrix"><code>companion</code> matrix</a> from the coefficients of its characteristic (monic) polynomial.</p><p>The matrix is <code>n × n</code> for a vector input of length <code>n</code> or an input <code>Polynomial</code> of degree <code>n</code>, but the storage here is only <code>O(n)</code>. This version puts the coefficients along the last column of the matrix. Some texts put the coefficients along the first row, the transpose of the convention used here.</p><p>This type has efficient methods for <code>mul!</code> and <code>inv</code>.</p><pre><code class="language-julia-repl hljs">julia&gt; A = Companion([3,2,1])
+3×3 Companion{Int64}:
+ 0  0  -3
+ 1  0  -2
+ 0  1  -1</code></pre><p>Also, directly from a polynomial:</p><pre><code class="language-julia-repl hljs">julia&gt; using Polynomials
+
+julia&gt; P = Polynomial(2:5)
+Polynomial(2 + 3*x + 4*x^2 + 5*x^3)
+
+julia&gt; C = Companion(P)
+3×3 Companion{Float64}:
+ 0.0  0.0  -0.4
+ 1.0  0.0  -0.6
+ 0.0  1.0  -0.8</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/companion.jl#L4-L43">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.Frobenius" href="#SpecialMatrices.Frobenius"><code>SpecialMatrices.Frobenius</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">[`Frobenius` matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)</code></pre><p>Frobenius matrices or Gaussian elimination matrices of the form</p><pre><code class="nohighlight hljs">[ 1 0 ...     0 ]
+[ 0 1 ...     0 ]
+[ .........     ]
+[ ... 1 ...     ]
+[ ... c1 1 ...  ]
+[ ... c2 0 1 ...]
+[ ............. ]
+[ ... ck ...   1]</code></pre><p>i.e., an identity matrix with possibly nonzero subdiagonal elements along a single column.</p><p>In this implementation, the subdiagonal of the nonzero column is stored as a dense vector, so that the size can be inferred automatically as j+k, where j is the column index and k is the number of subdiagonal elements.</p><pre><code class="language-julia-repl hljs">julia&gt; using SpecialMatrices
+
+julia&gt; F = Frobenius(3, 4:6) # Specify subdiagonals of column 3
+6×6 Frobenius{Int64}:
+ 1  0  0  0  0  0
+ 0  1  0  0  0  0
+ 0  0  1  0  0  0
+ 0  0  4  1  0  0
+ 0  0  5  0  1  0
+ 0  0  6  0  0  1
+
+julia&gt; inv(F) # Special form of inverse
+6×6 Frobenius{Int64}:
+ 1  0   0  0  0  0
+ 0  1   0  0  0  0
+ 0  0   1  0  0  0
+ 0  0  -4  1  0  0
+ 0  0  -5  0  1  0
+ 0  0  -6  0  0  1
+
+julia&gt; F*F # Special form preserved if the same column has the subdiagonals
+6×6 Frobenius{Int64}:
+ 1  0   0  0  0  0
+ 0  1   0  0  0  0
+ 0  0   1  0  0  0
+ 0  0   8  1  0  0
+ 0  0  10  0  1  0
+ 0  0  12  0  0  1
+
+julia&gt; F*Frobenius(2, 2:5) # Promotes to Matrix
+6×6 Matrix{Int64}:
+ 1   0  0  0  0  0
+ 0   1  0  0  0  0
+ 0   2  1  0  0  0
+ 0  11  4  1  0  0
+ 0  14  5  0  1  0
+ 0  17  6  0  0  1
+
+julia&gt; F * [10.0,20,30,40,50,60.0]
+6-element Vector{Float64}:
+  10.0
+  20.0
+  30.0
+ 160.0
+ 200.0
+ 240.0</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/frobenius.jl#L3-L75">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.Hilbert" href="#SpecialMatrices.Hilbert"><code>SpecialMatrices.Hilbert</code></a> — <span class="docstring-category">Type</span></header><section><div><p>Hilbert(m [,n])</p><p>Construct <code>m × m</code> or <code>m × n</code> <a href="https://en.wikipedia.org/wiki/Hilbert_matrix"><code>Hilbert</code> matrix</a> from its specified dimensions, where element <code>i,j</code> equal to <code>1 / (i+j-1)</code>.</p><pre><code class="language-julia-repl hljs">julia&gt; A = Hilbert(5)
+5×5 Hilbert{Rational{Int64}}:
+  1    1//2  1//3  1//4  1//5
+ 1//2  1//3  1//4  1//5  1//6
+ 1//3  1//4  1//5  1//6  1//7
+ 1//4  1//5  1//6  1//7  1//8
+ 1//5  1//6  1//7  1//8  1//9
+
+julia&gt; Matrix(A)
+5×5 Matrix{Rational{Int64}}:
+  1    1//2  1//3  1//4  1//5
+ 1//2  1//3  1//4  1//5  1//6
+ 1//3  1//4  1//5  1//6  1//7
+ 1//4  1//5  1//6  1//7  1//8
+ 1//5  1//6  1//7  1//8  1//9</code></pre><p>Inverses are also integer matrices:</p><pre><code class="language-julia-repl hljs">julia&gt; inv(A)
+5×5 InverseHilbert{Rational{Int64}}:
+    25    -300     1050    -1400     630
+  -300    4800   -18900    26880  -12600
+  1050  -18900    79380  -117600   56700
+ -1400   26880  -117600   179200  -88200
+   630  -12600    56700   -88200   44100</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/hilbert.jl#L6-L43">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.Kahan" href="#SpecialMatrices.Kahan"><code>SpecialMatrices.Kahan</code></a> — <span class="docstring-category">Type</span></header><section><div><p><a href="https://math.nist.gov/MatrixMarket/data/MMDELI/kahan/kahan.html"><code>Kahan</code> matrix</a></p><pre><code class="language-julia-repl hljs">julia&gt; A = Kahan(5,5,1,35)
+5×5 Kahan{Int64, Int64}:
+ 1.0  -0.540302  -0.540302  -0.540302  -0.540302
+ 0.0   0.841471  -0.454649  -0.454649  -0.454649
+ 0.0   0.0        0.708073  -0.382574  -0.382574
+ 0.0   0.0        0.0        0.595823  -0.321925
+ 0.0   0.0        0.0        0.0        0.501368
+
+julia&gt; A = Kahan(5,3,0.5,0)
+5×3 Kahan{Float64, Int64}:
+ 1.0  -0.877583  -0.877583
+ 0.0   0.479426  -0.420735
+ 0.0   0.0        0.229849
+ 0.0   0.0        0.0
+ 0.0   0.0        0.0
+
+julia&gt; A = Kahan(3,5,0.5,1e-3)
+3×5 Kahan{Float64, Float64}:
+ 1.0  -0.877583  -0.877583  -0.877583  -0.877583
+ 0.0   0.479426  -0.420735  -0.420735  -0.420735
+ 0.0   0.0        0.229849  -0.201711  -0.201711</code></pre><p>For more details see: N. Higham, &quot;A Survey of Condition Number Estimation for Triangular Matrices,&quot; SIMAX, Vol. 29, No. 4, pp. 588, 1987, https://doi.org/10.1137/1029112</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/kahan.jl#L5-L37">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.Riemann" href="#SpecialMatrices.Riemann"><code>SpecialMatrices.Riemann</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">Riemann(N::Int)</code></pre><p>Construct <code>N × N</code> <code>Riemann</code> matrix, defined as <code>A = B[2:N+1, 2:N+1]</code>, where <code>B[i,j] = i-1</code> if <code>i</code> divides <code>j</code>, and <code>-1</code> otherwise. The <a href="https://en.wikipedia.org/wiki/Riemann_hypothesis">Riemann hypothesis</a> holds if and only if <code>det(A) = O(N! N^(-1/2+ϵ))</code> for every <code>ϵ &gt; 0</code>.</p><pre><code class="language-julia-repl hljs">julia&gt; Riemann(7)
+7×7 Riemann{Int64}:
+  1  -1   1  -1   1  -1   1
+ -1   2  -1  -1   2  -1  -1
+ -1  -1   3  -1  -1  -1   3
+ -1  -1  -1   4  -1  -1  -1
+ -1  -1  -1  -1   5  -1  -1
+ -1  -1  -1  -1  -1   6  -1
+ -1  -1  -1  -1  -1  -1   7</code></pre><p>For more details see Friedrich Roesler, &quot;Riemann&#39;s hypothesis as an eigenvalue problem,&quot; Linear Algebra and its Applications, Vol. 81, p.153-198, Sep. 1986. https://doi.org/10.1016/0024-3795(86)90255-7</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/riemann.jl#L6-L32">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.Strang" href="#SpecialMatrices.Strang"><code>SpecialMatrices.Strang</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">Strang([T=Int,] n::Int)</code></pre><p>Construct <code>Strang</code> matrix with elements of type <code>T</code>. This special matrix named after Gilbert Strang is symmetric, tridiagonal, and Toeplitz. See Fig. 1 of <a href="https://doi.org/10.1137/141000671">Julia paper</a>.</p><pre><code class="language-julia-repl hljs">julia&gt; Strang(4)
+4×4 Strang{Int64}:
+  2  -1   0   0
+ -1   2  -1   0
+  0  -1   2  -1
+  0   0  -1   2
+
+julia&gt; Strang(Int16, 3)
+3×3 Strang{Int16}:
+  2  -1   0
+ -1   2  -1
+  0  -1   2</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/strang.jl#L5-L27">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.Vandermonde" href="#SpecialMatrices.Vandermonde"><code>SpecialMatrices.Vandermonde</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">Vandermonde(c::AbstractVector)</code></pre><p>Create a &quot;lazy&quot; <code>n × n</code> <a href="https://en.wikipedia.org/wiki/Vandermonde_matrix"><code>Vandermonde</code> matrix</a> where <span>$A_{ij} = c_i^{j-1}$</span>, requiring only <code>O(n)</code> storage for the vector <code>c</code>.</p><p>The <code>transpose</code> and <code>adjoint</code> operations are also lazy.</p><pre><code class="language-julia-repl hljs">julia&gt; a = 1:5; A = Vandermonde(a)
+5×5 Vandermonde{Int64}:
+ 1  1   1    1    1
+ 1  2   4    8   16
+ 1  3   9   27   81
+ 1  4  16   64  256
+ 1  5  25  125  625
+
+julia&gt; A&#39;
+5×5 adjoint(::Vandermonde{Int64}) with eltype Int64:
+ 1   1   1    1    1
+ 1   2   3    4    5
+ 1   4   9   16   25
+ 1   8  27   64  125
+ 1  16  81  256  625</code></pre><p>The backslash operator <code>\</code> is overloaded to solve Vandermonde and adjoint Vandermonde systems in <code>O(n^2)</code> time using the algorithm of Björck &amp; Pereyra (1970), https://doi.org/10.2307/2004623.</p><pre><code class="language-julia-repl hljs">julia&gt; A \ a
+5-element Vector{Float64}:
+ 0.0
+ 1.0
+ 0.0
+ 0.0
+ 0.0
+
+julia&gt; A&#39; \ A[2,:]
+5-element Vector{Float64}:
+ 0.0
+ 1.0
+ 0.0
+ 0.0
+ 0.0</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/vandermonde.jl#L6-L55">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="LinearAlgebra.det-Union{Tuple{InverseHilbert{T}}, Tuple{T}} where T" href="#LinearAlgebra.det-Union{Tuple{InverseHilbert{T}}, Tuple{T}} where T"><code>LinearAlgebra.det</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">det(A::InverseHilbert)</code></pre><p>Explicit formula for the determinant. Caution: this function overflows easily.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/hilbert.jl#L106-L110">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.dvand!-Tuple{Any, Any}" href="#SpecialMatrices.dvand!-Tuple{Any, Any}"><code>SpecialMatrices.dvand!</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">dvand!(a, b) -&gt; b</code></pre><p>Solve system <span>$A*x = b$</span> in-place.</p><p><code>A</code> is Vandermonde matrix <span>$A_{ij} = a_i^{j-1}$</span>.</p><p>Algorithm by Bjorck &amp; Pereyra, Mathematics of Computation, Vol. 24, No. 112 (1970), pp. 893-903, https://doi.org/10.2307/2004623</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/vandermonde.jl#L154-L164">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.pvand!-Tuple{Any, Any}" href="#SpecialMatrices.pvand!-Tuple{Any, Any}"><code>SpecialMatrices.pvand!</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">pvand!(a, b) -&gt; b</code></pre><p>Solve system <span>$A^T*x = b$</span> in-place.</p><p><span>$A^T$</span> is transpose of Vandermonde matrix <span>$A_{ij} = a_i^{j-1}$</span>.</p><p>Algorithm by Bjorck &amp; Pereyra, Mathematics of Computation, Vol. 24, No. 112 (1970), pp. 893-903, https://doi.org/10.2307/2004623</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/vandermonde.jl#L117-L127">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SpecialMatrices.vandtype-Tuple{Type, Type}" href="#SpecialMatrices.vandtype-Tuple{Type, Type}"><code>SpecialMatrices.vandtype</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">vandtype(T1::Type, T2::Type)</code></pre><p>Determine the return type of <code>Vandermonde{T1} \ Vector{T2}</code>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/blob/ded8984f8f911bcf7b7b068342369e0083ec8528/src/vandermonde.jl#L106-L109">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../generated/examples/1-overview/">SpecialMatrices overview »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Sunday 17 August 2025 18:44">Sunday 17 August 2025</span>. Using Julia version 1.11.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
