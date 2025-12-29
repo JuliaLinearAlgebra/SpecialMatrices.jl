@@ -1,12 +1,6 @@
 module SpecialMatrices
 
-using LinearAlgebra
-using Polynomials
-
-import LinearAlgebra: Matrix, inv, det, ishermitian, isposdef, mul!
-
-import Base: getindex, size, *
-import Base.\
+import Base: getindex, size, *, \
 
 include("cauchy.jl") # Cauchy matrix
 include("companion.jl") # Companion matrix

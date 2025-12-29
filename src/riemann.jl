@@ -1,7 +1,9 @@
 #### Riemann Matrix
+
 export Riemann
 
-import Base: size, getindex
+# import Base: getindex, size
+
 
 """
     Riemann(N::Int)
