@@ -1,7 +1,10 @@
 #The m-by-n Hilbert matrix has matrix elements
 # H_{ij} = 1/(i+j-1)
-#
+
 export Hilbert, InverseHilbert
+
+import LinearAlgebra: det, ishermitian, isposdef
+import Base: inv
 
 """
    Hilbert(m [,n])

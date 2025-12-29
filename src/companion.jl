@@ -1,5 +1,9 @@
 export Companion
-using LinearAlgebra: dot
+
+using Polynomials: Polynomial
+import LinearAlgebra: mul!
+import Base: inv #, getindex, size
+
 
 """
    Companion(v::Union{AbstractVector,Polynomial})::AbstractMatrix

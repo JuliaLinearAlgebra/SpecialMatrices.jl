@@ -1,6 +1,7 @@
 export Vandermonde
 
 using LinearAlgebra: Adjoint, Transpose
+import LinearAlgebra: \
 
 
 """

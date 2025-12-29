@@ -1,5 +1,9 @@
 export Frobenius
 
+import LinearAlgebra: mul!
+import Base: inv #, getindex, size
+
+
 """
     [`Frobenius` matrix](https://en.wikipedia.org/wiki/Frobenius_matrix)
 

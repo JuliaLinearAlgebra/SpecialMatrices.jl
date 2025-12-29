@@ -1,6 +1,8 @@
 export Strang
 
 using LinearAlgebra: LDLt, SymTridiagonal
+import LinearAlgebra
+
 
 """
     Strang([T=Int,] n::Int)
@@ -73,6 +75,7 @@ SparseArrays: spdiagm
 =#
 
 if VERSION >= v"1.8"
+
 #=
 Strang is a special case of SymTridiagonal,
 and the default factorization of that class is LDLt
@@ -88,4 +91,5 @@ function LinearAlgebra.factorize(A::Strang)
     S = SymTridiagonal(dv, ev)
     return LDLt(S)
 end
-end
+
+end # VERSION
