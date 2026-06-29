@@ -33,7 +33,7 @@ jobs:
             arch: x64
             coverage: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
 #     - name: "Set up Julia"
       - uses: julia-actions/setup-julia@latest
