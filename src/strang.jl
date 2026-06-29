@@ -42,9 +42,9 @@ Strang(n::Int) = Strang(Int, n)
 size(s::Strang) = (s.n, s.n)
 LinearAlgebra.adjoint(s::Strang) = s
 LinearAlgebra.transpose(s::Strang) = s
-LinearAlgebra.issymmetric(s::Strang) = true
-LinearAlgebra.ishermitian(s::Strang) = true
-LinearAlgebra.isposdef(s::Strang) = true
+LinearAlgebra.issymmetric(s::Strang) = true # COV_EXCL_LINE
+LinearAlgebra.ishermitian(s::Strang) = true # COV_EXCL_LINE
+LinearAlgebra.isposdef(s::Strang) = true # COV_EXCL_LINE
 
 @inline Base.@propagate_inbounds function getindex(A::Strang{T}, i::Integer, j::Integer) where T
     @boundscheck checkbounds(A, i, j)

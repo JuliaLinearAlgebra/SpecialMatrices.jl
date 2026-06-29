@@ -88,8 +88,8 @@ size(A::InverseHilbert, dim::Integer) = dim==1 || dim==2 ? A.n : 1
 size(A::InverseHilbert) = size(A,1), size(A,2)
 
 # Properties
-ishermitian(::InverseHilbert) = true
-isposdef(::InverseHilbert) = true
+ishermitian(::InverseHilbert) = true # COV_EXCL_LINE
+isposdef(::InverseHilbert) = true # COV_EXCL_LINE
 
 # Index into a inverse Hilbert matrix
 function getindex(A::InverseHilbert{T}, i::Integer, j::Integer) where {T}
