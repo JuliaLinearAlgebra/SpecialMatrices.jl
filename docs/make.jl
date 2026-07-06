@@ -95,7 +95,7 @@ if isci
         devurl = "dev",
         versions = ["stable" => "v^", "dev" => "dev"],
         forcepush = true,
-#       push_preview = true,
+        push_preview = true,
         # see https://$org.github.io/$repo.jl/previews/PR##
     )
 end

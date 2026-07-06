@@ -1,15 +1,14 @@
 # SpecialMatrices.jl
 
-[![action status][action-img]][action-url]
-[![pkgeval status][pkgeval-img]][pkgeval-url]
-[![codecov][codecov-img]][codecov-url]
-[![coveralls][coveralls-img]][coveralls-url]
-[![license][license-img]][license-url]
 [![docs-stable][docs-stable-img]][docs-stable-url]
 [![docs-dev][docs-dev-img]][docs-dev-url]
-[![deps](https://juliahub.com/docs/SpecialMatrices/deps.svg)](https://juliahub.com/ui/Packages/SpecialMatrices)
-[![version](https://juliahub.com/docs/SpecialMatrices/version.svg)](https://juliahub.com/ui/Packages/SpecialMatrices)
-[![pkgeval](https://juliahub.com/docs/SpecialMatrices/pkgeval.svg)](https://juliahub.com/ui/Packages/SpecialMatrices)
+[![action][action-img]][action-url]
+[![Aqua QA][aqua-img]][aqua-url]
+[![codecov][codecov-img]][codecov-url]
+[![deps][deps-img]][deps-url]
+[![license][license-img]][license-url]
+[![pkgeval][pkgeval-img]][pkgeval-url]
+[![version][ver-img]][ver-url]
 
 https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl
 
@@ -290,19 +289,26 @@ julia> A' \ A[2,:]
 <!-- URLs -->
 [action-img]: https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/workflows/CI/badge.svg
 [action-url]: https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/actions
-[build-img]: https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/workflows/CI/badge.svg?branch=master
-[build-url]: https://github.com/JuliaLinearAlgebra/SpecialMatrices.jl/actions?query=workflow%3ACI+branch%3Amaster
-[pkgeval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/S/SpecialMatrices.svg
-[pkgeval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/S/SpecialMatrices.html
-[code-blue-img]: https://img.shields.io/badge/code%20style-blue-4495d1.svg
-[code-blue-url]: https://github.com/invenia/BlueStyle
-[codecov-img]: https://codecov.io/github/JuliaLinearAlgebra/SpecialMatrices.jl/coverage.svg?branch=master
-[codecov-url]: https://codecov.io/github/JuliaLinearAlgebra/SpecialMatrices.jl?branch=master
-[coveralls-img]: https://coveralls.io/repos/JuliaLinearAlgebra/SpecialMatrices.jl/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/JuliaLinearAlgebra/SpecialMatrices.jl?branch=master
-[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
-[docs-stable-url]: https://JuliaLinearAlgebra.github.io/SpecialMatrices.jl/stable
+
+[aqua-img]: https://juliatesting.github.io/Aqua.jl/dev/assets/badge.svg
+[aqua-url]: https://github.com/JuliaTesting/Aqua.jl
+
+[codecov-img]: https://codecov.io/github/JuliaLinearAlgebra/SpecialMatrices.jl/coverage.svg
+[codecov-url]: https://codecov.io/github/JuliaLinearAlgebra/SpecialMatrices.jl
+
+[deps-img]: https://juliahub.com/docs/SpecialMatrices/deps.svg
+[deps-url]: https://juliahub.com/ui/Packages/SpecialMatrices
+
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
 [docs-dev-url]: https://JuliaLinearAlgebra.github.io/SpecialMatrices.jl/dev
+[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-url]: https://JuliaLinearAlgebra.github.io/SpecialMatrices.jl/stable
+
 [license-img]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [license-url]: LICENSE
+
+[pkgeval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/S/SpecialMatrices.svg
+[pkgeval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/S/SpecialMatrices.html
+
+[ver-img]: https://juliahub.com/docs/SpecialMatrices/version.svg
+[ver-url]: https://juliahub.com/ui/Packages/SpecialMatrices

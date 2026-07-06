@@ -3,43 +3,53 @@ name: CI
 on:
   create:
     tags:
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
   push:
     branches:
       - main
     paths-ignore:
       - '**.md'
       - 'docs/**'
-  pull_request:
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
   workflow_dispatch:
 
 jobs:
+  version:
+    # see https://github.com/julia-actions/julia-version
+    name: Resolve Julia Versions
+    # These permissions are needed to:
+    # - Checkout the Git repository (`contents: read`)
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    outputs:
+      json: ${{ steps.julia-version.outputs.resolved-json }}
+    steps:
+      - uses: actions/checkout@v7 # Needed for "min" to access the Project.toml
+      - uses: julia-actions/julia-version@v0.1.0
+        id: julia-version
+        with:
+          versions: |
+            - min # Oldest supported version in Project.toml
+            - 1 # Latest release
+
   test:
-    name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }}
+    name: Julia ${{ matrix.version }} - ${{ matrix.os }}
+    needs: version
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.version == 'nightly' }}
     strategy:
       fail-fast: false
       matrix:
-        version: ['1.6', '1', 'nightly']
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-        arch:
-          - x64
-        include:
-          - version: '1'
-            os: ubuntu-latest
-            arch: x64
-            coverage: true
+        version: ${{ fromJSON(needs.version.outputs.json) }}
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v7
-
-#     - name: "Set up Julia"
-      - uses: julia-actions/setup-julia@latest
+      - uses: julia-actions/setup-julia@v3
         with:
           version: ${{ matrix.version }}
-          arch: ${{ matrix.arch }}
 
       - name: Cache artifacts
         uses: actions/cache@v6
@@ -54,21 +64,15 @@ jobs:
             ${{ runner.os }}-
 
 #     - name: "Unit Test"
-      - uses: julia-actions/julia-buildpkg@latest
-      - uses: julia-actions/julia-runtest@latest
+      - uses: julia-actions/julia-buildpkg@v1
+      - uses: julia-actions/julia-runtest@v1
 
 #     - name: "Cover"
       - uses: julia-actions/julia-processcoverage@v1
-        if: matrix.coverage
       - uses: codecov/codecov-action@v7
-        if: matrix.coverage
+        if: ${{ matrix.version == '1' && matrix.os == 'ubuntu-latest' }}
         with:
           file: lcov.info
           fail_ci_if_error: false
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      - uses: coverallsapp/github-action@master
-        if: matrix.coverage
-        with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
-            path-to-lcov: ./lcov.info
