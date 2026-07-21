@@ -6,3 +6,4 @@ Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
 [compat]
 Documenter = "0.27.3"
 Literate = "2"
+Polynomials = "4.1.1"
